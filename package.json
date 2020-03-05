@@ -1,0 +1,27 @@
+{
+  "name": "frontend-app",
+  "version": "1.0.0",
+  "description": "The Frontend app for the Track Coronavirus website",
+  "main": "index.js",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/track-coronavirus/frontend-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/track-coronavirus/frontend-app/issues"
+  },
+  "homepage": "https://github.com/track-coronavirus/frontend-app#readme",
+  "dependencies": {
+    "next": "^9.2.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  }
+}
