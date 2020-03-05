@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/track-coronavirus/backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/track-coronavirus/backend/issues"
+  },
+  "homepage": "https://github.com/track-coronavirus/backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node": "^12.16.1"
+  }
+}
