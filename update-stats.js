@@ -31,6 +31,7 @@ const uploadStats = async () => {
   let formattedList = [];
   for (let i = 0; i < cList.length; i++) {
     let c = cList[i].split(',');
+    if (c[0] === "") continue;
     let countryObj = {
       country: c[0],
       totalCases:         (c.length > 1 ? Number(c[1]) : 0),
