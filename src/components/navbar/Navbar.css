@@ -5,3 +5,7 @@
 .logo {
 		max-width: 35px
 }
+
+.appbar {
+	align-items: center;
+}

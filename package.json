@@ -2,23 +2,17 @@
   "name": "frontend-app",
   "version": "1.0.0",
   "description": "The Frontend app for the Track Coronavirus website",
-  "main": "index.js",
-  "scripts": {
-    "build": "next build",
-    "start": "next start",
-    "dev": "next"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/track-coronavirus/frontend-app.git"
   },
+  "proxy": "http://localhost:9000/",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/track-coronavirus/frontend-app/issues"
   },
-  "homepage": "https://github.com/track-coronavirus/frontend-app#readme",
   "dependencies": {
     "@devexpress/dx-react-core": "^2.5.0",
     "@devexpress/dx-react-grid": "^2.5.0",
@@ -26,18 +20,38 @@
     "@devexpress/dx-react-grid-material-ui": "^2.5.0",
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
-    "@zeit/next-css": "^1.0.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
-    "babel-plugin-styled-components": "^1.10.7",
     "bootstrap": "^4.4.1",
-    "isomorphic-unfetch": "^3.0.0",
     "material-table": "^1.57.2",
     "mongoose": "^5.9.3",
-    "mui-datatables": "^2.14.0",
-    "next": "^9.2.2",
+    "nan": "^2.14.0",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-scripts": "3.4.0"
   },
-  "devDependencies": {}
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

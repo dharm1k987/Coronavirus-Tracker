@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import "../../styles/main.css"
-import "../../styles/Overall.css"
+import "./Overall.css"
+
 
 
 export class Overall extends Component {
+
+    
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -24,15 +26,21 @@ export class Overall extends Component {
                         <div className="b ma2">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.props.world.totalDeaths)}</div>
                     </div>
+
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
-                        <div className="b ma2">Recoveries</div>
+                        <div className="b ma2">Active</div>
+                        <div className="green">{this.numberWithCommas(this.props.world.activeCases)}</div>
+                    </div>
+
+
+                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
+                        <div className="b ma2">Recovered</div>
                         <div className="green">{this.numberWithCommas(this.props.world.totalRecovered)}</div>
                     </div>
                 </div>
             </div>
           );
     }
-
 }
 
 export default Overall;

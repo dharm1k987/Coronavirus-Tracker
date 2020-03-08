@@ -11,16 +11,16 @@ import {
   Table,
   Toolbar,
   SearchPanel,
+  PagingPanel,
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-bootstrap4';
+import {
+  PagingState,
+  IntegratedPaging,
+} from '@devexpress/dx-react-grid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
-import "../../styles/main.css"
-import "../../styles/Table1.css"
-import fetch from 'isomorphic-unfetch';
-
-
-
+import "./Table1.css"
 
 
 export class Table1 extends Component {
@@ -32,61 +32,74 @@ export class Table1 extends Component {
   }
 
 
-generateRows() {
-    const countries = ["Canada", "USA", "China", "Italy", "Russia", "Belgium", "Slovakia"]
-    return countries.map((country) => {
-        return {country: country, deaths: this.getRandomInt(1,200), cases: this.getRandomInt(200, 400)}
-    })  
-  }
+  generateRows() {
+      const countries = ["Canada", "USA", "China", "Italy", "Russia", "Belgium", "Slovakia"]
+      return countries.map((country) => {
+          return {country: country, deaths: this.getRandomInt(1,200), cases: this.getRandomInt(200, 400)}
+      })  
+    }
 
   constructor(props) {
     super(props);
     this.generateRows = this.generateRows.bind(this);
     this.getRandomInt = this.getRandomInt.bind(this);
 
+    // activeCases: 23605
+    // country: "China"
+    // newCases: 167
+    // newDeaths: 30
+    // seriousAndCritical: 5737
+    // totalCases: 99999
+    // totalDeaths: 3042
+    // totalRecovered: 53929
 
 
     this.state = {
       columns: [
         { name: 'country', title: 'Country' },
-        { name: 'deaths', title: 'Deaths' },
-        { name: 'cases', title: 'Cases' }
-      ],
-      rows: this.generateRows({ length: 6 })
+        { name: 'totalDeaths', title: 'Deaths' },
+        { name: 'totalCases', title: 'Cases' }
+      ]
+      // rows: this.generateRows({ length: 6 })
   
     }
+
+    
     
   }
 
-  async componentDidMount() {
-    // const res = await fetch('http://localhost:9000/live-stats');
-    // const data = await res.json();
-    // console.log("OLAAA");
-    // console.log(data);
-  }
-  
   render() {
     // console.log(this.state.rows)
     return (
       <div className="tableDiv">
         <Grid
-          rows={this.state.rows}
+          rows={
+            this.props.data.length > 0 ? this.props.data : []
+          }
           columns={this.state.columns}
         >
         <SearchState />
-        {/*
+        
         <IntegratedFiltering />
         
         <SortingState
-          defaultSorting={[{ columnName: 'deaths', direction: 'desc' }]} //asc or desc
+          defaultSorting={[{ columnName: 'totalDeaths', direction: 'desc' }]} //asc or desc
         />
         <IntegratedSorting />
-        <Table />
-        <TableHeaderRow showSortingControls /> */}
-        {/* <TableHeaderRow /> */}
 
-        {/* <Toolbar />
-        <SearchPanel /> */}
+        <PagingState
+          defaultCurrentPage={0}
+          defaultPageSize={5}
+        />
+        <IntegratedPaging />
+        <PagingPanel
+          pageSizes={[5,10,15,20]}
+        />
+        <Table />
+        <TableHeaderRow showSortingControls />
+
+        <Toolbar />
+        <SearchPanel />
        </Grid>
     </div>
     );
