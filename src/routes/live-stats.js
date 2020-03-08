@@ -6,10 +6,7 @@ const {
 module.exports = app => {
   app.get('/live-stats', async (req, res, next) => {
     const stats = await getStats();
-    res.send({
-      message: "Hello world! We are live!",
-      ...stats
-    });
+    res.send({ stats: stats });
   });
 
   app.post('/live-stats/update', async (req, res, next) => {
