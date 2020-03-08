@@ -105,3 +105,6 @@ dist
 
 # Vim
 *.swp
+
+# Project
+stats/

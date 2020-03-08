@@ -1,5 +1,6 @@
 const {
-  getStats
+  getStats,
+  postStats
 } = require('../models');
 
 module.exports = app => {
@@ -13,6 +14,7 @@ module.exports = app => {
 
   app.post('/live-stats/update', async (req, res, next) => {
     const { newStats } = req.body;
+    const addStats = await postStats(newStats);
     res.send({ stats: newStats });
   });
 }

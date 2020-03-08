@@ -7,12 +7,20 @@ const getStats = async () => {
   return stats;
 };
 
-const postStat = async (stats) => {
-  const newStat = await Stat.create(...stats);
-  return newStat;
+const postStats = async (stats) => {
+  let updated = true;
+  for (let i = 0; i < stats.length; i++) {
+    const newStat = await Stat.updateOne(
+      { country: stats[i].country },
+      { ...stats[i] },
+      { upsert: true }
+    );
+  }
+  return updated;
 };
 
 module.exports = {
-  getStats
+  getStats,
+  postStats
 };
 
