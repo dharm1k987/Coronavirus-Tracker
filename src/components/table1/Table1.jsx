@@ -1,29 +1,15 @@
-import React, { Component,  useState } from 'react';
-// import fetch from "isomorphic-unfetch";
-import {
-  SearchState,
-  IntegratedFiltering,
-  IntegratedSorting,
-  SortingState
-} from '@devexpress/dx-react-grid';
-import {
-  Grid,
-  Table,
-  Toolbar,
-  SearchPanel,
-  PagingPanel,
-  TableHeaderRow,
-} from '@devexpress/dx-react-grid-bootstrap4';
-import {
-  PagingState,
-  IntegratedPaging,
-} from '@devexpress/dx-react-grid';
+import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
 import "./Table1.css"
+import { Link } from 'react-router-dom';
 
 
 export class Table1 extends Component {
+
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -57,50 +43,66 @@ export class Table1 extends Component {
     this.state = {
       columns: [
         { name: 'country', title: 'Country' },
-        { name: 'totalDeaths', title: 'Deaths' },
         { name: 'totalCases', title: 'Cases' }
-      ]
+      ],
+      stats: [],
+      filteredStats: [],
+      searchValue: ""
       // rows: this.generateRows({ length: 6 })
-  
-    }
+    };
+  }
 
-    
-    
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (!prevState.filteredStats.length) {
+      return { stats: nextProps.stats.stats ? nextProps.stats.stats : prevState.stats, filteredStats: nextProps.stats.stats ? nextProps.stats.stats : [] };
+    }
+    else return null;
+  }
+ 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.stats.length !== this.props.stats.length){
+        this.setState({ stats: this.props.stats, filteredStats: this.props.stats ? this.props.stats : [] });
+    }
+  }
+
+  filterCountryList(countryStr) {
+    this.setState({
+      searchValue: countryStr,
+      filteredStats: this.state.stats.filter(s => s.country.toLowerCase().includes(countryStr.toLowerCase()))
+    });
+  }
+
+  goToCountryInfo(countryStr) {
+    console.log("Go to: ", countryStr);
   }
 
   render() {
-    // console.log(this.state.rows)
     return (
-      <div className="tableDiv">
-        <Grid
-          rows={
-            this.props.data.length > 0 ? this.props.data : []
-          }
-          columns={this.state.columns}
-        >
-        <SearchState />
-        
-        <IntegratedFiltering />
-        
-        <SortingState
-          defaultSorting={[{ columnName: 'totalDeaths', direction: 'desc' }]} //asc or desc
-        />
-        <IntegratedSorting />
-
-        <PagingState
-          defaultCurrentPage={0}
-          defaultPageSize={5}
-        />
-        <IntegratedPaging />
-        <PagingPanel
-          pageSizes={[5,10,15,20]}
-        />
-        <Table />
-        <TableHeaderRow showSortingControls />
-
-        <Toolbar />
-        <SearchPanel />
-       </Grid>
+      <div>
+        <div className="center">
+          <div className="w-90 center mh2 br2">
+            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
+          </div>
+        </div>
+        <div className="pre br2 ma3 pa1 shadow-1">
+          <div>
+            <div className="fl w-50 pv2 pl4 b bg-moon-gray">Country</div>
+            <div className="fl w-50 pa2 tc b bg-moon-gray">Active Cases</div>
+          </div>
+          <div>
+            {
+              this.state.filteredStats.filter(s => s.country !== "Total:").map(s => (
+                <div key={s.country} className="br2" onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
+                  <Link to={`/${s.country}`}>
+                    <div className="dark-gray fl w-50 mt1 pv2 pl4 bg-near-white">{s.country}</div>
+                    <div className="dark-gray fl w-50 mt1 pa2 tc bg-near-white">{this.numberWithCommas(s.activeCases)}</div>
+                    {this.state.searchValue.length ? <div className="dark-gray fl w-100 tc f6 bg-near-white ph2 pv1">click for more info</div> : <div></div>}
+                  </Link>
+                </div>)
+              )
+            }
+          </div>
+        </div>
     </div>
     );
   }
