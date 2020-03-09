@@ -14,6 +14,14 @@ class CountryInfo extends React.Component {
     }
   }
 
+  toTitleCase(str) {
+    const lowerStr = str.toLowerCase();
+    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   componentDidMount() {
     axios
       .get(`/live-stats/${this.state.country}`)
@@ -27,7 +35,7 @@ class CountryInfo extends React.Component {
   render() {
     return (<div>
       <div className="flex mv3"> 
-        <Overall placeName={this.state.country} place={this.state.countryStats} />
+        <Overall placeName={this.toTitleCase(this.state.country)} place={this.state.countryStats} />
       </div>
       </div>
     );
