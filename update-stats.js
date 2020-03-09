@@ -35,7 +35,7 @@ const uploadStats = async () => {
     let c = cList[i].split(',');
     if (c[0] === "") continue;
     let countryObj = {
-      country: c[0],
+      country: c[0].toLowerCase(),
       totalCases:         (c.length > 1 ? Number(c[1]) : 0),
       newCases:           (c.length > 2 ? Number(c[2]) : 0),
       totalDeaths:        (c.length > 3 ? Number(c[3]) : 0),
