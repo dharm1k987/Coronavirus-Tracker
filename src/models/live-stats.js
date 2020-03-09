@@ -19,8 +19,14 @@ const postStats = async (stats) => {
   return updated;
 };
 
+const getStatsOf = async (country) => {
+  const countryStats = await Stat.findOne({ country });
+  return countryStats;
+};
+
 module.exports = {
   getStats,
-  postStats
+  postStats,
+  getStatsOf
 };
 

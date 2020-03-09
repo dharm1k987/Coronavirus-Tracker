@@ -1,6 +1,7 @@
 const {
   getStats,
-  postStats
+  postStats,
+  getStatsOf
 } = require('../models');
 
 module.exports = app => {
@@ -13,6 +14,12 @@ module.exports = app => {
     const { newStats } = req.body;
     const addStats = await postStats(newStats);
     res.send({ stats: newStats });
+  });
+
+  app.get('/live-stats/:country', async (req, res, next) => {
+    const { country } = req.params;
+    const countryStats = await getStatsOf(country);
+    res.send({ countryStats });
   });
 }
 
