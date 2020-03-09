@@ -11,6 +11,12 @@ export class Table1 extends Component {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
   getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -91,10 +97,10 @@ export class Table1 extends Component {
           </div>
           <div>
             {
-              this.state.filteredStats.filter(s => s.country !== "Total:").map(s => (
+              this.state.filteredStats.filter(s => s.country !== "total:").map(s => (
                 <div key={s.country} className="br2" onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
                   <Link to={`/${s.country}`}>
-                    <div className="dark-gray fl w-50 mt1 pv2 pl4 bg-near-white">{s.country}</div>
+                    <div className="dark-gray fl w-50 mt1 pv2 pl4 bg-near-white">{this.toTitleCase(s.country)}</div>
                     <div className="dark-gray fl w-50 mt1 pa2 tc bg-near-white">{this.numberWithCommas(s.activeCases)}</div>
                     {this.state.searchValue.length ? <div className="dark-gray fl w-100 tc f6 bg-near-white ph2 pv1">click for more info</div> : <div></div>}
                   </Link>
