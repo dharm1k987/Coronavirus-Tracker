@@ -51,9 +51,14 @@ export class Overall extends Component {
                     <p className="f1 b mt2 mb0 pa0" >
                         {this.state.placeName}
                     </p>
-                    <p className="f2 b">
-                        {this.numberWithCommas(this.state.placeStats.activeCases)}
-                    </p>
+                    <div className="tc">
+                        <p className="f2 b mb1">
+                            {this.numberWithCommas(this.state.placeStats.activeCases)}
+                        </p>
+                        <p className="f5">
+                            &nbsp; (active cases)
+                        </p>
+                    </div>
                 </div>
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
