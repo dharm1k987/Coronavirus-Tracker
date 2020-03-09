@@ -38,7 +38,7 @@ class Home extends React.Component {
             <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
           </div>
         </div>
-        <Overall placeName={"WORLD"} place={this.state.world}/>
+        <Overall placeName={"World"} place={this.state.world}/>
       <Table1 stats={this.state.liveStats} />
       </div>
     );
