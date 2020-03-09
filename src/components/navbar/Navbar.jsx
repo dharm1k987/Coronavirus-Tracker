@@ -18,7 +18,7 @@ export class Navbar extends Component {
           <AppBar position="static" className="appbar">
               <Toolbar>
               <Typography variant="h6" color="inherit" className="title">
-                Coronavirus Tracker
+                COVID-19 (Coronavirus) Tracker
               </Typography>
               {/* <p className="tc f3 b mv2">
               Coronavirus Tracker
