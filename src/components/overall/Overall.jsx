@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./Overall.css"
+import { CircularProgress } from '@material-ui/core';
 
 
 
@@ -10,19 +11,19 @@ export class Overall extends Component {
         this.state = {
             placeName: "",
             placeStats: {
-                activeCases: 0,
-                totalDeaths: 0,
-                totalRecovered: 0,
+                activeCases: -1,
+                totalDeaths: '--',
+                totalRecovered: '--',
             }
         }
     }
     
     numberWithCommas(x) {
+        if (x == '--') { return '--' }
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     static getDerivedStateFromProps(nextProps, prevState){
-        console.log(nextProps);
         if (!prevState.placeName || (prevState.placeName && prevState.placeName === "")) {
             return { placeName: nextProps.placeName };
         }
@@ -53,7 +54,11 @@ export class Overall extends Component {
                     </p>
                     <div className="tc">
                         <p className="f2 b mb1 gold">
-                            {this.numberWithCommas(this.state.placeStats.activeCases)}
+                        {
+                            this.state.placeStats.activeCases == -1 ?
+                            <CircularProgress /> :
+                            this.numberWithCommas(this.state.placeStats.activeCases)
+                        }
                         </p>
                         <p className="f5 gray b">
                             &nbsp; active cases

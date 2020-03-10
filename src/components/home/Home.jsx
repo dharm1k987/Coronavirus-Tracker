@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Overall, Table1 } from '../'
+import { Overall, Table1 } from '..'
 import axios from 'axios';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 

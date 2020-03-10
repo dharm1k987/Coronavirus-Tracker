@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { Navbar } from '../components'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Home from '../components/home/home';
-import CountryInfo from '../components/country-info/country-info';
+import Home from '../components/home/Home';
+import CountryInfo from '../components/countryInfo/CountryInfo';
 
 class App extends React.Component {
 
