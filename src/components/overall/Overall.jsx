@@ -23,6 +23,14 @@ export class Overall extends Component {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    toTitleCase(str) {
+        const lowerStr = str.toLowerCase();
+        if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+        return str.replace(/\w\S*/g, function(txt){
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+      }
+
     static getDerivedStateFromProps(nextProps, prevState){
         if (!prevState.placeName || (prevState.placeName && prevState.placeName === "")) {
             return { placeName: nextProps.placeName };
@@ -50,7 +58,7 @@ export class Overall extends Component {
             <div className="shadow-1 br2 ma3 w-90 center">
                 <div className="tc pt4 mb3 mh2 br2">
                     <p className="f1 b mt2 mb0 pa0 mid-gray" >
-                        {this.state.placeName}
+                        {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
                         <p className="f2 b mb1 gold">
