@@ -7,6 +7,9 @@ const options = {
 const parser = require('parse5');
 
 const fs = require('fs');
+
+const json2xls = require('json2xls');
+
  
 // with async/await
 // const result = scrape(options);
@@ -15,6 +18,7 @@ const fs = require('fs');
 // scrape(options).then((result) => {});
  
 // or with callback
+let objArray = [];
 scrape(options, (error, result) => {
 
     fs.readFile('./path/index.html', function(err, data) {
@@ -41,16 +45,33 @@ scrape(options, (error, result) => {
         let final = p[0].split(' ');
         
         final = final.filter((f) => f != "");
-        // if (final[1] == "0") { final.splice(1, 10)}
+        if (final[1] == "0") { final.splice(1, 1)}
+        final = final.map((f) => { if (!isNaN(f)) {return parseInt(f)} return f} )
 
+        let obj = {
+          country: final[0],
+          totalCases: final[1],
+          newCases: final[2],
+          totalDeaths: final[3],
+          newDeaths: final[4],
+          totalRecovered: final[5],
+          activeCases: final[6],
+          seriousCases: final[8],
+          casesPerMil: final[8]
+        }
         // fix 0 in first position, why?
         // fix country names with spaces
         // make into json
-        console.log(final.join(' '));
+        objArray.push(obj);
+        
       }
+
+      let xls = json2xls(objArray)
+      fs.writeFileSync('data.xlsx', xls, 'binary');
       
       
 
 // console.log(found);
     })
+
 });
