@@ -24,6 +24,12 @@
       color: red;
   }
 
+  .shadow_div {
+    background-color: white;
+    /* background: rgb(251,251,251);
+    background: radial-gradient(circle, rgba(251,251,251,1) 0%, rgba(238,238,238,1) 98%); */
+  }
+
 
   @keyframes blinker {
     50% {

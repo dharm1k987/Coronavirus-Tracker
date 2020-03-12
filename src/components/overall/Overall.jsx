@@ -55,7 +55,7 @@ export class Overall extends Component {
 
     render() {
         return (
-            <div className="shadow-1 br2 ma3 w-90 center">
+            <div className="shadow-1 br2 ma3 w-90 center ba b--mid-gray shadow_div">
                 <div className="tc pt4 mb3 mh2 br2">
                     <p className="f1 b mt2 mb0 pa0 mid-gray" >
                         {this.toTitleCase(this.state.placeName)}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from "moment";
+import './NewsBlock.css'
 export class NewsBlock extends Component {
 
     /*
@@ -15,7 +16,7 @@ export class NewsBlock extends Component {
         const { item } = this.props
         return (<div>
             <a href={item.link} className="no-hv-underline">
-            <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv3 w-90 center">
+            <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv3 w-90 center ba bw1 news_block">
                 
                 <div>
                     <h2 className="f5 b gray">{item.publisher}</h2>
