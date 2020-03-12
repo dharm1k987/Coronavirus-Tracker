@@ -29,7 +29,7 @@ scrape(options, (error, result) => {
       
       for (let i = 1; i < s.length - 1; i++ ){
         let p = s[i].match(/<td(.*)<\/td>/g);
-        p[0] = p[0].replace(/ /g,'')
+        // p[0] = p[0].replace(/ /g,'')
         p[0] = p[0].replace(/<!--(.*?)-->/g, ' ');
         p[0] = p[0].replace(/>\s*<\/td>/g, ">0</td>")
         
@@ -66,8 +66,10 @@ scrape(options, (error, result) => {
         
       }
 
-      let xls = json2xls(objArray)
-      fs.writeFileSync('data.xlsx', xls, 'binary');
+      console.log(objArray);
+
+      // let xls = json2xls(objArray)
+      // fs.writeFileSync('data.xlsx', xls, 'binary');
       
       
 

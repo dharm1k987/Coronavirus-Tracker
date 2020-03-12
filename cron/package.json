@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "json2xls": "^0.1.2",
-    "parse5": "^5.1.1"
+    "parse5": "^5.1.1",
+    "website-scraper": "^4.2.0"
   }
 }
