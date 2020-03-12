@@ -8,11 +8,11 @@ import moment from "moment";
 import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
+import { useHistory, Redirect } from 'react-router-dom';
 const Parser = require('rss-parser');
 
 
 class CountryInfo extends React.Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ class CountryInfo extends React.Component {
   }
 
   getLiveStats(country) {
-    return axios.get(`/live-stats/${country}`);
+    return axios.get(`/live-stats/${country.toLowerCase()}`);
   }
 
   getParsedNews(url) {
@@ -47,7 +47,6 @@ class CountryInfo extends React.Component {
     let query = this.state.country + " coronavirus";
     let url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
-      console.log(res);
       this.setState({ countryStats: res.data.countryStats });
     })
     this.getParsedNews(url)
@@ -71,7 +70,12 @@ class CountryInfo extends React.Component {
   }
 
   render() {
-
+    if (!this.state.countryStats) {
+      return (<Redirect to={{
+        pathname: '/404',
+        state: { path: this.state.country }
+      }} />);
+    }
     const newsAggregation = this.state.news.map((item) => {
       return <NewsBlock key={uuidv4()} item={item}/>
     })
@@ -84,7 +88,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb3 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Latest News
+              Latest News in {this.state.country}
           </p>
           <div className="flex">
           <div className="center flex">

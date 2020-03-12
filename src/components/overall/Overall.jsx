@@ -61,13 +61,12 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        <p className="f2 b mb1 gold">
-                        {
-                            this.state.placeStats.activeCases == -1 ?
+                        {this.state.placeStats.activeCases == -1 ?
                             <CircularProgress /> :
-                            this.numberWithCommas(this.state.placeStats.activeCases)
+                            <p className="f2 b mb1 gold">
+                            { this.numberWithCommas(this.state.placeStats.activeCases) }
+                            </p>
                         }
-                        </p>
                         <p className="f5 gray b">
                             &nbsp; active cases
                         </p>
