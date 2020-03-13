@@ -4,3 +4,24 @@ a:hover {
   text-decoration: none;
 }
 
+.arrow {
+  font-size: 20px;
+}
+
+.custom {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 3px;
+  background-color: white;
+  padding: 2px 5px 2px 5px;
+}
+
+.custom:hover {
+  background-color: white;
+  transition: all 0.25s;
+  color: darkblue;
+}
+

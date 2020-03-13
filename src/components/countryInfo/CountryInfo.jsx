@@ -9,7 +9,7 @@ import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
 import { useHistory, Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
 
 
@@ -81,13 +81,24 @@ class CountryInfo extends React.Component {
       return <NewsBlock key={uuidv4()} item={item}/>
     })
 
+    const styles = {
+
+      Icon: {
+        
+      },
+    
+    };
+
     return (
-    <div>
-      <Link to="/">
-        <div className="pa2 w-90 center tc b f3 mid-gray mt3 tc br2 shadow-3">
-            Home
+      <div>
+    <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
+      
+        <a href="/" className="ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
+            <HomeIcon style={styles.Icon}/>
+            <div>Home</div>
+            </a>    
+        
         </div>
-      </Link>
 
       <div className="flex mt2"> 
         <Overall placeName={this.state.country} place={this.state.countryStats} />
