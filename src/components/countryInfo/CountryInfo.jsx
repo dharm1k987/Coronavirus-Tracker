@@ -10,6 +10,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
 import { useHistory, Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const Parser = require('rss-parser');
 
 
@@ -81,11 +82,23 @@ class CountryInfo extends React.Component {
       return <NewsBlock key={uuidv4()} item={item}/>
     })
 
+    const styles = {
+
+      largeIcon: {
+        width: 30,
+        height: 30,
+      },
+    
+    };
+
     return (
     <div>
       <Link to="/">
-        <div className="pa2 w-90 center tc b f3 mid-gray mt3 tc br2 shadow-3">
-            Home
+        <div className=" ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
+            
+            <div class="arrow"><ArrowBackIcon style={styles.largeIcon}/></div>
+            <div>Home</div>
+            
         </div>
       </Link>
 
