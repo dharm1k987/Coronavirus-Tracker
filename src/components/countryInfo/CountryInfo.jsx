@@ -9,8 +9,7 @@ import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
 import { useHistory, Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
 
 
@@ -96,7 +95,7 @@ class CountryInfo extends React.Component {
     <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
       
         <a href="/" className="ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
-            <div class="arrow"><ArrowBackIcon style={styles.largeIcon}/></div>
+            <div class="arrow"><HomeIcon style={styles.largeIcon}/></div>
             <div>Home</div>
             </a>    
         
