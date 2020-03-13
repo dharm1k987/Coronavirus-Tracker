@@ -83,9 +83,8 @@ class CountryInfo extends React.Component {
 
     const styles = {
 
-      largeIcon: {
-        width: 30,
-        height: 30,
+      Icon: {
+        
       },
     
     };
@@ -95,7 +94,7 @@ class CountryInfo extends React.Component {
     <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
       
         <a href="/" className="ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
-            <div class="arrow"><HomeIcon style={styles.largeIcon}/></div>
+            <HomeIcon style={styles.Icon}/>
             <div>Home</div>
             </a>    
         
