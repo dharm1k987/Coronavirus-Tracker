@@ -14,6 +14,13 @@ a:hover {
   align-content: center;
   align-items: center;
   width: fit-content;
-  padding: 3px;
+  padding: 5px;
   border-radius: 3px;
 }
+
+.custom:hover {
+  background-color: white;
+  transition: all 0.25s;
+  color: darkblue;
+}
+

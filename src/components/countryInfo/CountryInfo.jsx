@@ -92,15 +92,15 @@ class CountryInfo extends React.Component {
     };
 
     return (
-    <div>
-      <Link to="/">
-        <div className=" ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
-            
+      <div>
+    <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
+      
+        <a href="/" className="ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
             <div class="arrow"><ArrowBackIcon style={styles.largeIcon}/></div>
             <div>Home</div>
-            
+            </a>    
+        
         </div>
-      </Link>
 
       <div className="flex mt2"> 
         <Overall placeName={this.state.country} place={this.state.countryStats} />
