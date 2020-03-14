@@ -77,7 +77,7 @@ class CountryInfo extends React.Component {
         state: { path: this.state.country }
       }} />);
     }
-    const newsAggregation = this.state.news.map((item) => {
+    const newsAggregation = this.state.news.splice(0, 10).map((item) => {
       return <NewsBlock key={uuidv4()} item={item}/>
     })
 

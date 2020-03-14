@@ -2,3 +2,28 @@
   background: rgb(93,93,93);
   background: radial-gradient(circle, rgba(93,93,93,1) 0%, rgba(238,238,238,1) 0%, rgba(255,255,255,1) 100%);
   }
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 !important;
+}
+
+.listItem h1 {
+  margin-bottom: 0 !important;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+.listItem:hover {
+  background: white !important;
+}
+.listItem:active {
+  background: white !important
+}
+
+.listItemInner {
+  padding: 0 !important;
+  padding-left: 4px !important;
+
+}

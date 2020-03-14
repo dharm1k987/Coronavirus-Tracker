@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import moment from "moment";
 import './NewsBlock.css'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import { Collapse } from '@material-ui/core';
+import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import WebIcon from '@material-ui/icons/Web';
+
+
 export class NewsBlock extends Component {
 
     /*
@@ -12,23 +23,70 @@ export class NewsBlock extends Component {
     title: "The Corona Virus And Travel Procrastination - Psychology Today"
     */
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick() {
+        this.setState({open: !this.state.open})
+    }
+    
+
     render() {
         const { item } = this.props
-        return (<div>
-            <a href={item.link} className="no-hv-underline">
-            <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv3 w-90 center ba bw1 news_block">
-                
-                <div>
-                    <h2 className="f5 b gray">{item.publisher}</h2>
-                    <h1 className="f4">{item.title}</h1>
+        return (
 
-                    <h1 className="f6 gray pt2">{item.pubDate}</h1>
-                
-                </div>
+            <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv2 w-90 center ba bw1">
+                <ListItem button onClick={this.handleClick} className="listItem">
+          
+                    <h1 className="f4">{item.title}</h1>
+                        {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem button className="listItemInner">
+                            <ListItemIcon>
+                                <WebIcon />
+                            </ListItemIcon>                            
+                            <ListItemText primary={item.publisher} />
+                        </ListItem>
+                        <ListItem button className="listItemInner">
+                            <ListItemIcon>
+                                <LinkOutlinedIcon/>
+                            </ListItemIcon>                            
+                            <a href={item.link} target="_blank"><ListItemText primary="Go to article" /></a>
+                        </ListItem>
+                        <ListItem button className="listItemInner">
+                            <ListItemIcon>
+                                <AccessTimeIcon/>
+                            </ListItemIcon>                            
+                            <ListItemText primary={item.pubDate} />
+                        </ListItem>
+                    </List>
+
+                </Collapse>
 
             </div>
-            </a>
-        </div>
+        
+        // <div>
+        //     <a href={item.link} className="no-hv-underline">
+        //     <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv3 w-90 center ba bw1 news_block">
+                
+        //         <div>
+        //             <h2 className="f5 b gray">{item.publisher}</h2>
+        //             <h1 className="f4">{item.title}</h1>
+
+        //             <h1 className="f6 gray pt2">{item.pubDate}</h1>
+                
+        //         </div>
+
+        //     </div>
+        //     </a>
+        // </div>
 
         );
     }

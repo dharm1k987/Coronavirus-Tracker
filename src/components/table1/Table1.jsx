@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
 import "./Table1.css"
 import { Link } from 'react-router-dom';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 
 export class Table1 extends Component {
@@ -37,6 +38,7 @@ export class Table1 extends Component {
     super(props);
     this.generateRows = this.generateRows.bind(this);
     this.getRandomInt = this.getRandomInt.bind(this);
+    this.handleSort = this.handleSort.bind(this);
 
     // activeCases: 23605
     // country: "China"
@@ -55,7 +57,9 @@ export class Table1 extends Component {
       ],
       stats: [],
       filteredStats: [],
-      searchValue: ""
+      searchValue: "",
+      sort: 'upper',
+      sortColumn: 'country'
       // rows: this.generateRows({ length: 6 })
     };
   }
@@ -74,6 +78,7 @@ export class Table1 extends Component {
   }
 
   filterCountryList(countryStr) {
+    if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: this.state.stats})
     this.setState({
       searchValue: countryStr,
       filteredStats: this.state.stats.filter(s => s.country.toLowerCase().includes(countryStr.toLowerCase()))
@@ -82,6 +87,36 @@ export class Table1 extends Component {
 
   goToCountryInfo(countryStr) {
     console.log("Go to: ", countryStr);
+  }
+
+  handleSort(type) {
+    if (this.state.sort === 'upper') this.setState({sort: 'lower'})
+    else this.setState({sort: 'upper'})
+    let num = this.state.sort === 'upper' ? 1 : -1
+    
+    switch (type) {
+      case 'country':
+        let stats = this.state.stats.sort((a,b) => a.country > b.country ? num: -1*num)
+        this.setState({
+          stats: stats,
+          sortColumn: 'country',
+          filteredStats: this.state.searchValue.trim() ? this.state.filteredStats.sort((a,b) => a.country > b.country ? num: -1*num) : stats
+
+        })      
+
+        break;
+      case 'activeCases':
+        let stats1 = this.state.stats.sort((a,b) => a.activeCases > b.activeCases ? num: -1*num)
+        this.setState({
+          stats: stats1,
+          sortColumn: 'activeCases',
+          filteredStats: this.state.searchValue.trim() ? this.state.filteredStats.sort((a,b) => a.activeCases > b.activeCases ? num: -1*num) : stats1
+        })
+        break;
+    
+      default:
+        break;
+    }
   }
 
   render() {
@@ -94,8 +129,16 @@ export class Table1 extends Component {
         </div>
         <div className="pre br2 mv3 pa1 w-90 center mh2 shadow-1">
           <div>
-            <div className="fl w-50 pv2 pl4 b bg-moon-gray">Country</div>
-            <div className="fl w-50 pa2 tc b bg-moon-gray">Active Cases</div>
+            <div className="fl w-50 pv2 pl4 b bg-moon-gray">Country
+              <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
+                <ImportExportIcon onClick={() => this.handleSort('country')}/>
+              </span>
+            </div>
+            <div className="fl w-50 pa2 tc b bg-moon-gray">Active Cases
+              <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
+                <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
+              </span>
+            </div>
           </div>
           <div>
             {
