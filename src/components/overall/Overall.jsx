@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import "./Overall.css"
 import { CircularProgress } from '@material-ui/core';
+import { Doughnut } from 'react-chartjs-2';
+
 
 
 
@@ -14,7 +16,8 @@ export class Overall extends Component {
                 activeCases: -1,
                 totalDeaths: '--',
                 totalRecovered: '--',
-            }
+            },
+            graph: null
         }
     }
     
@@ -49,13 +52,31 @@ export class Overall extends Component {
             (!prevProps.place.activeCases && 
             !prevProps.place.totalDeaths && 
             !prevProps.place.totalRecovered)) {
-            this.setState({ placeStats: this.props.place });
+            this.setState({ placeStats: this.props.place }, () => {
+                this.setState(prevState => ({
+                    graph: {
+                        labels: ['Active Cases','Deaths','Recoveries'],
+                        datasets: [
+                          {                    
+                            backgroundColor: [
+                              '#ffb700',
+                              '#ff725c',
+                              '#19a974',
+                            ],
+                            data: [prevState.placeStats.activeCases, prevState.placeStats.totalDeaths, prevState.placeStats.
+                                totalRecovered]
+                          }
+                        ]
+                      }
+                }))
+            });
         }
     }
 
     render() {
         return (
             <div className="shadow-1 br2 ma3 w-90 center ba b--mid-gray shadow_div">
+
                 <div className="tc pt4 mb3 mh2 br2">
                     <p className="f1 b mt2 mb0 pa0 mid-gray" >
                         {this.toTitleCase(this.state.placeName)}
@@ -72,10 +93,37 @@ export class Overall extends Component {
                         </p>
                     </div>
                 </div>
+                <div className="dn-l db center f2-ns f3 b pa2 tc mh2 pv4-ns pt3 br2">
+                    { this.state.graph ?
+                    <Doughnut
+                        data={this.state.graph}
+                        options={{
+                            legend:{
+                            display:false,
+                            position:'right'
+                            }
+                        }}
+                        className=""
+                    /> : null }
+                </div>
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.state.placeStats.totalDeaths)}</div>
+                    </div>
+
+                    <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2 pv4-ns pt3 br2">
+                        { this.state.graph ?
+                        <Doughnut
+                            data={this.state.graph}
+                            options={{
+                                legend:{
+                                display:false,
+                                position:'right'
+                                }
+                            }}
+                            className=""
+                        /> : null }
                     </div>
 
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">

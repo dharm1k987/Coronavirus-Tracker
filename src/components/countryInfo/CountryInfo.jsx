@@ -13,13 +13,15 @@ import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
 
 
+
 class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       country: props.match.params.country,
       countryStats: {},
-      news: []
+      news: [],
+      graph: null
     }
   }
 
