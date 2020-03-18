@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# place this script inside the /home/ec2-user/oneoff-scripts/cron
+# the crontab command is as follows (runs every 1 minute)
+#*/1 * * * * bash /home/ec2-user/oneoff-scripts/cron/cronScript
+# (remove the # of course)
+
 TODAY=$(TZ=":US/Eastern" date)
 echo $TODAY >> /home/ec2-user/log.txt
 ~/.nvm/versions/node/v13.10.1/bin/node /home/ec2-user/oneoff-scripts/cron/index.js >> /home/ec2-user/log.txt
