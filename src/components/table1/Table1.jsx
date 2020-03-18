@@ -13,6 +13,13 @@ export class Table1 extends Component {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  toTitleCase(str) {
+    const lowerStr = str.toLowerCase();
+    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
 
   getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -33,7 +40,6 @@ export class Table1 extends Component {
     this.generateRows = this.generateRows.bind(this);
     this.getRandomInt = this.getRandomInt.bind(this);
     this.handleSort = this.handleSort.bind(this);
-    this.encode = this.encode.bind(this);
 
     // activeCases: 23605
     // country: "China"
@@ -91,10 +97,6 @@ export class Table1 extends Component {
     console.log("Go to: ", countryStr);
   }
 
-  encode(countryStr) {
-    return encodeURI(countryStr.toLowerCase());
-  }
-
   handleSort(type) {
     if (this.state.sort === 'upper') this.setState({sort: 'lower'})
     else this.setState({sort: 'upper'})
@@ -148,11 +150,11 @@ export class Table1 extends Component {
           </div>
           <div>
             {
-              this.state.filteredStats.filter(s => s.country.toLowerCase() !== 'total:').map(s => (
+              this.state.filteredStats.filter(s => s.country !== "total:").map(s => (
                 <div key={s.country} onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
-                  <Link to={`/${s.country.toLowerCase()}`}>
+                  <Link to={`/${s.country}`}>
                       <div className="br3 flex mv2 pt1 ba b--moon-gray">
-                        <p className="dark-gray ma0 w-50 pv2 pl4">{s.country}</p>
+                        <p className="dark-gray ma0 w-50 pv2 pl4">{this.toTitleCase(s.country)}</p>
                         <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
                         <div className="w-10 pv2 pr2 center mid-gray">
                           <ArrowForwardIosIcon />
@@ -170,4 +172,3 @@ export class Table1 extends Component {
 }
 
 export default Table1;
-

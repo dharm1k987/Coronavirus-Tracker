@@ -54,12 +54,14 @@ export class NewsBlock extends Component {
                             </ListItemIcon>                            
                             <ListItemText primary={item.publisher} />
                         </ListItem>
-                        <ListItem button className="listItemInner">
-                            <ListItemIcon>
-                                <LinkOutlinedIcon/>
-                            </ListItemIcon>                            
-                            <a href={item.link} target="_blank"><ListItemText primary="Go to article" /></a>
-                        </ListItem>
+                        <a href={item.link} target="_blank">
+                            <ListItem button className="listItemInner">
+                                <ListItemIcon>
+                                    <LinkOutlinedIcon/>
+                                </ListItemIcon>                            
+                                <ListItemText primary="Go to article" />
+                            </ListItem>
+                        </a>
                         <ListItem button className="listItemInner">
                             <ListItemIcon>
                                 <AccessTimeIcon/>

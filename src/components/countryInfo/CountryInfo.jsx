@@ -115,7 +115,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Latest News in {this.state.country}
+              Latest News in {this.toTitleCase(this.state.country)}
           </p>
           <div className="flex">
           <div className="center flex">
