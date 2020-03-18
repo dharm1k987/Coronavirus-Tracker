@@ -22,7 +22,7 @@ class Home extends React.Component {
     axios
       .get('/live-stats')
       .then(res => {
-        const world = res.data.stats.filter(s => s.country === "total:")[0];
+        const world = res.data.stats.filter(s => s.country.toLowerCase() === "total:")[0];
         this.setState({
           liveStats: res.data.stats,
           world
