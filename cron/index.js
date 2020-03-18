@@ -118,6 +118,39 @@ scrape(options, (error, result) => {
    if (obj.country.includes('St.Barth')) {
     obj.country = 'St. Barth'
    }
+   if (obj.country.includes('St.VincentGrenadines')) {
+    obj.country = 'St. Vincent Grenadines'
+   }
+   if (obj.country.includes('U.S.VirginIslands')) {
+    obj.country = 'Virgin Islands'
+   }
+   if (obj.country.includes('SaintLucia')) {
+    obj.country = 'Saint Lucia'
+   }
+   if (obj.country.includes('EquatorialGuinea')) {
+    obj.country = 'Equatorial Guinea'
+   }
+   if (obj.country.includes('TrinidadandTobago')) {
+    obj.country = 'Trinidad & Tobago'
+   }
+   if (obj.country.includes('AntiguaandBarbuda')) {
+    obj.country = 'Antigua & Barbuda'
+   }
+   if (obj.country.includes('Cura&ccedil;ao')) {
+    obj.country = 'Curaçao'
+   }
+   if (obj.country.includes('SriLanka')) {
+    obj.country = 'Sri Lanka'
+   }
+   if (obj.country.includes('CaymanIslands')) {
+    obj.country = 'Cayman Islands'
+   }
+   if (obj.country.includes('DRC')) {
+    obj.country = 'Democratic Republic of the Congo'
+   }
+   if (obj.country.includes('CAR')) {
+    obj.country = 'Central African Republic'
+   }
    if (obj.country.includes('Total:')) {
     obj.country = 'Total:'
    }
