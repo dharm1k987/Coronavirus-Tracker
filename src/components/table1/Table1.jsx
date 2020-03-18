@@ -131,18 +131,18 @@ export class Table1 extends Component {
     return (
       <div>
         <div className="center">
-          <div className="w-90 center br2">
+          <div className="w-70-ns w-90 center br2">
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
-        <div className="mv3 pa1 w-90 center mh2">
+        <div className="mv3 pa1 w-70-ns w-90 center mh2">
           <div className="ba flex pv2 bg-light-gray br3">
             <div className="w-50 pv2 pl4 b">Country
               <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('country')}/>
               </span>
             </div>
-            <div className="w-40 pa2 tc b">Active Cases
+            <div className="w-40 pv2 ph1 tc b">Active Cases
               <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
               </span>

@@ -76,7 +76,7 @@ export class Overall extends Component {
 
     render() {
         return (
-            <div className="ma3 w-90 center ba b--light-silver bg-white br4">
+            <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
                 <div className="center flex pa3 mid-gray">
                     <p className="ma0"> Live </p>
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
