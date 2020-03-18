@@ -25,6 +25,14 @@ class CountryInfo extends React.Component {
     }
   }
 
+  toTitleCase(str) {
+    const lowerStr = str.toLowerCase();
+    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   getLiveStats(country) {
     return axios.get(`/live-stats/${country.toLowerCase()}`);
   }
@@ -95,7 +103,7 @@ class CountryInfo extends React.Component {
       <div>
     <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
       
-        <a href="/" className="ba b--mid-gray  b f3 blue mt3 shadow-3 custom">
+        <a href="/" className="ba b--moon-gray  b f3 blue mt3 shadow-3 custom">
             <HomeIcon style={styles.Icon}/>
             <div>Home</div>
             </a>    
@@ -108,7 +116,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Latest News in {this.state.country}
+              Latest News in {this.toTitleCase(this.state.country)}
           </p>
           <div className="flex">
           <div className="center flex">

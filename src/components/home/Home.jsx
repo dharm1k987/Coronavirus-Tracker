@@ -32,12 +32,6 @@ class Home extends React.Component {
 
   render() {
     return (<div>
-      <div className="flex mv3">
-          <div className="center flex">
-            <p className="ma0"> Live </p>
-            <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
-          </div>
-        </div>
         <Overall placeName={"World"} place={this.state.world}/>
       <Table1 stats={this.state.liveStats} />
       </div>

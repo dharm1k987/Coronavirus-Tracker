@@ -40,7 +40,7 @@ export class NewsBlock extends Component {
         const { item } = this.props
         return (
 
-            <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv2 w-90 center ba bw1">
+            <div className="tl br3 mid-gray ma3 ph4 pv2 w-90 center ba b--light-silver">
                 <ListItem button onClick={this.handleClick} className="listItem">
           
                     <h1 className="f4">{item.title}</h1>

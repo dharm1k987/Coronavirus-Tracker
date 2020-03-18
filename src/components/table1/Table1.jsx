@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
+
 import "./Table1.css"
 import { Link } from 'react-router-dom';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
 export class Table1 extends Component {
@@ -66,22 +67,29 @@ export class Table1 extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
     if (!prevState.filteredStats.length) {
-      return { stats: nextProps.stats.stats ? nextProps.stats.stats : prevState.stats, filteredStats: nextProps.stats.stats ? nextProps.stats.stats : [] };
+      return {
+        stats: nextProps.stats.stats ? nextProps.stats.stats : prevState.stats,
+        filteredStats: nextProps.stats.stats ? nextProps.stats.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1) : []
+      };
     }
     else return null;
   }
  
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.stats.length !== this.props.stats.length){
-        this.setState({ stats: this.props.stats, filteredStats: this.props.stats ? this.props.stats : [] });
+        this.setState({
+          stats: this.props.stats,
+          filteredStats: this.props.stats ? this.props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1) : [] });
     }
   }
 
   filterCountryList(countryStr) {
-    if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: this.state.stats})
+    const orderedStats = this.state.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1);
+    if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: orderedStats})
     this.setState({
       searchValue: countryStr,
-      filteredStats: this.state.stats.filter(s => s.country.toLowerCase().includes(countryStr.toLowerCase()))
+      filteredStats: orderedStats
+        .filter(s => s.country.toLowerCase().includes(countryStr.toLowerCase()))
     });
   }
 
@@ -123,18 +131,18 @@ export class Table1 extends Component {
     return (
       <div>
         <div className="center">
-          <div className="w-90 center mh2 br2">
-            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2 ba bw1"></input>
+          <div className="w-90 center br2">
+            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
-        <div className="pre br2 mv3 pa1 w-90 center mh2 shadow-1">
-          <div>
-            <div className="fl w-50 pv2 pl4 b bg-moon-gray">Country
+        <div className="mv3 pa1 w-90 center mh2">
+          <div className="ba pv2 bg-light-gray br3">
+            <div className="fl w-50 pv2 pl4 b">Country
               <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('country')}/>
               </span>
             </div>
-            <div className="fl w-50 pa2 tc b bg-moon-gray">Active Cases
+            <div className="flex w-50 pa2 tc b">Active Cases
               <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
               </span>
@@ -143,11 +151,15 @@ export class Table1 extends Component {
           <div>
             {
               this.state.filteredStats.filter(s => s.country !== "total:").map(s => (
-                <div key={s.country} className="br2" onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
+                <div key={s.country} onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
                   <Link to={`/${s.country}`}>
-                    <div className="dark-gray fl w-50 mt1 pv2 pl4 bg-near-white">{this.toTitleCase(s.country)}</div>
-                    <div className="dark-gray fl w-50 mt1 pa2 tc bg-near-white">{this.numberWithCommas(s.activeCases)}</div>
-                    {this.state.searchValue.length ? <div className="dark-gray fl w-100 tc f6 bg-near-white ph2 pv1">click for more info</div> : <div></div>}
+                      <div className="br3 flex mv2 pt1 ba b--moon-gray">
+                        <p className="dark-gray ma0 w-50 pv2 pl4">{this.toTitleCase(s.country)}</p>
+                        <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
+                        <div className="w-10 pv2 pr2 center mid-gray">
+                          <ArrowForwardIosIcon />
+                        </div>
+                      </div>
                   </Link>
                 </div>)
               )
