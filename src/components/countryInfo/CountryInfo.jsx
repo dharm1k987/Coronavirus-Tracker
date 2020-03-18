@@ -101,7 +101,7 @@ class CountryInfo extends React.Component {
 
     return (
       <div>
-    <div className="w-90 mt-0 mb-0 mr-auto ml-auto">
+    <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
       
         <a href="/" className="ba b--moon-gray  b f3 blue mt3 shadow-3 custom">
             <HomeIcon style={styles.Icon}/>
