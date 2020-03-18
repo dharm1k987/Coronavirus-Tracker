@@ -54,6 +54,7 @@ class CountryInfo extends React.Component {
   }
 
   componentDidMount() {
+
     let query = this.state.country + " coronavirus";
     let url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
