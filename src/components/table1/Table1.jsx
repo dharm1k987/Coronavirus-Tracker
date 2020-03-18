@@ -60,7 +60,7 @@ export class Table1 extends Component {
       filteredStats: [],
       searchValue: "",
       sort: 'upper',
-      sortColumn: 'country'
+      sortColumn: 'activeCases'
       // rows: this.generateRows({ length: 6 })
     };
   }
