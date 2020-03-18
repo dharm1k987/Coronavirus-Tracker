@@ -55,9 +55,10 @@ scrape(options, (error, result) => {
       if (obj.country.includes('Total:')) obj.country = 'Total:'
 
       obj.country = obj.country.toLowerCase();
-
-
       objArray.push(obj);
+
+      if (obj.country == 'total:') break;
+
     }
 
     console.log("Pushing to server...");
