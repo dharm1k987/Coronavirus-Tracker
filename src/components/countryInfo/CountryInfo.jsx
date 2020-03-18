@@ -13,6 +13,10 @@ import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
 
 
+const NewsAPI = require('newsapi');
+// doesn't matter that its public, its attached to a spam email even
+const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
+
 
 class CountryInfo extends React.Component {
   constructor(props) {
@@ -43,14 +47,11 @@ class CountryInfo extends React.Component {
   }
 
   getTimeMeasure(diffInMilli) {
-    const diff = moment.duration(diffInMilli, 'milliseconds');
+    console.log(diffInMilli)
+    const diff = moment.duration(moment().diff(diffInMilli), "milliseconds");
     if (diff >= 1000 * 60 * 60 * 24) return Math.floor(diff.asDays()) + " day(s) ago";
     if (diff >= 1000 * 60 * 60) return Math.floor(diff.asHours()) + " hr(s) ago";
     return Math.floor(diff.asMinutes()) + " min(s) ago";
-  }
-
-  timeSincePosted(postTime) {
-    return moment().diff(moment(postTime));
   }
 
   componentDidMount() {
@@ -60,24 +61,29 @@ class CountryInfo extends React.Component {
     this.getLiveStats(this.state.country).then(res => {
       this.setState({ countryStats: res.data.countryStats });
     })
-    this.getParsedNews(url)
-      .then(res => {
-        const news = res.items
-          .filter(i => !i.title.toLowerCase().includes("live update"))
-          .sort((i, j) => this.timeSincePosted(i.pubDate) < this.timeSincePosted(j.pubDate) ? -1 : 1)
-          .map(i => {
-            let splitTitle = i.title.split('-');
-            let publisher = splitTitle[splitTitle.length - 1];
-            splitTitle.splice(splitTitle.length - 1, 1);
-            return {
-              ...i,
-              pubDate: this.getTimeMeasure(this.timeSincePosted(i.pubDate)),
-              title: splitTitle.join('-'),
-              publisher
-            };
-          });
-        this.setState({ news });
-      });
+
+    newsapi.v2.everything({
+      q: `${query}`,
+      language: 'en',
+      sortBy: 'publishedAt',
+      }).then(response => {
+        console.log(response.articles)
+        let news = response.articles.map((r) => {
+          return {
+
+            link: r.url,
+            pubDate: moment(r.publishedAt, 'YYYY-MM-DDTHH:mm:ssZ').valueOf(),
+            publisher: r.source.name ? r.source.name : 'External',
+            title: r.title
+          }
+        });
+        news = news.sort((a,b) => a.pubDate < b.pubDate ? 1 : -1)
+        news = news.map((r) => {
+          return { link: r.link, pubDate: this.getTimeMeasure(r.pubDate), publisher: r.publisher, title: r.title }
+        })
+        this.setState({ news: news });
+       }).catch((e) => console.log(e))
+
   }
 
   render() {
@@ -87,24 +93,16 @@ class CountryInfo extends React.Component {
         state: { path: this.state.country }
       }} />);
     }
-    const newsAggregation = this.state.news.splice(0, 10).map((item) => {
+    const newsAggregation = this.state.news.splice(0, 20).map((item) => {
       return <NewsBlock key={uuidv4()} item={item}/>
     })
-
-    const styles = {
-
-      Icon: {
-        
-      },
-    
-    };
 
     return (
       <div>
     <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
       
-        <a href="/" className="ba b--moon-gray  b f3 blue mt3 shadow-3 custom">
-            <HomeIcon style={styles.Icon}/>
+        <a href="/" className="ba bg-white  b f3 blue mt3 custom">
+            <HomeIcon/>
             <div>Home</div>
             </a>    
         
@@ -116,7 +114,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Latest News in {this.toTitleCase(this.state.country)}
+              Top Stories in {this.toTitleCase(this.state.country)}
           </p>
           <div className="flex">
           <div className="center flex">

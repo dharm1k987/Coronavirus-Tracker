@@ -11,7 +11,6 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import WebIcon from '@material-ui/icons/Web';
 
-
 export class NewsBlock extends Component {
 
     /*
@@ -40,11 +39,12 @@ export class NewsBlock extends Component {
         const { item } = this.props
         return (
 
-            <div className="tl br3 mid-gray ma3 ph4 pv2 w-70-ns w-90 center ba b--light-silver">
+            <div className="tl br3 mid-gray ma3 ph4 pv2 w-70-ns w-90 center ba b--light-silver bg-white">
                 <ListItem button onClick={this.handleClick} className="listItem">
           
                     <h1 className="f4">{item.title}</h1>
-                        {this.state.open ? <ExpandLess /> : <ExpandMore />}
+                    {this.state.open ? <ExpandLess style={{"color":"cornflowerblue"}}/> :
+                    <ExpandMore style={{"color":"cornflowerblue"}}/>}
                 </ListItem>
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
