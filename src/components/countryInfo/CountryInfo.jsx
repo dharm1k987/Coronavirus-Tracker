@@ -11,12 +11,8 @@ import "./CountryInfo.css"
 import { useHistory, Redirect } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
-
-
 const NewsAPI = require('newsapi');
-// doesn't matter that its public, its attached to a spam email even
-const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
-
+const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API_KEY);
 
 class CountryInfo extends React.Component {
   constructor(props) {
@@ -47,7 +43,6 @@ class CountryInfo extends React.Component {
   }
 
   getTimeMeasure(diffInMilli) {
-    console.log(diffInMilli)
     const diff = moment.duration(moment().diff(diffInMilli), "milliseconds");
     if (diff >= 1000 * 60 * 60 * 24) return Math.floor(diff.asDays()) + " day(s) ago";
     if (diff >= 1000 * 60 * 60) return Math.floor(diff.asHours()) + " hr(s) ago";
@@ -67,7 +62,6 @@ class CountryInfo extends React.Component {
       language: 'en',
       sortBy: 'publishedAt',
       }).then(response => {
-        console.log(response.articles)
         let news = response.articles.map((r) => {
           return {
 
