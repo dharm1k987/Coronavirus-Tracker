@@ -6,7 +6,6 @@
     "type": "git",
     "url": "git+https://github.com/track-coronavirus/frontend-app.git"
   },
-  "proxy": "http://localhost:9000/",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -29,6 +28,7 @@
     "dotenv": "^8.2.0",
     "env-cmd": "^10.1.0",
     "fs": "0.0.1-security",
+    "http-proxy-middleware": "^1.0.3",
     "material-table": "^1.57.2",
     "moment": "^2.24.0",
     "mongoose": "^5.9.3",

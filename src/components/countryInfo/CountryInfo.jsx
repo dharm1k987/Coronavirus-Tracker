@@ -39,8 +39,9 @@ class CountryInfo extends React.Component {
   }
 
   getParsedNews(url) {
-    let parser = new Parser();
-    return parser.parseURL(`https://cors-anywhere.herokuapp.com/${url}`)
+    return axios.get(`cors/${url}`)
+      .then(res => new Parser().parseString(res.data))
+      .catch(err => console.log(err))
   }
 
   getTimeMeasure(diffInMilli) {
@@ -50,34 +51,58 @@ class CountryInfo extends React.Component {
     return Math.floor(diff.asMinutes()) + " min(s) ago";
   }
 
+  timeSincePosted(postTime) {
+    return moment().diff(moment(postTime));
+  }
+
   componentDidMount() {
 
     let query = this.state.country + " coronavirus";
-    let url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
+    let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
       this.setState({ countryStats: res.data.countryStats });
     })
 
-    newsapi.v2.everything({
-      q: `${query}`,
-      language: 'en',
-      sortBy: 'publishedAt',
-      }).then(response => {
-        let news = response.articles.map((r) => {
-          return {
+    this.getParsedNews(url)
+      .then(res => {
+        const news = res.items
+          .filter(i => !i.title.toLowerCase().includes("live update"))
+          .sort((i, j) => this.timeSincePosted(i.pubDate) < this.timeSincePosted(j.pubDate) ? -1 : 1)
+          .map(i => {
+            let splitTitle = i.title.split('-');
+            let publisher = splitTitle[splitTitle.length - 1];
+            splitTitle.splice(splitTitle.length - 1, 1);
+            return {
+              ...i,
+              pubDate: this.getTimeMeasure(this.timeSincePosted(i.pubDate)),
+              title: splitTitle.join('-'),
+              publisher
+            };
+          });
+        this.setState({ news });
+      });
 
-            link: r.url,
-            pubDate: moment(r.publishedAt, 'YYYY-MM-DDTHH:mm:ssZ').valueOf(),
-            publisher: r.source.name ? r.source.name : 'External',
-            title: r.title
-          }
-        });
-        news = news.sort((a,b) => a.pubDate < b.pubDate ? 1 : -1)
-        news = news.map((r) => {
-          return { link: r.link, pubDate: this.getTimeMeasure(r.pubDate), publisher: r.publisher, title: r.title }
-        })
-        this.setState({ news: news });
-       }).catch((e) => console.log(e))
+
+  //  newsapi.v2.everything({
+  //     q: `${query}`,
+  //     language: 'en',
+  //     sortBy: 'publishedAt',
+  //     }).then(response => {
+  //       let news = response.articles.map((r) => {
+  //         return {
+
+  //           link: r.url,
+  //           pubDate: moment(r.publishedAt, 'YYYY-MM-DDTHH:mm:ssZ').valueOf(),
+  //           publisher: r.source.name ? r.source.name : 'External',
+  //           title: r.title
+  //         }
+  //       });
+  //       news = news.sort((a,b) => a.pubDate < b.pubDate ? 1 : -1)
+  //       news = news.map((r) => {
+  //         return { link: r.link, pubDate: this.getTimeMeasure(r.pubDate), publisher: r.publisher, title: r.title }
+  //       })
+  //       this.setState({ news: news });
+  //      }).catch((e) => console.log(e))
 
   }
 
