@@ -12,7 +12,7 @@ scrape(options, (error, result) => {
 
   fs.readFile('./path/index.html', function(err, data) {
     let d = data.toString();
-
+    d = d.replace(/(\r\n|\n|\r)/gm, "");
     let l = d.match(/<tr>(.*)<\/tr>/g); // match the <tr> .. </tr>
     let s = l[0].split('</tr>');
 
