@@ -23,6 +23,7 @@ export class Overall extends Component {
     }
     
     numberWithCommas(x) {
+        if (!x) return 0;
         if (x == '--') { return '--' }
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
