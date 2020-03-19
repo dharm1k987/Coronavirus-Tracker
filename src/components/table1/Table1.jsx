@@ -142,7 +142,7 @@ export class Table1 extends Component {
                 <ImportExportIcon onClick={() => this.handleSort('country')}/>
               </span>
             </div>
-            <div className="w-40 pv2 ph1 tc b">Active Cases
+            <div className="w-40 pv2 tc b">Active Cases
               <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
               </span>
@@ -153,11 +153,11 @@ export class Table1 extends Component {
               this.state.filteredStats.filter(s => s.country !== "total:").map(s => (
                 <div key={s.country} onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
                   <Link to={`/${s.country}`}>
-                      <div className="br3 flex mv2 pt1 ba b--moon-gray">
+                      <div className="br3 flex mv2 pt1 ba b--moon-gray bg-white">
                         <p className="dark-gray ma0 w-50 pv2 pl4">{this.toTitleCase(s.country)}</p>
                         <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
                         <div className="w-10 pv2 pr2 center mid-gray">
-                          <ArrowForwardIosIcon />
+                          <ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/>
                         </div>
                       </div>
                   </Link>
