@@ -45,7 +45,7 @@ class CountryInfo extends React.Component {
   }
 
   getTimeMeasure(diffInMilli) {
-    const diff = moment.duration(moment().diff(diffInMilli), "milliseconds");
+    const diff = moment.duration(diffInMilli, 'milliseconds');
     if (diff >= 1000 * 60 * 60 * 24) return Math.floor(diff.asDays()) + " day(s) ago";
     if (diff >= 1000 * 60 * 60) return Math.floor(diff.asHours()) + " hr(s) ago";
     return Math.floor(diff.asMinutes()) + " min(s) ago";
