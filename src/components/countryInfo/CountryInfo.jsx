@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { newsXML } from './newsXML'
 import { NewsBlock } from './newsBlock/NewsBlock'
 import { v4 as uuidv4 } from 'uuid';
@@ -95,10 +96,10 @@ class CountryInfo extends React.Component {
       <div>
     <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
       
-        <a href="/" className="ba bg-white  b f3 blue mt3 custom">
+        <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
             <HomeIcon/>
             <div>Home</div>
-            </a>    
+          </Link>   
         
         </div>
 
