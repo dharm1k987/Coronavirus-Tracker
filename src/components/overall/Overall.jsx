@@ -96,11 +96,11 @@ export class Overall extends Component {
                             { this.numberWithCommas(this.state.placeStats.totalCases) }
                             </p>
                         }
-                        <p className="f5 mid-gray b">
+                        <p className="f4 mid-gray b">
                             {
                                 this.state.placeStats.totalCases == '--' ? null :
                                 <div>
-                                    (active: {this.numberWithCommas(this.state.placeStats.activeCases)})
+                                    Active: {this.numberWithCommas(this.state.placeStats.activeCases)}
                                 </div>
                             }
                         </p>
