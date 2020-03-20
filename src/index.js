@@ -16,6 +16,8 @@ app.get('/', (req, res) =>
 )
 
 require('./routes/live-stats')(app);
+require('./routes/timeline')(app);
+
 
 app.listen(9000, () => console.log('Track Coronavirus app listening on port 9000!'))
 

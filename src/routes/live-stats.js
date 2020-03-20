@@ -21,5 +21,7 @@ module.exports = app => {
     const countryStats = await getStatsOf(country);
     res.send({ countryStats });
   });
+
+
 }
 
