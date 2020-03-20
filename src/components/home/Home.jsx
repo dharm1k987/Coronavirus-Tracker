@@ -14,6 +14,7 @@ class Home extends React.Component {
         totalDeaths: "",
         activeCases: "",
         totalRecovered: "",
+        totalCases: ""
       }
     }
   }

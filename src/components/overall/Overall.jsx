@@ -17,6 +17,7 @@ export class Overall extends Component {
                 activeCases: -1,
                 totalDeaths: '--',
                 totalRecovered: '--',
+                totalCases: '--',
             },
             graph: null
         }
@@ -53,7 +54,8 @@ export class Overall extends Component {
         if (!prevProps.place ||
             (!prevProps.place.activeCases && 
             !prevProps.place.totalDeaths && 
-            !prevProps.place.totalRecovered)) {
+            !prevProps.place.totalRecovered &&
+            !prevProps.place.totalCases)) {
             this.setState({ placeStats: this.props.place }, () => {
                 this.setState(prevState => ({
                     graph: {
@@ -88,14 +90,19 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        {this.state.placeStats.activeCases == -1 ?
+                        {this.state.placeStats.totalCases == '--' ?
                             <CircularProgress /> :
                             <p className="f2 b mb1 gold">
-                            { this.numberWithCommas(this.state.placeStats.activeCases) }
+                            { this.numberWithCommas(this.state.placeStats.totalCases) }
                             </p>
                         }
-                        <p className="f5 gray b">
-                            &nbsp; active cases
+                        <p className="f4 mid-gray b">
+                            {
+                                this.state.placeStats.totalCases == '--' ? null :
+                                <div>
+                                    Active: {this.numberWithCommas(this.state.placeStats.activeCases)}
+                                </div>
+                            }
                         </p>
                     </div>
                 </div>
@@ -116,6 +123,7 @@ export class Overall extends Component {
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.state.placeStats.totalDeaths)}</div>
+
                     </div>
 
                     <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2 pv4-ns pt3 br2">
