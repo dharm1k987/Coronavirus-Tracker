@@ -2,32 +2,46 @@ const {
     Timeline
   } = require('../schemas');
   
-//   const getStats = async () => {
-//     const stats = await Stat.find({});
-//     return stats;
-//   };
-  
-  const postTimeline = async (timeline) => {
-    let updated = true;
-    console.log(timeline.length)
+  const getTimelines = async () => {
+    const timelinesDeath = await Timeline.find({type: 'deaths'});
+    const timelinesRecovered = await Timeline.find({type: 'recovered'});
+    const timelinesConfirmed = await Timeline.find({type: 'confirmed'});
 
-    for (let i = 0; i < timeline.length; i++) {
-    //   const newTimeline = await Timeline.updateOne(
-    //     { country: stats[i].country },
-    //     { ...stats[i] },
-    //     { upsert: true }
-    //   );
+    let obj = {
+      timelinesDeath: timelinesDeath,
+      timelinesRecovered: timelinesRecovered,
+      timelinesConfirmed: timelinesConfirmed
     }
-    return updated;
+
+    return obj;
+  };
+
+  const getTimelinesOf = async (country) => {
+    const timelinesDeath = await Timeline.find({type: 'deaths', country: country});
+    const timelinesRecovered = await Timeline.find({type: 'recovered', country: country});
+    const timelinesConfirmed = await Timeline.find({type: 'confirmed', country: country});
+
+    let obj = {
+      timelinesDeath: timelinesDeath,
+      timelinesRecovered: timelinesRecovered,
+      timelinesConfirmed: timelinesConfirmed
+    }
+    
+    return obj;
   };
   
-//   const getStatsOf = async (country) => {
-//     const countryStats = await Stat.findOne({ country });
-//     return countryStats;
-//   };
+  const postTimeline = async (timeline, type) => {
+    let updated = true;
+    console.log(type)
+    const newTimeline = await Timeline.updateOne({ country: timeline.country, type: type }, { data: timeline.data, type: type },
+       { upsert: true });
+    return updated;
+  };
 
 module.exports = {
-    postTimeline
+    postTimeline,
+    getTimelines,
+    getTimelinesOf,
 }
   
 //   module.exports = {
