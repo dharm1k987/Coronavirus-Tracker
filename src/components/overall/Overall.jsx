@@ -21,13 +21,12 @@ export class Overall extends Component {
     
     numberWithCommas(x) {
         if (!x) return 0;
-        if (x == '--') { return '--' }
+        if (x === '--') { return '--' }
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     toTitleCase(str) {
-        const lowerStr = str.toLowerCase();
-        if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+        if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
         return str.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
@@ -65,7 +64,7 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        {this.state.place.totalCases == '--' ?
+                        {this.state.place.totalCases === '--' ?
                             <CircularProgress /> :
                             <p className="f2 b mb1 gold">
                             { this.numberWithCommas(this.state.place.totalCases) }
@@ -73,7 +72,7 @@ export class Overall extends Component {
                         }
                         <div className="f4 mid-gray b">
                             {
-                                this.state.place.totalCases == '--' ? null :
+                                this.state.place.totalCases === '--' ? null :
                                 <div>
                                     Active: {this.numberWithCommas(this.state.place.activeCases)}
                                 </div>

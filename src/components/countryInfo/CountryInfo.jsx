@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { newsXML } from './newsXML'
 import { NewsBlock } from './newsBlock/NewsBlock'
 import { v4 as uuidv4 } from 'uuid';
-import { Overall, Table1 } from '..'
+import { Overall } from '..'
 import axios from 'axios';
 import moment from "moment";
 import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
-const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API_KEY);
 
 class CountryInfo extends React.Component {
   constructor(props) {
@@ -28,8 +25,7 @@ class CountryInfo extends React.Component {
   }
 
   toTitleCase(str) {
-    const lowerStr = str.toLowerCase();
-    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -134,7 +130,7 @@ class CountryInfo extends React.Component {
           <div className="tc ">
 
               <div className="f3">
-                {newsAggregation.length == 0 ? <CircularProgress /> : newsAggregation}
+                {newsAggregation.length === 0 ? <CircularProgress /> : newsAggregation}
               </div>
           </div>
 

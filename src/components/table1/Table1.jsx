@@ -14,8 +14,7 @@ export class Table1 extends Component {
   }
 
   toTitleCase(str) {
-    const lowerStr = str.toLowerCase();
-    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
     return str.replace(/\w\S*/g, function(txt){
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
