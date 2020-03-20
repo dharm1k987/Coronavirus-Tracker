@@ -12,14 +12,10 @@ export class Overall extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            placeName: "",
-            placeStats: {
-                activeCases: -1,
-                totalDeaths: '--',
-                totalRecovered: '--',
-                totalCases: '--',
-            },
-            graph: null
+            placeName: props.placeName,
+            place: props.place,
+            graph: null,
+            placeTimeline: {}
         }
     }
     
@@ -37,44 +33,23 @@ export class Overall extends Component {
         });
       }
 
-    static getDerivedStateFromProps(nextProps, prevState){
-        if (!prevState.placeName || (prevState.placeName && prevState.placeName === "")) {
-            return { placeName: nextProps.placeName };
-        }
-        if (!prevState.place) {
-            return { placeStats: nextProps.place };
-        }
-        else return null;
-    }
-        
-    componentDidUpdate(prevProps, prevState) {
-        if(prevProps.placeName === "") {
-            this.setState({ placeName: this.props.placeName });
-        }
-        if (!prevProps.place ||
-            (!prevProps.place.activeCases && 
-            !prevProps.place.totalDeaths && 
-            !prevProps.place.totalRecovered &&
-            !prevProps.place.totalCases)) {
-            this.setState({ placeStats: this.props.place }, () => {
-                this.setState(prevState => ({
-                    graph: {
-                        labels: ['Active Cases','Deaths','Recoveries'],
-                        datasets: [
-                          {                    
-                            backgroundColor: [
-                              '#ffb700',
-                              '#ff725c',
-                              '#19a974',
-                            ],
-                            data: [prevState.placeStats.activeCases, prevState.placeStats.totalDeaths, prevState.placeStats.
-                                totalRecovered]
-                          }
-                        ]
-                      }
-                }))
-            });
-        }
+    componentDidMount() {
+        this.setState(prevState => ({
+        graph: {
+            labels: ['Active Cases','Deaths','Recoveries'],
+            datasets: [
+                {                    
+                backgroundColor: [
+                    '#ffb700',
+                    '#ff725c',
+                    '#19a974',
+                ],
+                data: [prevState.place.activeCases, prevState.place.totalDeaths, prevState.place.
+                    totalRecovered]
+                }
+            ]
+            }
+        }))
     }
 
     render() {
@@ -90,20 +65,20 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        {this.state.placeStats.totalCases == '--' ?
+                        {this.state.place.totalCases == '--' ?
                             <CircularProgress /> :
                             <p className="f2 b mb1 gold">
-                            { this.numberWithCommas(this.state.placeStats.totalCases) }
+                            { this.numberWithCommas(this.state.place.totalCases) }
                             </p>
                         }
-                        <p className="f4 mid-gray b">
+                        <div className="f4 mid-gray b">
                             {
-                                this.state.placeStats.totalCases == '--' ? null :
+                                this.state.place.totalCases == '--' ? null :
                                 <div>
-                                    Active: {this.numberWithCommas(this.state.placeStats.activeCases)}
+                                    Active: {this.numberWithCommas(this.state.place.activeCases)}
                                 </div>
                             }
-                        </p>
+                        </div>
                     </div>
                 </div>
                 <div className="dn-l db center f2-ns f3 b pa2 tc mh2 pv4-ns pt3 br2">
@@ -122,7 +97,7 @@ export class Overall extends Component {
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
-                        <div className="light-red">{this.numberWithCommas(this.state.placeStats.totalDeaths)}</div>
+                        <div className="light-red">{this.numberWithCommas(this.state.place.totalDeaths)}</div>
 
                     </div>
 
@@ -142,7 +117,7 @@ export class Overall extends Component {
 
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
-                        <div className="green">{this.numberWithCommas(this.state.placeStats.totalRecovered)}</div>
+                        <div className="green">{this.numberWithCommas(this.state.place.totalRecovered)}</div>
                     </div>
                 </div>
             </div>

@@ -20,9 +20,10 @@ class CountryInfo extends React.Component {
     super(props);
     this.state = {
       country: props.match.params.country,
-      countryStats: {},
+      countryStats: null,
       news: [],
-      graph: null
+      graph: null,
+      notFound: false
     }
   }
 
@@ -61,6 +62,11 @@ class CountryInfo extends React.Component {
     let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
       this.setState({ countryStats: res.data.countryStats });
+    }).catch(e => {
+      console.log(e);
+      this.setState({
+        notFound: true
+      })
     })
 
     this.getParsedNews(url)
@@ -83,31 +89,10 @@ class CountryInfo extends React.Component {
       });
 
 
-  //  newsapi.v2.everything({
-  //     q: `${query}`,
-  //     language: 'en',
-  //     sortBy: 'publishedAt',
-  //     }).then(response => {
-  //       let news = response.articles.map((r) => {
-  //         return {
-
-  //           link: r.url,
-  //           pubDate: moment(r.publishedAt, 'YYYY-MM-DDTHH:mm:ssZ').valueOf(),
-  //           publisher: r.source.name ? r.source.name : 'External',
-  //           title: r.title
-  //         }
-  //       });
-  //       news = news.sort((a,b) => a.pubDate < b.pubDate ? 1 : -1)
-  //       news = news.map((r) => {
-  //         return { link: r.link, pubDate: this.getTimeMeasure(r.pubDate), publisher: r.publisher, title: r.title }
-  //       })
-  //       this.setState({ news: news });
-  //      }).catch((e) => console.log(e))
-
   }
 
   render() {
-    if (!this.state.countryStats) {
+    if (this.state.notFound) {
       return (<Redirect to={{
         pathname: '/404',
         state: { path: this.state.country }
@@ -129,7 +114,9 @@ class CountryInfo extends React.Component {
         </div>
 
       <div className="flex mt2"> 
-        <Overall placeName={this.state.country} place={this.state.countryStats} />
+      {
+        this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats} /> : null
+      }
       </div>
 
         <div className="tc pt4 mb2 mh2 br2">

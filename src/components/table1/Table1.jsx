@@ -21,24 +21,9 @@ export class Table1 extends Component {
     });
   }
 
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-  }
-
-
-  generateRows() {
-      const countries = ["Canada", "USA", "China", "Italy", "Russia", "Belgium", "Slovakia"]
-      return countries.map((country) => {
-          return {country: country, deaths: this.getRandomInt(1,200), cases: this.getRandomInt(200, 400)}
-      })  
-    }
-
   constructor(props) {
     super(props);
-    this.generateRows = this.generateRows.bind(this);
-    this.getRandomInt = this.getRandomInt.bind(this);
+    
     this.handleSort = this.handleSort.bind(this);
 
     // activeCases: 23605
@@ -56,35 +41,19 @@ export class Table1 extends Component {
         { name: 'country', title: 'Country' },
         { name: 'totalCases', title: 'Cases' }
       ],
-      stats: [],
-      filteredStats: [],
+      stats: props.stats,
+      filteredStats: props.stats ? props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1) : [],
       searchValue: "",
       sort: 'upper',
       sortColumn: 'activeCases'
-      // rows: this.generateRows({ length: 6 })
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    if (!prevState.filteredStats.length) {
-      return {
-        stats: nextProps.stats.stats ? nextProps.stats.stats : prevState.stats,
-        filteredStats: nextProps.stats.stats ? nextProps.stats.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1) : []
-      };
-    }
-    else return null;
-  }
- 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.stats.length !== this.props.stats.length){
-        this.setState({
-          stats: this.props.stats,
-          filteredStats: this.props.stats ? this.props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1) : [] });
-    }
-  }
-
   filterCountryList(countryStr) {
-    const orderedStats = this.state.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1);
+    let column = this.state.sortColumn;
+    let num = this.state.sort === 'upper' ? 1 : -1
+    const orderedStats = this.state.stats.sort((a,b) => eval('a[column]') < eval('b[column]') ? num : -1*num);
+
     if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: orderedStats})
     this.setState({
       searchValue: countryStr,

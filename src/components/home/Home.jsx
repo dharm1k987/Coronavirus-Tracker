@@ -9,13 +9,9 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      liveStats: {},
-      world: {
-        totalDeaths: "",
-        activeCases: "",
-        totalRecovered: "",
-        totalCases: ""
-      }
+      liveStats: null,
+      world: null,
+      timelines: {}
     }
   }
 
@@ -29,12 +25,27 @@ class Home extends React.Component {
           world
         });
       });
+
+    axios
+    .get('/timelines')
+    .then(res => {
+      this.setState({
+        timelines: res.data
+      })
+    }).catch(e => console.log(e));
   }
 
   render() {
     return (<div>
-        <Overall placeName={"World"} place={this.state.world}/>
-      <Table1 stats={this.state.liveStats} />
+        {
+          this.state.world && this.state.liveStats ? 
+          <div>
+            <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
+            <Table1 stats={this.state.liveStats} />
+          </div>
+        : null
+        }
+
       </div>
     );
   }
