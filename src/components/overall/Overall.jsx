@@ -17,6 +17,7 @@ export class Overall extends Component {
                 activeCases: -1,
                 totalDeaths: '--',
                 totalRecovered: '--',
+                totalCases: '--'
             },
             graph: null
         }
@@ -53,7 +54,8 @@ export class Overall extends Component {
         if (!prevProps.place ||
             (!prevProps.place.activeCases && 
             !prevProps.place.totalDeaths && 
-            !prevProps.place.totalRecovered)) {
+            !prevProps.place.totalRecovered &&
+            !prevProps.place.totalCases)) {
             this.setState({ placeStats: this.props.place }, () => {
                 this.setState(prevState => ({
                     graph: {
@@ -95,7 +97,14 @@ export class Overall extends Component {
                             </p>
                         }
                         <p className="f5 gray b">
-                            &nbsp; active cases
+                            active cases<br/>
+                            {
+                                this.state.placeStats.totalCases == '--' ? null :
+                                <div>(total: {this.numberWithCommas(this.state.placeStats.totalCases)})</div>
+                            }
+                            {/* {this.state.placeStats.totalCases == '--' ? null
+                            : (total: {this.numberWithCommas(this.state.placeStats.totalCases)})
+                            } */}
                         </p>
                     </div>
                 </div>
@@ -116,6 +125,8 @@ export class Overall extends Component {
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.state.placeStats.totalDeaths)}</div>
+                        <div className="light-red f6">(total)</div>
+
                     </div>
 
                     <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2 pv4-ns pt3 br2">
@@ -135,6 +146,7 @@ export class Overall extends Component {
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
                         <div className="green">{this.numberWithCommas(this.state.placeStats.totalRecovered)}</div>
+                        <div className="green f6">(total)</div>
                     </div>
                 </div>
             </div>
