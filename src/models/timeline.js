@@ -32,7 +32,6 @@ const {
   
   const postTimeline = async (timeline, type) => {
     let updated = true;
-    console.log(type)
     const newTimeline = await Timeline.updateOne({ country: timeline.country, type: type }, { data: timeline.data, type: type },
        { upsert: true });
     return updated;
