@@ -17,7 +17,7 @@ export class Overall extends Component {
                 activeCases: -1,
                 totalDeaths: '--',
                 totalRecovered: '--',
-                totalCases: '--'
+                totalCases: '--',
             },
             graph: null
         }
@@ -90,21 +90,19 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        {this.state.placeStats.activeCases == -1 ?
+                        {this.state.placeStats.totalCases == '--' ?
                             <CircularProgress /> :
                             <p className="f2 b mb1 gold">
-                            { this.numberWithCommas(this.state.placeStats.activeCases) }
+                            { this.numberWithCommas(this.state.placeStats.totalCases) }
                             </p>
                         }
-                        <p className="f5 gray b">
-                            active cases<br/>
+                        <p className="f5 mid-gray b">
                             {
                                 this.state.placeStats.totalCases == '--' ? null :
-                                <div>(total: {this.numberWithCommas(this.state.placeStats.totalCases)})</div>
+                                <div>
+                                    (active: {this.numberWithCommas(this.state.placeStats.activeCases)})
+                                </div>
                             }
-                            {/* {this.state.placeStats.totalCases == '--' ? null
-                            : (total: {this.numberWithCommas(this.state.placeStats.totalCases)})
-                            } */}
                         </p>
                     </div>
                 </div>
@@ -125,7 +123,6 @@ export class Overall extends Component {
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.state.placeStats.totalDeaths)}</div>
-                        <div className="light-red f6">(total)</div>
 
                     </div>
 
@@ -146,7 +143,6 @@ export class Overall extends Component {
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
                         <div className="green">{this.numberWithCommas(this.state.placeStats.totalRecovered)}</div>
-                        <div className="green f6">(total)</div>
                     </div>
                 </div>
             </div>
