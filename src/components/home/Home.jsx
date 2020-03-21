@@ -10,7 +10,7 @@ class Home extends React.Component {
     this.state = {
       liveStats: null,
       world: null,
-      timelines: {}
+      timelines: null
     }
   }
 
@@ -37,7 +37,7 @@ class Home extends React.Component {
   render() {
     return (<div>
         {
-          this.state.world && this.state.liveStats ? 
+          this.state.world && this.state.liveStats && this.state.timelines ? 
           <div>
             <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
             <Table1 stats={this.state.liveStats} />

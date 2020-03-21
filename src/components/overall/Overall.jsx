@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import "./Overall.css"
 import { CircularProgress } from '@material-ui/core';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+const moment = require('moment');
+
+
 
 
 
@@ -11,11 +14,13 @@ export class Overall extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
             placeName: props.placeName,
             place: props.place,
             graph: null,
-            placeTimeline: {}
+            placeTimeline: props.timelines,
+            timelineData: null
         }
     }
     
@@ -31,6 +36,8 @@ export class Overall extends Component {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
       }
+
+    convertDate
 
     componentDidMount() {
         this.setState(prevState => ({
@@ -49,6 +56,75 @@ export class Overall extends Component {
             ]
             }
         }))
+        let labels = [];
+        let data1 = [];
+        let data2 = [];
+        let data3 = [];
+
+        this.state.placeTimeline.timelinesDeath[0].data.forEach(day => {
+            let slashDate = Object.keys(day)[0];
+            let date = moment(slashDate, 'MM/DD/YYYY').format('MMM D')
+            labels.push(date);
+            data1.push(day[slashDate])
+        })
+        // console.log(data1);
+        this.state.placeTimeline.timelinesRecovered[0].data.forEach(day => {
+            let slashDate = Object.keys(day)[0];
+            data2.push(day[slashDate])
+        })
+        this.state.placeTimeline.timelinesConfirmed[0].data.forEach(day => {
+            let slashDate = Object.keys(day)[0];
+            data3.push(day[slashDate])
+        })
+
+        this.setState({
+            timelineData: {
+                labels: labels.filter((_,i) => i % 5 == 0),
+                datasets: [
+                    {
+                        label: 'Deaths',
+                        fill: false,
+                        lineTension: 0.01,
+                        borderColor: '#ff725c',
+                        data: data1.filter((_,i) => i % 5 == 0) 
+                    },
+                    {
+                        label: 'Recovered',
+                        fill: false,
+                        lineTension: 0.01,
+                        borderColor: '#19a974',
+                        data: data2.filter((_,i) => i % 5 == 0) 
+                    },
+                    {
+                        label: 'Confirmed',
+                        fill: false,
+                        lineTension: 0.01,
+                        borderColor: '#ffb700',
+                        data: data3.filter((_,i) => i % 5 == 0) 
+                    }
+                ]
+            }
+        })
+
+        // const data = {
+        //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        //     datasets: [
+        //       {
+        //         label: 'My First dataset',
+        //         fill: false,
+        //         lineTension: 0.01,
+        //         borderColor: 'rgba(75,192,192,1)',
+        //         data: [65, 59, 80, 81, 56, 55, 40]
+        //       },
+        //       {
+        //         label: 'My second dataset',
+        //         fill: false,
+        //         lineTension: 0.01,
+        //         borderColor: 'rgba(75,255,255,1)',
+        //         data: [65, 39, 23, 11, 56, 55, 40]
+        //       }
+        //     ]
+        //   };
     }
 
     render() {
@@ -58,6 +134,10 @@ export class Overall extends Component {
                     <p className="ma0"> Live </p>
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
                 </div>
+                {
+                    this.state.timelineData ? <Line ref="chart" data={this.state.timelineData}/> : null
+                }
+                {/* <Line ref="chart" data={data} /> */}
 
                 <div className="tc pt4 mb3 mh2 br2">
                     <p className="f1 b mt2 mb0 pa0 mid-gray" >
