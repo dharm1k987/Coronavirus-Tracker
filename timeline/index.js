@@ -8,16 +8,19 @@ let countryToTotal = {};
 
 let types = ['Confirmed', 'Deaths', 'Recovered']
 
-types.forEach(type => {
-  let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-${type}.csv`;
-  axios.get(url)
-  .then(function (response) {
-    parseData(response.data, type.toLowerCase())
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-});
+async function main() {
+  for (let i = 0; i < types.length; i++) {
+    let type = types[i];
+    let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-${type}.csv`;
+    let res = await axios.get(url);
+    let res2 = await parseData(res.data, type.toLowerCase())
+    data = []
+    countryToTotal = {}
+  }
+
+}
+
+
 
 
 const parseData = (contents, type) => {
@@ -31,6 +34,7 @@ const parseData = (contents, type) => {
       }
     }
 
+
     
     for (let i = 1; i < rowCount; i++) {
       let country = data[i][1].toLowerCase();
@@ -42,11 +46,16 @@ const parseData = (contents, type) => {
           obj[[date]] = 0;
           return obj;
         });
+
       }
+      // console.log(type, data[1])
+      // return
+
 
       for (let j = 0; j < dates.length; j++) {
         let date = dates[j];
         let toAddValue = parseInt(data[i][j + 4], 10);
+
         countryToTotal[country][j][date] += toAddValue;
       }
       let finalObj = {
@@ -75,3 +84,5 @@ const parseData = (contents, type) => {
 }
 
 
+
+main();
