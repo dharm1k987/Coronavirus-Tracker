@@ -8,18 +8,27 @@ let countryToTotal = {};
 
 let types = ['Confirmed', 'Deaths', 'Recovered']
 
-async function main() {
-  for (let i = 0; i < types.length; i++) {
-    let type = types[i];
+async function main(type) {
+  // for (let i = 0; i < types.length; i++) {
+    // let type = types[i];
     let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-${type}.csv`;
     let res = await axios.get(url);
     let res2 = await parseData(res.data, type.toLowerCase())
     data = []
     countryToTotal = {}
-  }
+  // }
 
 }
 
+async function main2() {
+  await main('Confirmed')
+  data = [];
+  countryToTotal = {};
+  await main('Deaths')
+  data = [];
+  countryToTotal = {};
+  await main('Recovered')
+}
 
 
 
@@ -85,4 +94,4 @@ const parseData = (contents, type) => {
 
 
 
-main();
+main2();
