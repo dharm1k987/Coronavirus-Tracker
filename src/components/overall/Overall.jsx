@@ -176,6 +176,10 @@ export class Overall extends Component {
                         }}
                         className=""
                     /> : null }
+                    {
+                        this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
+                        : null
+                    }
                 </div>
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pt3 br2">
