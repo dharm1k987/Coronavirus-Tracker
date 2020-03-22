@@ -58,7 +58,8 @@ class CountryInfo extends React.Component {
     let query = this.state.country + " coronavirus";
     let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
-      this.setState({ countryStats: res.data.countryStats });
+      if (!res.data.countryStats) this.setState({ notFound: true })
+      else this.setState({ countryStats: res.data.countryStats });
     }).catch(e => {
       console.log(e);
       this.setState({
@@ -86,7 +87,7 @@ class CountryInfo extends React.Component {
       }).catch(e => console.log(e));
 
       axios
-      .get(`/timelines/${this.state.country}`)
+      .get(`/timelines/${decodeURIComponent(this.state.country)}`)
       .then(res => {
         console.log(res.data)
         let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);

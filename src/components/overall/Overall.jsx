@@ -53,11 +53,11 @@ export class Overall extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps)
-        this.setState({ placeTimeline: nextProps.timelines }, () => {
+        if (nextProps.timelines) {
             const skip = 5;
             this.setState({
                 timelineData: {
-                    labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
+                    labels: nextProps.timelines.labels.filter((_,i) => i % skip == 0),
                     datasets: [
                         {
                             label: 'Deaths',
@@ -67,7 +67,7 @@ export class Overall extends Component {
                             borderColor: '#ff725c',
                             pointStyle: 'rect',
                             pointBackgroundColor: '#ff725c',
-                            data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
+                            data: nextProps.timelines.timelinesDeath.filter((_,i) => i % skip == 0) 
                         },
                         {
                             label: 'Recovered',
@@ -77,7 +77,7 @@ export class Overall extends Component {
                             borderColor: '#19a974',
                             pointStyle: 'rect',
                             pointBackgroundColor: '#19a974',
-                            data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
+                            data: nextProps.timelines.timelinesRecovered.filter((_,i) => i % skip == 0) 
                         },
                         {
                             label: 'Confirmed',
@@ -87,12 +87,12 @@ export class Overall extends Component {
                             borderColor: '#ffb700',
                             pointStyle: 'rect',
                             pointBackgroundColor: '#ffb700',
-                            data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
+                            data: nextProps.timelines.timelinesConfirmed.filter((_,i) => i % skip == 0) 
                         }
                     ]
                 }
             })
-        });  
+        }
 
 
         
