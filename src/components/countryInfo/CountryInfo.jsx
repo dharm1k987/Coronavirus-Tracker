@@ -20,7 +20,8 @@ class CountryInfo extends React.Component {
       countryStats: null,
       news: [],
       graph: null,
-      notFound: false
+      notFound: false,
+      timelines: null
     }
   }
 
@@ -53,7 +54,6 @@ class CountryInfo extends React.Component {
   }
 
   componentDidMount() {
-
     let query = this.state.country + " coronavirus";
     let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
@@ -82,7 +82,27 @@ class CountryInfo extends React.Component {
             };
           });
         this.setState({ news });
-      });
+      }).catch(e => console.log(e));
+
+      axios
+      .get(`/timelines/${this.state.country}`)
+      .then(res => {
+        console.log(res.data)
+        let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
+        dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
+
+        let confirmedSum = res.data.countryTimelines.timelinesConfirmed[0].data.map(f => f[Object.keys(f)])
+        let recoveredSum = res.data.countryTimelines.timelinesRecovered[0].data.map(f => f[Object.keys(f)])
+        let deathSum = res.data.countryTimelines.timelinesDeath[0].data.map(f => f[Object.keys(f)])
+
+        this.setState({
+          timelines: { labels: dates, timelinesDeath: deathSum,
+             timelinesConfirmed: confirmedSum,
+             timelinesRecovered: recoveredSum}
+        }, () => console.log(this.state.timelines))
+
+
+      }).catch(e => console.log(e))
 
 
   }
@@ -111,7 +131,8 @@ class CountryInfo extends React.Component {
 
       <div className="flex mt2"> 
       {
-        this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats} /> : null
+        this.state.countryStats && this.state.country && this.state.timelines ? <Overall placeName={this.state.country} place={this.state.countryStats} timelines={this.state.timelines} />
+        : null
       }
       </div>
 
