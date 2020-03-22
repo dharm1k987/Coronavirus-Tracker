@@ -51,28 +51,60 @@ export class Overall extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
+        this.setState({ placeTimeline: nextProps.timelines }, () => {
+            const skip = 5;
+            this.setState({
+                timelineData: {
+                    labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
+                    datasets: [
+                        {
+                            label: 'Deaths',
+                            fill: false,
+                            lineTension: 0.1,
+                            borderWidth: 1,
+                            borderColor: '#ff725c',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#ff725c',
+                            data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
+                        },
+                        {
+                            label: 'Recovered',
+                            fill: false,
+                            lineTension: 0.01,
+                            borderWidth: 1,
+                            borderColor: '#19a974',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#19a974',
+                            data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
+                        },
+                        {
+                            label: 'Confirmed',
+                            fill: false,
+                            lineTension: 0.01,
+                            borderWidth: 1,
+                            borderColor: '#ffb700',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#ffb700',
+                            data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
+                        }
+                    ]
+                }
+            })
+        });  
+
+
+        
+      }
+
+
+
     componentDidMount() {
         console.log(this.state.placeTimeline)
-        this.setState(prevState => ({
-        graph: {
-            labels: ['Active Cases','Deaths','Recoveries'],
-            datasets: [
-                {                    
-                backgroundColor: [
-                    '#ffb700',
-                    '#ff725c',
-                    '#19a974',
-                ],
-                data: [prevState.place.activeCases, prevState.place.totalDeaths, prevState.place.
-                    totalRecovered]
-                }
-            ]
-            }
-        }))
 
-
-        const skip = 5;
         if (this.state.placeTimeline) {
+            const skip = 5;
             this.setState({
                 timelineData: {
                     labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
@@ -111,6 +143,25 @@ export class Overall extends Component {
                 }
             })
         }
+        this.setState(prevState => ({
+        graph: {
+            labels: ['Active Cases','Deaths','Recoveries'],
+            datasets: [
+                {                    
+                backgroundColor: [
+                    '#ffb700',
+                    '#ff725c',
+                    '#19a974',
+                ],
+                data: [prevState.place.activeCases, prevState.place.totalDeaths, prevState.place.
+                    totalRecovered]
+                }
+            ]
+            }
+        }))
+
+
+
 
 
 

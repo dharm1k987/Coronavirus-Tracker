@@ -52,6 +52,7 @@ class CountryInfo extends React.Component {
   timeSincePosted(postTime) {
     return moment().diff(moment(postTime));
   }
+  
 
   componentDidMount() {
     let query = this.state.country + " coronavirus";
