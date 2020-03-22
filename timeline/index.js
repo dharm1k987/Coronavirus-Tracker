@@ -20,37 +20,36 @@ async function helper(type) {
 
 async function main() {
   await helper('Confirmed'); // parse the Confirmed csv, WAIT for this to complete before moving on
-  console.log(finalArrayConfirmed.length);
   data = []; countryToTotal = {}; // reset data structures
   
   await helper('Recovered'); // parse the Recovered csv, WAIT for this to complete before moving on
-  console.log(finalArrayRecovered.length);
   data = []; countryToTotal = {}; // reset data structures
 
   await helper('Deaths'); // parse the Deaths csv
-  console.log(finalArrayDeaths.length);
 
   await finalArrayConfirmed.forEach((c) => {
-    Object.keys(c).forEach(a => {
-      console.log(c[a])
-      return
+
+    Object.keys(c).forEach(country => {
+      axios.post(`http://localhost:9000/timeline/update/confirmed`, {
+        newTimeline: { country: country, data: c[country] }
+      })
     })
-      // axios.post(`http://localhost:9000/timeline/update/confirmed`, {
-      //   newTimeline: finalArrayConfirmed[country]
-      // })
+
   })
-
-  // await finalArrayRecovered.forEach((country) => {
-  //   axios.post(`http://localhost:9000/timeline/update/recovered`, {
-  //     newTimeline: finalArrayRecovered[country]
-  //   })
-  // })
-  // await finalArrayDeaths.forEach((country) => {
-  //   axios.post(`http://localhost:9000/timeline/update/deaths`, {
-  //     newTimeline: finalArrayDeaths[country]
-  //   })
-  // })
-
+  await finalArrayDeaths.forEach((c) => {
+    Object.keys(c).forEach(function(country) {
+      axios.post(`http://localhost:9000/timeline/update/deaths`, {
+        newTimeline: { country: country, data: c[country] }
+      })
+    })
+  })
+  await finalArrayRecovered.forEach((c) => {
+    Object.keys(c).forEach(function(country) {
+      axios.post(`http://localhost:9000/timeline/update/recovered`, {
+        newTimeline: { country: country, data: c[country] }
+      })
+    })
+  })
 }
 
 
