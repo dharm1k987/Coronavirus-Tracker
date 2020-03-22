@@ -32,6 +32,17 @@ const {
   
   const postTimeline = async (timeline, type) => {
     let updated = true;
+
+    if (timeline.country == 'korea, south') timeline.country = 's. korea';
+    if (timeline.country == 'taiwan*') timeline.country = 'taiwan';
+    if (timeline.country == 'congo (kinshasa)') timeline.country = 'congo';
+    if (timeline.country == "cote d'ivoire") timeline.country = 'ivory coast';
+    if (timeline.country == 'congo (brazzaville)') timeline.country = 'congo';
+    if (timeline.country == 'bahamas, the') timeline.country = 'bahamas';
+    if (timeline.country == 'gambia, the') timeline.country = 'gambia';
+    if (timeline.country == 'united kingdom') timeline.country = 'uk';
+
+
     const newTimeline = await Timeline.updateOne({ country: timeline.country, type: type }, { data: timeline.data, type: type },
        { upsert: true });
     return updated;
