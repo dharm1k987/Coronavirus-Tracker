@@ -76,3 +76,7 @@
   background-color: rgb(228, 228, 228) !important;
   margin-bottom: 30px;
 }
+
+.showBtn {
+  margin-top: 10px !important;
+}

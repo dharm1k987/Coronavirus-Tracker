@@ -51,100 +51,34 @@ export class Overall extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-        if (nextProps.timelines) {
-            const skip = 5;
-            this.setState({
-                timelineData: {
-                    labels: nextProps.timelines.labels.filter((_,i) => i % skip == 0),
-                    datasets: [
-                        {
-                            label: 'Deaths',
-                            fill: false,
-                            lineTension: 0.1,
-                            borderWidth: 1,
-                            borderColor: '#ff725c',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#ff725c',
-                            data: nextProps.timelines.timelinesDeath.filter((_,i) => i % skip == 0) 
-                        },
-                        {
-                            label: 'Recovered',
-                            fill: false,
-                            lineTension: 0.01,
-                            borderWidth: 1,
-                            borderColor: '#19a974',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#19a974',
-                            data: nextProps.timelines.timelinesRecovered.filter((_,i) => i % skip == 0) 
-                        },
-                        {
-                            label: 'Confirmed',
-                            fill: false,
-                            lineTension: 0.01,
-                            borderWidth: 1,
-                            borderColor: '#ffb700',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#ffb700',
-                            data: nextProps.timelines.timelinesConfirmed.filter((_,i) => i % skip == 0) 
-                        }
-                    ]
-                }
-            })
+    static customizeTimeline(label, colour, dataArray) {
+        const skip = 5;
+        return {
+            label: label,
+            fill: false,
+            lineTension: 0.1,
+            borderWidth: 1,
+            borderColor: colour,
+            pointStyle: 'rect',
+            pointBackgroundColor: colour,
+            data: dataArray.filter((_,i) => i % skip == 0) 
+        }                                                         
+    }
+
+    static createTimelineData(props) {
+        const skip = 5;
+        return {
+            labels: props.timelines.labels.filter((_,i) => i % skip == 0),
+            datasets: [
+                Overall.customizeTimeline('Deaths', '#ff725c', props.timelines.timelinesDeath),
+                Overall.customizeTimeline('Recovered', '#19a974', props.timelines.timelinesRecovered),
+                Overall.customizeTimeline('Confirmed', '#ffb700', props.timelines.timelinesConfirmed)
+            ]
         }
+    }
 
-
-        
-      }
-
-
-
-    componentDidMount() {
-        console.log(this.state.placeTimeline)
-
-        if (this.state.placeTimeline) {
-            const skip = 5;
-            this.setState({
-                timelineData: {
-                    labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
-                    datasets: [
-                        {
-                            label: 'Deaths',
-                            fill: false,
-                            lineTension: 0.1,
-                            borderWidth: 1,
-                            borderColor: '#ff725c',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#ff725c',
-                            data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
-                        },
-                        {
-                            label: 'Recovered',
-                            fill: false,
-                            lineTension: 0.01,
-                            borderWidth: 1,
-                            borderColor: '#19a974',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#19a974',
-                            data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
-                        },
-                        {
-                            label: 'Confirmed',
-                            fill: false,
-                            lineTension: 0.01,
-                            borderWidth: 1,
-                            borderColor: '#ffb700',
-                            pointStyle: 'rect',
-                            pointBackgroundColor: '#ffb700',
-                            data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
-                        }
-                    ]
-                }
-            })
-        }
-        this.setState(prevState => ({
-        graph: {
+    static createPiechart(props) {
+        return {
             labels: ['Active Cases','Deaths','Recoveries'],
             datasets: [
                 {                    
@@ -153,18 +87,22 @@ export class Overall extends Component {
                     '#ff725c',
                     '#19a974',
                 ],
-                data: [prevState.place.activeCases, prevState.place.totalDeaths, prevState.place.
+                data: [props.place.activeCases, props.place.totalDeaths, props.place.
                     totalRecovered]
                 }
             ]
-            }
-        }))
+        }
+    }
 
 
 
+    static getDerivedStateFromProps(props, state) {
+        console.log(props);
+        console.log(state)
+        if (props.timelines && props.place) return { timelineData: Overall.createTimelineData(props), graph: Overall.createPiechart(props) }
+        if (!props.timelines && props.place) return { graph: Overall.createPiechart(props) }
 
-
-
+        return null;
     }
 
     options() {
@@ -228,10 +166,12 @@ export class Overall extends Component {
                         className=""
                     /> : null }
                     {
-                        this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
+                        this.state.timelineData ? <Button variant="contained" className="showBtn" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
                         : null
                     }
                 </div>
+                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
+
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
@@ -263,7 +203,6 @@ export class Overall extends Component {
                         <div className="green">{this.numberWithCommas(this.state.place.totalRecovered)}</div>
                     </div>
                 </div>
-                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
 
             </div>
           );
