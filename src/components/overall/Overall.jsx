@@ -40,6 +40,7 @@ export class Overall extends Component {
     convertDate
 
     componentDidMount() {
+        console.log(this.state.placeTimeline)
         this.setState(prevState => ({
         graph: {
             labels: ['Active Cases','Deaths','Recoveries'],
@@ -56,51 +57,62 @@ export class Overall extends Component {
             ]
             }
         }))
-        let labels = [];
-        let data1 = [];
-        let data2 = [];
-        let data3 = [];
+        // let labels = [];
+        // let data1 = [];
+        // let data2 = [];
+        // let data3 = [];
 
-        this.state.placeTimeline.timelinesDeath[0].data.forEach(day => {
-            let slashDate = Object.keys(day)[0];
-            let date = moment(slashDate, 'MM/DD/YYYY').format('MMM D')
-            labels.push(date);
-            data1.push(day[slashDate])
-        })
-        // console.log(data1);
-        this.state.placeTimeline.timelinesRecovered[0].data.forEach(day => {
-            let slashDate = Object.keys(day)[0];
-            data2.push(day[slashDate])
-        })
-        this.state.placeTimeline.timelinesConfirmed[0].data.forEach(day => {
-            let slashDate = Object.keys(day)[0];
-            data3.push(day[slashDate])
-        })
+        // this.state.placeTimeline.timelinesDeath[0].data.forEach(day => {
+        //     let slashDate = Object.keys(day)[0];
+        //     let date = moment(slashDate, 'MM/DD/YYYY').format('MMM D')
+        //     labels.push(date);
+        //     data1.push(day[slashDate])
+        // })
+        // console.log(this.state.placeTimeline.timelinesRecovered[0]);
+        // this.state.placeTimeline.timelinesRecovered[0].data.forEach(day => {
+        //     let slashDate = Object.keys(day)[0];
+        //     data2.push(day[slashDate])
+        // })
+        // this.state.placeTimeline.timelinesConfirmed[0].data.forEach(day => {
+        //     let slashDate = Object.keys(day)[0];
+        //     data3.push(day[slashDate])
+        // })
+
+        const skip = 5;
 
         this.setState({
             timelineData: {
-                labels: labels.filter((_,i) => i % 5 == 0),
+                labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
                 datasets: [
                     {
                         label: 'Deaths',
                         fill: false,
-                        lineTension: 0.01,
+                        lineTension: 0.1,
+                        borderWidth: 1,
                         borderColor: '#ff725c',
-                        data: data1.filter((_,i) => i % 5 == 0) 
+                        pointStyle: 'rect',
+                        pointBackgroundColor: '#ff725c',
+                        data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
                     },
                     {
                         label: 'Recovered',
                         fill: false,
                         lineTension: 0.01,
+                        borderWidth: 1,
                         borderColor: '#19a974',
-                        data: data2.filter((_,i) => i % 5 == 0) 
+                        pointStyle: 'rect',
+                        pointBackgroundColor: '#19a974',
+                        data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
                     },
                     {
                         label: 'Confirmed',
                         fill: false,
                         lineTension: 0.01,
+                        borderWidth: 1,
                         borderColor: '#ffb700',
-                        data: data3.filter((_,i) => i % 5 == 0) 
+                        pointStyle: 'rect',
+                        pointBackgroundColor: '#ffb700',
+                        data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
                     }
                 ]
             }
