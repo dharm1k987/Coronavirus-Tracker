@@ -11,9 +11,21 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) =>
-  res.send('Hello Track Coronavirus backend!')
-)
+app.use((req, res, next) => {
+  console.log(req.headers.origin);
+  if (req.headers.origin === 'https://track-coronavirus.com') {
+    res.setHeader('Access-Control-Allow-Origin', 'https://track-coronavirus.com');
+  } else if (req.headers.origin === 'http://localhost:3000') {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') res.sendStatus(200);
+  else next();
+});
+
+app.get('/', (req, res) => res.send('Hello Track Coronavirus backend!'));
 
 require('./routes/live-stats')(app);
 
