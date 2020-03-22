@@ -131,7 +131,8 @@ class CountryInfo extends React.Component {
 
       <div className="flex mt2"> 
       {
-        this.state.countryStats && this.state.country && this.state.timelines ? <Overall placeName={this.state.country} place={this.state.countryStats} timelines={this.state.timelines} />
+        this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats} 
+        timelines={this.state.timelines ? this.state.timelines : null} />
         : null
       }
       </div>

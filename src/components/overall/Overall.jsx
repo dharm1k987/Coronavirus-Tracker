@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Overall.css"
 import { CircularProgress } from '@material-ui/core';
 import { Doughnut, Line } from 'react-chartjs-2';
+import Timeline from '../timeline/Timeline'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from '@material-ui/core/Button';
 
@@ -68,86 +69,51 @@ export class Overall extends Component {
             ]
             }
         }))
-        // let labels = [];
-        // let data1 = [];
-        // let data2 = [];
-        // let data3 = [];
 
-        // this.state.placeTimeline.timelinesDeath[0].data.forEach(day => {
-        //     let slashDate = Object.keys(day)[0];
-        //     let date = moment(slashDate, 'MM/DD/YYYY').format('MMM D')
-        //     labels.push(date);
-        //     data1.push(day[slashDate])
-        // })
-        // console.log(this.state.placeTimeline.timelinesRecovered[0]);
-        // this.state.placeTimeline.timelinesRecovered[0].data.forEach(day => {
-        //     let slashDate = Object.keys(day)[0];
-        //     data2.push(day[slashDate])
-        // })
-        // this.state.placeTimeline.timelinesConfirmed[0].data.forEach(day => {
-        //     let slashDate = Object.keys(day)[0];
-        //     data3.push(day[slashDate])
-        // })
 
         const skip = 5;
+        if (this.state.placeTimeline) {
+            this.setState({
+                timelineData: {
+                    labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
+                    datasets: [
+                        {
+                            label: 'Deaths',
+                            fill: false,
+                            lineTension: 0.1,
+                            borderWidth: 1,
+                            borderColor: '#ff725c',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#ff725c',
+                            data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
+                        },
+                        {
+                            label: 'Recovered',
+                            fill: false,
+                            lineTension: 0.01,
+                            borderWidth: 1,
+                            borderColor: '#19a974',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#19a974',
+                            data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
+                        },
+                        {
+                            label: 'Confirmed',
+                            fill: false,
+                            lineTension: 0.01,
+                            borderWidth: 1,
+                            borderColor: '#ffb700',
+                            pointStyle: 'rect',
+                            pointBackgroundColor: '#ffb700',
+                            data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
+                        }
+                    ]
+                }
+            })
+        }
 
-        this.setState({
-            timelineData: {
-                labels: this.state.placeTimeline.labels.filter((_,i) => i % skip == 0),
-                datasets: [
-                    {
-                        label: 'Deaths',
-                        fill: false,
-                        lineTension: 0.1,
-                        borderWidth: 1,
-                        borderColor: '#ff725c',
-                        pointStyle: 'rect',
-                        pointBackgroundColor: '#ff725c',
-                        data: this.state.placeTimeline.timelinesDeath.filter((_,i) => i % skip == 0) 
-                    },
-                    {
-                        label: 'Recovered',
-                        fill: false,
-                        lineTension: 0.01,
-                        borderWidth: 1,
-                        borderColor: '#19a974',
-                        pointStyle: 'rect',
-                        pointBackgroundColor: '#19a974',
-                        data: this.state.placeTimeline.timelinesRecovered.filter((_,i) => i % skip == 0) 
-                    },
-                    {
-                        label: 'Confirmed',
-                        fill: false,
-                        lineTension: 0.01,
-                        borderWidth: 1,
-                        borderColor: '#ffb700',
-                        pointStyle: 'rect',
-                        pointBackgroundColor: '#ffb700',
-                        data: this.state.placeTimeline.timelinesConfirmed.filter((_,i) => i % skip == 0) 
-                    }
-                ]
-            }
-        })
 
-        // const data = {
-        //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        //     datasets: [
-        //       {
-        //         label: 'My First dataset',
-        //         fill: false,
-        //         lineTension: 0.01,
-        //         borderColor: 'rgba(75,192,192,1)',
-        //         data: [65, 59, 80, 81, 56, 55, 40]
-        //       },
-        //       {
-        //         label: 'My second dataset',
-        //         fill: false,
-        //         lineTension: 0.01,
-        //         borderColor: 'rgba(75,255,255,1)',
-        //         data: [65, 39, 23, 11, 56, 55, 40]
-        //       }
-        //     ]
-        //   };
+
     }
 
     options() {
@@ -177,9 +143,7 @@ export class Overall extends Component {
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
                 </div>
 
-                {/* <Line ref="chart" data={data} /> */}
-
-                <div className="tc pt4 mb3 mh2 br2">
+                <div className="tc mb3 mh2 br2">
                     <p className="f1 b mt2 mb0 pa0 mid-gray" >
                         {this.toTitleCase(this.state.placeName)}
                     </p>
@@ -200,7 +164,7 @@ export class Overall extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="dn-l db center f2-ns f3 b pa2 tc mh2 pv4-ns pt3 br2">
+                <div className="dn-l db center f2-ns f3 b pa2 tc mh2  pt3 br2">
                     { this.state.graph ?
                     <Doughnut
                         data={this.state.graph}
@@ -214,13 +178,13 @@ export class Overall extends Component {
                     /> : null }
                 </div>
                 <div className="flex pb4">
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
+                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(this.state.place.totalDeaths)}</div>
 
                     </div>
 
-                    <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2 pv4-ns pt3 br2">
+                    <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2  pt3 br2">
                         { this.state.graph ?
                         <Doughnut
                             data={this.state.graph}
@@ -236,16 +200,16 @@ export class Overall extends Component {
                             this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
                             : null
                         }
-                        {this.state.timelineData && this.state.showLine? <Line ref="chart" data={this.state.timelineData} options={this.options()}/> : null }
-
 
                     </div>
 
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
+                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt3 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
                         <div className="green">{this.numberWithCommas(this.state.place.totalRecovered)}</div>
                     </div>
                 </div>
+                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
+
             </div>
           );
     }
