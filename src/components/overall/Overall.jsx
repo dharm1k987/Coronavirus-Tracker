@@ -3,6 +3,8 @@ import "./Overall.css"
 import { CircularProgress } from '@material-ui/core';
 import { Doughnut, Line } from 'react-chartjs-2';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import Button from '@material-ui/core/Button';
+
 const moment = require('moment');
 
 
@@ -20,8 +22,12 @@ export class Overall extends Component {
             place: props.place,
             graph: null,
             placeTimeline: props.timelines,
-            timelineData: null
+            timelineData: null,
+            showLine: false,
+            btnText: 'Show Graph'
         }
+
+        this.getLineGraph = this.getLineGraph.bind(this)
     }
     
     numberWithCommas(x) {
@@ -37,7 +43,12 @@ export class Overall extends Component {
         });
       }
 
-    convertDate
+    getLineGraph() {
+        this.setState({
+            showLine: !this.state.showLine,
+            btnText: this.state.btnText == 'Show Graph' ? 'Hide Graph' : 'Show Graph'
+        })
+    }
 
     componentDidMount() {
         console.log(this.state.placeTimeline)
@@ -165,9 +176,7 @@ export class Overall extends Component {
                     <p className="ma0"> Live </p>
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
                 </div>
-                {
-                    this.state.timelineData ? <Line ref="chart" data={this.state.timelineData} options={this.options()}/> : null
-                }
+
                 {/* <Line ref="chart" data={data} /> */}
 
                 <div className="tc pt4 mb3 mh2 br2">
@@ -223,6 +232,13 @@ export class Overall extends Component {
                             }}
                             className=""
                         /> : null }
+                        {
+                            this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
+                            : null
+                        }
+                        {this.state.timelineData && this.state.showLine? <Line ref="chart" data={this.state.timelineData} options={this.options()}/> : null }
+
+
                     </div>
 
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pv4-ns pt3 br2">
