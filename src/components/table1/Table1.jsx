@@ -40,12 +40,30 @@ export class Table1 extends Component {
         { name: 'country', title: 'Country' },
         { name: 'totalCases', title: 'Cases' }
       ],
-      stats: props.stats,
-      filteredStats: props.stats ? props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1) : [],
+      stats: [],
+      filteredStats: [],
       searchValue: "",
       sort: 'upper',
       sortColumn: 'activeCases'
     };
+  }
+
+
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(state.stats)
+    console.log(props.stats)
+    if (state.stats.length == 0) {
+      if (props.stats) {
+        console.log("will update")
+        return {
+          stats: props.stats,
+          filteredStats: props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1)
+        }
+      }
+    }
+    return null
+
   }
 
   filterCountryList(countryStr) {

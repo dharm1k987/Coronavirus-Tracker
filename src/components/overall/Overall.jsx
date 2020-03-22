@@ -20,7 +20,7 @@ export class Overall extends Component {
         console.log(props)
         this.state = {
             placeName: props.placeName,
-            place: props.place,
+            place: null,
             graph: null,
             placeTimeline: props.timelines,
             timelineData: null,
@@ -99,8 +99,8 @@ export class Overall extends Component {
     static getDerivedStateFromProps(props, state) {
         console.log(props);
         console.log(state)
-        if (props.timelines && props.place) return { timelineData: Overall.createTimelineData(props), graph: Overall.createPiechart(props) }
-        if (!props.timelines && props.place) return { graph: Overall.createPiechart(props) }
+        if (props.timelines && props.place) return { timelineData: Overall.createTimelineData(props), graph: Overall.createPiechart(props), place: props.place }
+        if (!props.timelines && props.place) return { graph: Overall.createPiechart(props), place: props.place }
 
         return null;
     }
@@ -125,6 +125,7 @@ export class Overall extends Component {
     }
 
     render() {
+        console.log(this.state.place)
         return (
             <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
                 <div className="center flex pa3 mid-gray">
@@ -137,7 +138,7 @@ export class Overall extends Component {
                         {this.toTitleCase(this.state.placeName)}
                     </p>
                     <div className="tc">
-                        {this.state.place.totalCases === '--' ?
+                        {!this.state.place ?
                             <CircularProgress /> :
                             <p className="f2 b mb1 gold">
                             { this.numberWithCommas(this.state.place.totalCases) }
@@ -145,7 +146,7 @@ export class Overall extends Component {
                         }
                         <div className="f4 mid-gray b">
                             {
-                                this.state.place.totalCases === '--' ? null :
+                                !this.state.place ? null :
                                 <div>
                                     Active: {this.numberWithCommas(this.state.place.activeCases)}
                                 </div>
@@ -170,12 +171,13 @@ export class Overall extends Component {
                         : null
                     }
                 </div>
-                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
 
                 <div className="flex pb4">
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pt3 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
-                        <div className="light-red">{this.numberWithCommas(this.state.place.totalDeaths)}</div>
+                        <div className="light-red">{this.numberWithCommas(
+                            this.state.place ? this.state.place.totalDeaths : this.state.place 
+                        )}</div>
 
                     </div>
 
@@ -200,9 +202,12 @@ export class Overall extends Component {
 
                     <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt3 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
-                        <div className="green">{this.numberWithCommas(this.state.place.totalRecovered)}</div>
+                        <div className="green">{this.numberWithCommas(
+                            this.state.place ? this.state.place.totalRecovered : this.state.place 
+                        )}</div>                        
                     </div>
                 </div>
+                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
 
             </div>
           );
