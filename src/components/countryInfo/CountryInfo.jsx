@@ -35,7 +35,7 @@ class CountryInfo extends React.Component {
   }
 
   getLiveStats(country) {
-    return axios.get(`/live-stats/${country.toLowerCase()}`);
+    return axios.get(`${process.env.REACT_APP_API_URL}/live-stats/${country.toLowerCase()}`);
   }
 
   getParsedNews(url) {

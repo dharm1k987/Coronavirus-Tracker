@@ -21,7 +21,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/live-stats')
+      .get(`${process.env.REACT_APP_API_URL}/live-stats`)
       .then(res => {
         const world = res.data.stats.filter(s => s.country === "total:")[0];
         this.setState({
