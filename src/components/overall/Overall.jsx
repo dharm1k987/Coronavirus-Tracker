@@ -139,6 +139,25 @@ export class Overall extends Component {
         //   };
     }
 
+    options() {
+        return (
+            {
+                scales: {
+                   yAxes :[
+                      {
+                         ticks :{
+                            maxTicksLimit:5
+                         }
+                      }
+                   ]
+                },
+                legend: {
+                    display: false,
+                }
+             }
+        )
+    }
+
     render() {
         return (
             <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
@@ -147,7 +166,7 @@ export class Overall extends Component {
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
                 </div>
                 {
-                    this.state.timelineData ? <Line ref="chart" data={this.state.timelineData}/> : null
+                    this.state.timelineData ? <Line ref="chart" data={this.state.timelineData} options={this.options()}/> : null
                 }
                 {/* <Line ref="chart" data={data} /> */}
 
