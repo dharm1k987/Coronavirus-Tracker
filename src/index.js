@@ -15,6 +15,8 @@ app.use((req, res, next) => {
   console.log(req.headers.origin);
   if (req.headers.origin === 'https://track-coronavirus.com') {
     res.setHeader('Access-Control-Allow-Origin', 'https://track-coronavirus.com');
+  } else if (req.headers.origin === 'https://dev.track-coronavirus.com') {
+    res.setHeader('Access-Control-Allow-Origin', 'https://dev.track-coronavirus.com');
   } else if (req.headers.origin === 'http://localhost:3000') {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   }
