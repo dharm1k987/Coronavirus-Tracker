@@ -174,7 +174,7 @@ export class Overall extends Component {
                     </Slider>
 
                     <div className="dotDiv">
-                        { this.state.graph ? <Dot slide={0} className="dotCust"> <ArrowBackIcon/> </Dot> : null }
+                        { this.state.graph ? <Dot slide={0} className="dotCust"> { this.state.timelineData ? <ArrowBackIcon/> : null }</Dot> : null }
                         { this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null }
                     </div>
                 </CarouselProvider>
