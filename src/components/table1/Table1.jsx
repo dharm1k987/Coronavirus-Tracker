@@ -51,11 +51,9 @@ export class Table1 extends Component {
 
 
   static getDerivedStateFromProps(props, state) {
-    console.log(state.stats)
-    console.log(props.stats)
+
     if (state.stats.length == 0) {
       if (props.stats) {
-        console.log("will update")
         return {
           stats: props.stats,
           filteredStats: props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1)

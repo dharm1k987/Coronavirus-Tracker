@@ -88,9 +88,8 @@ class CountryInfo extends React.Component {
       }).catch(e => console.log(e));
 
       axios
-      .get(`/timelines/${decodeURIComponent(this.state.country)}`)
+      .get(`${process.env.REACT_APP_API_URL}/timelines/${decodeURIComponent(this.state.country)}}`)
       .then(res => {
-        console.log(res.data)
         let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
         dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
 
@@ -102,7 +101,7 @@ class CountryInfo extends React.Component {
           timelines: { labels: dates, timelinesDeath: deathSum,
              timelinesConfirmed: confirmedSum,
              timelinesRecovered: recoveredSum}
-        }, () => console.log(this.state.timelines))
+        })
 
 
       }).catch(e => console.log(e))
