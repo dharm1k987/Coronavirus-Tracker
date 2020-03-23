@@ -5,6 +5,8 @@ import Timeline from '../timeline/Timeline'
 import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
@@ -172,8 +174,8 @@ export class Overall extends Component {
                     </Slider>
 
                     <div className="dotDiv">
-                        { this.state.graph ? <Dot slide={0} className="dotCust"> &#11044; </Dot> : null }
-                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> &#11044; </Dot> : null }
+                        { this.state.graph ? <Dot slide={0} className="dotCust"> <ArrowBackIcon/> </Dot> : null }
+                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null }
                     </div>
                 </CarouselProvider>
                     {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
@@ -210,8 +212,8 @@ export class Overall extends Component {
                     </Slider>
 
                     <div className="dotDiv">
-                        { this.state.graph ? <Dot slide={0} className="dotCust"> &#11044; </Dot> : null }
-                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> &#11044; </Dot> : null }
+                        { this.state.graph ? <Dot slide={0} className="dotCust"> <ArrowBackIcon/> </Dot> : null }
+                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null }
                     </div>
 
                 </CarouselProvider>
