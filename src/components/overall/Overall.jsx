@@ -193,10 +193,11 @@ export class Overall extends Component {
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
                         naturalSlideHeight={125}
+                        infinite={true}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
 
-                    <Slider>
+                    <Slider classNameAnimation="sliderAnimation">
                     <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
 
                     {this.state.timelineData ? 
