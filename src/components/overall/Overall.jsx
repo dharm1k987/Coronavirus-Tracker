@@ -155,6 +155,7 @@ export class Overall extends Component {
                 </div>
                 <div className="dn-l db center f2-ns f3 b pa2 tc mh2  pt3 br2">
                 <CarouselProvider
+                        lockOnWindowScroll={true}
                         naturalSlideWidth={200}
                         naturalSlideHeight={125}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
@@ -184,6 +185,7 @@ export class Overall extends Component {
 
                     <div className="db-l dn f2-ns f3 b fl w-70 tc mh2 br2">
                     <CarouselProvider
+                        lockOnWindowScroll={true}
                         naturalSlideWidth={200}
                         naturalSlideHeight={125}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
