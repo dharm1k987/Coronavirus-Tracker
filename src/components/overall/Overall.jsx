@@ -3,9 +3,13 @@ import "./Overall.css"
 import { CircularProgress } from '@material-ui/core';
 import { Doughnut, Line } from 'react-chartjs-2';
 import Timeline from '../timeline/Timeline'
+import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from '@material-ui/core/Button';
+import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
 
+import 'react-awesome-slider/dist/styles.css';
 const moment = require('moment');
 
 
@@ -126,6 +130,9 @@ export class Overall extends Component {
 
     render() {
         console.log(this.state.place)
+        const flickityOptions = {
+            initialIndex: 2
+        }
         return (
             <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
                 <div className="center flex pa3 mid-gray">
@@ -155,21 +162,24 @@ export class Overall extends Component {
                     </div>
                 </div>
                 <div className="dn-l db center f2-ns f3 b pa2 tc mh2  pt3 br2">
-                    { this.state.graph ?
-                    <Doughnut
-                        data={this.state.graph}
-                        options={{
-                            legend:{
-                            display:false,
-                            position:'right'
-                            }
-                        }}
-                        className=""
-                    /> : null }
+                        <AwesomeSlider
+                                media={[
+                                {
+                                    source: 'https://cdn.sstatic.net/Sites/superuser/img/logo.svg?v=4bc8a703ebac',
+                                },
+                                {
+                                    source: 'https://cdn.sstatic.net/Sites/superuser/img/logo.svg?v=4bc8a703ebac',
+                                },
+                                {
+                                    source: 'https://cdn.sstatic.net/Sites/superuser/img/logo.svg?v=4bc8a703ebac',
+                                },
+                                ]}
+                                />
+                    {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
                     {
                         this.state.timelineData ? <Button variant="contained" className="showBtn" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
                         : null
-                    }
+                    } */}
                 </div>
 
                 <div className="flex pb4">
@@ -182,17 +192,7 @@ export class Overall extends Component {
                     </div>
 
                     <div className="db-l dn f2-ns f3 b fl w-33 pa2 tc mh2  pt3 br2">
-                        { this.state.graph ?
-                        <Doughnut
-                            data={this.state.graph}
-                            options={{
-                                legend:{
-                                display:false,
-                                position:'right'
-                                }
-                            }}
-                            className=""
-                        /> : null }
+                        { this.state.graph ? <Piechart data={this.state.graph} /> : null }
                         {
                             this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
                             : null
