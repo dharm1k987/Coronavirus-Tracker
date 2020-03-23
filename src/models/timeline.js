@@ -42,7 +42,7 @@ const {
     if (timeline.country == 'bahamas, the') timeline.country = 'bahamas';
     if (timeline.country == 'gambia, the') timeline.country = 'gambia';
     if (timeline.country == 'united kingdom') timeline.country = 'uk';
-    if (timeline.country == 'usa') timeline.country = 'us';
+    if (timeline.country == 'us') timeline.country = 'usa';
 
 
 
