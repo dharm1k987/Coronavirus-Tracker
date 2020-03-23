@@ -76,3 +76,22 @@
   background-color: rgb(228, 228, 228) !important;
   margin-bottom: 30px;
 }
+
+.showBtn {
+  margin-top: 10px !important;
+}
+
+.dotCust {
+  font-size: 10px;
+  background-color: white;
+  border: none;
+}
+
+.dotDiv {
+  
+}
+
+.sliderAnimation {
+  transition-property: opacity, left, top, height;
+  transition-duration: 3s, 5s;
+}

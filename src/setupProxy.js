@@ -8,6 +8,12 @@ module.exports = function(app) {
         })
       );
       app.use(
+        '/timelines',
+        createProxyMiddleware({
+          target: 'http://localhost:9000/'
+        })
+      );
+      app.use(
         '/cors',
         createProxyMiddleware({
           target: 'http://localhost:8000/',

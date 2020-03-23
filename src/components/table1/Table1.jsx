@@ -14,31 +14,15 @@ export class Table1 extends Component {
   }
 
   toTitleCase(str) {
-    const lowerStr = str.toLowerCase();
-    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
     return str.replace(/\w\S*/g, function(txt){
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
 
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-  }
-
-
-  generateRows() {
-      const countries = ["Canada", "USA", "China", "Italy", "Russia", "Belgium", "Slovakia"]
-      return countries.map((country) => {
-          return {country: country, deaths: this.getRandomInt(1,200), cases: this.getRandomInt(200, 400)}
-      })  
-    }
-
   constructor(props) {
     super(props);
-    this.generateRows = this.generateRows.bind(this);
-    this.getRandomInt = this.getRandomInt.bind(this);
+    
     this.handleSort = this.handleSort.bind(this);
 
     // activeCases: 23605
@@ -61,30 +45,32 @@ export class Table1 extends Component {
       searchValue: "",
       sort: 'upper',
       sortColumn: 'activeCases'
-      // rows: this.generateRows({ length: 6 })
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    if (!prevState.filteredStats.length) {
-      return {
-        stats: nextProps.stats.stats ? nextProps.stats.stats : prevState.stats,
-        filteredStats: nextProps.stats.stats ? nextProps.stats.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1) : []
-      };
+
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(state.stats)
+    console.log(props.stats)
+    if (state.stats.length == 0) {
+      if (props.stats) {
+        console.log("will update")
+        return {
+          stats: props.stats,
+          filteredStats: props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1)
+        }
+      }
     }
-    else return null;
-  }
- 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.stats.length !== this.props.stats.length){
-        this.setState({
-          stats: this.props.stats,
-          filteredStats: this.props.stats ? this.props.stats.sort((a, b) => a.activeCases < b.activeCases ? 1 : -1) : [] });
-    }
+    return null
+
   }
 
   filterCountryList(countryStr) {
-    const orderedStats = this.state.stats.sort((a,b) => a.activeCases < b.activeCases ? 1 : -1);
+    let column = this.state.sortColumn;
+    let num = this.state.sort === 'upper' ? 1 : -1
+    const orderedStats = this.state.stats.sort((a,b) => eval('a[column]') < eval('b[column]') ? num : -1*num);
+
     if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: orderedStats})
     this.setState({
       searchValue: countryStr,

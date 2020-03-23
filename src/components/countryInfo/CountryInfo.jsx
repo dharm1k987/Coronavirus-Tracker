@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { newsXML } from './newsXML'
 import { NewsBlock } from './newsBlock/NewsBlock'
 import { v4 as uuidv4 } from 'uuid';
-import { Overall, Table1 } from '..'
+import { Overall } from '..'
 import axios from 'axios';
 import moment from "moment";
 import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
-const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API_KEY);
 
 class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       country: props.match.params.country,
-      countryStats: {},
+      countryStats: null,
       news: [],
-      graph: null
+      graph: null,
+      notFound: false,
+      timelines: null
     }
   }
 
   toTitleCase(str) {
-    const lowerStr = str.toLowerCase();
-    if (str === "usa" || str == "uae" || str == "uk") return str.toUpperCase();
+    if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -54,13 +52,19 @@ class CountryInfo extends React.Component {
   timeSincePosted(postTime) {
     return moment().diff(moment(postTime));
   }
+  
 
   componentDidMount() {
-
     let query = this.state.country + " coronavirus";
     let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
-      this.setState({ countryStats: res.data.countryStats });
+      if (!res.data.countryStats) this.setState({ notFound: true })
+      else this.setState({ countryStats: res.data.countryStats });
+    }).catch(e => {
+      console.log(e);
+      this.setState({
+        notFound: true
+      })
     })
 
     this.getParsedNews(url)
@@ -80,34 +84,33 @@ class CountryInfo extends React.Component {
             };
           });
         this.setState({ news });
-      });
+      }).catch(e => console.log(e));
+
+      axios
+      .get(`/timelines/${decodeURIComponent(this.state.country)}`)
+      .then(res => {
+        console.log(res.data)
+        let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
+        dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
+
+        let confirmedSum = res.data.countryTimelines.timelinesConfirmed[0].data.map(f => f[Object.keys(f)])
+        let recoveredSum = res.data.countryTimelines.timelinesRecovered[0].data.map(f => f[Object.keys(f)])
+        let deathSum = res.data.countryTimelines.timelinesDeath[0].data.map(f => f[Object.keys(f)])
+
+        this.setState({
+          timelines: { labels: dates, timelinesDeath: deathSum,
+             timelinesConfirmed: confirmedSum,
+             timelinesRecovered: recoveredSum}
+        }, () => console.log(this.state.timelines))
 
 
-  //  newsapi.v2.everything({
-  //     q: `${query}`,
-  //     language: 'en',
-  //     sortBy: 'publishedAt',
-  //     }).then(response => {
-  //       let news = response.articles.map((r) => {
-  //         return {
+      }).catch(e => console.log(e))
 
-  //           link: r.url,
-  //           pubDate: moment(r.publishedAt, 'YYYY-MM-DDTHH:mm:ssZ').valueOf(),
-  //           publisher: r.source.name ? r.source.name : 'External',
-  //           title: r.title
-  //         }
-  //       });
-  //       news = news.sort((a,b) => a.pubDate < b.pubDate ? 1 : -1)
-  //       news = news.map((r) => {
-  //         return { link: r.link, pubDate: this.getTimeMeasure(r.pubDate), publisher: r.publisher, title: r.title }
-  //       })
-  //       this.setState({ news: news });
-  //      }).catch((e) => console.log(e))
 
   }
 
   render() {
-    if (!this.state.countryStats) {
+    if (this.state.notFound) {
       return (<Redirect to={{
         pathname: '/404',
         state: { path: this.state.country }
@@ -129,7 +132,11 @@ class CountryInfo extends React.Component {
         </div>
 
       <div className="flex mt2"> 
-        <Overall placeName={this.state.country} place={this.state.countryStats} />
+      {
+        this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats} 
+        timelines={this.state.timelines ? this.state.timelines : null} />
+        : null
+      }
       </div>
 
         <div className="tc pt4 mb2 mh2 br2">
@@ -147,7 +154,7 @@ class CountryInfo extends React.Component {
           <div className="tc ">
 
               <div className="f3">
-                {newsAggregation.length == 0 ? <CircularProgress /> : newsAggregation}
+                {newsAggregation.length === 0 ? <CircularProgress /> : newsAggregation}
               </div>
           </div>
 
