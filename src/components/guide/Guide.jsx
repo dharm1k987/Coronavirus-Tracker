@@ -112,8 +112,10 @@ export class Guide extends Component {
 
   render() {
 
+    // ADVERT
     return (
       <div className="center w-90 w-70-ns">
+        <div id="ezoic-pub-ad-placeholder-102"> </div>
         <p className="mv4 f2 f1-ns b tc">How do I stay safe?</p>
         {this.state.tipList.map(tip => <TipCard {...tip} />)}
       </div>
