@@ -32,6 +32,7 @@ const {
   
   const postTimeline = async (timeline, type) => {
     let updated = true;
+    timeline.country = timeline.country.toLowerCase();
 
     if (timeline.country == 'korea, south') timeline.country = 's. korea';
     if (timeline.country == 'taiwan*') timeline.country = 'taiwan';
