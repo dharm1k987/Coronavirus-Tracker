@@ -88,7 +88,7 @@ class CountryInfo extends React.Component {
       }).catch(e => console.log(e));
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/timelines/${country.toLowerCase()}`)
+      .get(`${process.env.REACT_APP_API_URL}/timelines/${this.state.country.toLowerCase()}`)
       .then(res => {
         let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
         dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
