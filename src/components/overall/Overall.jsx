@@ -19,7 +19,6 @@ export class Overall extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             placeName: props.placeName,
             place: null,
@@ -99,8 +98,7 @@ export class Overall extends Component {
 
 
     static getDerivedStateFromProps(props, state) {
-        console.log(props);
-        console.log(state)
+
         if (props.timelines && props.place) return { timelineData: Overall.createTimelineData(props), graph: Overall.createPiechart(props), place: props.place }
         if (!props.timelines && props.place) return { graph: Overall.createPiechart(props), place: props.place }
 
@@ -130,7 +128,6 @@ export class Overall extends Component {
     }
 
     render() {
-        console.log(this.state.place)
         return (
             <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
                 <div className="center flex pa3 mid-gray">
