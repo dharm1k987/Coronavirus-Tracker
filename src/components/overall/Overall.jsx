@@ -6,7 +6,7 @@ import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from '@material-ui/core/Button';
 
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 
@@ -166,6 +166,11 @@ export class Overall extends Component {
                     <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
                     </Slide> : null }
                     </Slider>
+
+                    <div className="dotDiv">
+                        { this.state.graph ? <Dot slide={0} className="dotCust"> &#11044; </Dot> : null }
+                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> &#11044; </Dot> : null }
+                    </div>
                 </CarouselProvider>
                     {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
                     {
@@ -190,12 +195,20 @@ export class Overall extends Component {
                         naturalSlideHeight={125}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
+
                     <Slider>
                     <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
+
                     {this.state.timelineData ? 
                     <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
                     </Slide> : null }
                     </Slider>
+
+                    <div className="dotDiv">
+                        { this.state.graph ? <Dot slide={0} className="dotCust"> &#11044; </Dot> : null }
+                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> &#11044; </Dot> : null }
+                    </div>
+
                 </CarouselProvider>
                         {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
                         {
