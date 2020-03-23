@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Overall, Table1 } from '..'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import InfoIcon from '@material-ui/icons/Info';
 
 
 class Home extends React.Component {
@@ -33,7 +35,14 @@ class Home extends React.Component {
 
   render() {
     return (<div>
-        <Overall placeName={"World"} place={this.state.world}/>
+      <div className="w-90 center ba bw1 b shadow-3 br3 bg-white f5 blue mt3">
+      <Link to="/guide" className="flex justify-center">
+        <InfoIcon className="mv2 mh2"/>
+        <div className="mv2">What do I need to know?</div>
+      </Link>
+
+      </div>
+      <Overall placeName={"World"} place={this.state.world}/>
       <Table1 stats={this.state.liveStats} />
       </div>
     );

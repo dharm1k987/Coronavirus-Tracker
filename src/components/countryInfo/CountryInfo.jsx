@@ -65,6 +65,7 @@ class CountryInfo extends React.Component {
 
     this.getParsedNews(url)
       .then(res => {
+        if (!res) return;
         const news = res.items
           .filter(i => !i.title.toLowerCase().includes("live update"))
           .sort((i, j) => this.timeSincePosted(i.pubDate) < this.timeSincePosted(j.pubDate) ? -1 : 1)
