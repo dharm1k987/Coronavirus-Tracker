@@ -17,6 +17,7 @@ const {
   };
 
   const getTimelinesOf = async (country) => {
+    country = country.toLowerCase()
     const timelinesDeath = await Timeline.find({type: 'deaths', country: country});
     const timelinesRecovered = await Timeline.find({type: 'recovered', country: country});
     const timelinesConfirmed = await Timeline.find({type: 'confirmed', country: country});
