@@ -30,6 +30,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.send('Hello Track Coronavirus backend!'));
 
 require('./routes/live-stats')(app);
+require('./routes/timeline')(app);
+
 
 app.listen(9000, () => console.log('Track Coronavirus app listening on port 9000!'))
 
