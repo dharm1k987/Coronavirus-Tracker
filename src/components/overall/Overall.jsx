@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import { number } from 'prop-types';
 
 
 
@@ -111,7 +112,10 @@ export class Overall extends Component {
                    yAxes :[
                       {
                          ticks :{
-                            maxTicksLimit:5
+                            callback: function(value, index, values) {
+                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            },
+                            maxTicksLimit:5,
                          }
                       }
                    ]
@@ -192,7 +196,7 @@ export class Overall extends Component {
                     <CarouselProvider
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
-                        naturalSlideHeight={125}
+                        naturalSlideHeight={100}
                         infinite={true}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
