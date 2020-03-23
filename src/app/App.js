@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
 import { Navbar } from '../components'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Home from '../components/home/Home';
 import CountryInfo from '../components/countryInfo/CountryInfo';
 import NoRouteMatch from '../components/NoRouteMatch/NoRouteMatch';
+import { Guide } from '../components/guide/Guide';
 
 class App extends React.Component {
 
@@ -17,9 +18,12 @@ class App extends React.Component {
       <div className="apply-font mid-gray">
       <Navbar />
       <Router>
-        <Route exact path="/" component={Home}></Route>
-        <Route exact path="/:country" component={CountryInfo}></Route>
-        <Route path="/404" component={NoRouteMatch}></Route>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/guide" component={Guide} />
+          <Route exact path="/404" component={NoRouteMatch} />
+          <Route exact path="/:country" component={CountryInfo} />
+        </Switch>
       </Router>
     </div>
     )

@@ -1,8 +1,13 @@
 import React from 'react';
 import { Overall, Table1 } from '..'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import InfoIcon from '@material-ui/icons/Info';
+
 const fs = require('fs')
 const moment = require('moment')
+
 
 class Home extends React.Component {
   
@@ -17,7 +22,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/live-stats')
+      .get(`${process.env.REACT_APP_API_URL}/live-stats`)
       .then(res => {
         const world = res.data.stats.filter(s => s.country === "total:")[0];
         this.setState({
@@ -60,17 +65,15 @@ class Home extends React.Component {
 
   render() {
     return (<div>
-                <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
-            <Table1 stats={this.state.liveStats} />
-        {/* {
-          this.state.world && this.state.liveStats && this.state.timelines ? 
-          <div>
-            <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
-            <Table1 stats={this.state.liveStats} />
-          </div>
-        : null
-        } */}
+      <div className="w-90 center ba bw1 b shadow-3 br3 bg-white f5 blue mt3">
+      <Link to="/guide" className="flex justify-center">
+        <InfoIcon className="mv2 mh2"/>
+        <div className="mv2">What do I need to know?</div>
+      </Link>
 
+      </div>
+      <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
+      <Table1 stats={this.state.liveStats} />
       </div>
     );
   }
