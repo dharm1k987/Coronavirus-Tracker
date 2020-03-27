@@ -12,20 +12,20 @@ let finalArrayRecovered = []; // stores all the json objects to pass to backend
 async function helper(type) {
     // type = Confirmed, Deaths or Recovered
     // console.log("helper called")
-    let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-${type}.csv`;
+    let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_${type}_global.csv`;
     let res = await axios.get(url); // res = content of csv file
     // console.log("res finished")
     await parseData(res.data, type.toLowerCase()) // WAIT for parsing to complete, we need to parse csv's separately
 }
 
 async function main() {
-  await helper('Confirmed'); // parse the Confirmed csv, WAIT for this to complete before moving on
+  await helper('confirmed'); // parse the Confirmed csv, WAIT for this to complete before moving on
   data = []; countryToTotal = {}; // reset data structures
   
-  await helper('Recovered'); // parse the Recovered csv, WAIT for this to complete before moving on
+  await helper('recovered'); // parse the Recovered csv, WAIT for this to complete before moving on
   data = []; countryToTotal = {}; // reset data structures
 
-  await helper('Deaths'); // parse the Deaths csv
+  await helper('deaths'); // parse the Deaths csv
 
   await finalArrayConfirmed.forEach((c) => {
     Object.keys(c).forEach(country => {
