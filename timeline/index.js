@@ -28,7 +28,6 @@ async function main() {
   await helper('Deaths'); // parse the Deaths csv
 
   await finalArrayConfirmed.forEach((c) => {
-
     Object.keys(c).forEach(country => {
       axios.post(`http://localhost:9000/timeline/update/confirmed`, {
         newTimeline: { country: country, data: c[country] }
@@ -78,7 +77,9 @@ const parseData = async (contents, type) => {
         if (!(country in countryToTotal)) {
           countryToTotal[country] = dates.map(date => {
             let obj = {};
-            obj[[date]] = 0;
+            obj["date"] = date;
+            obj["value"] = 0;
+            // obj[[date]] = 0;
             return obj;
           });  
         }
@@ -87,7 +88,10 @@ const parseData = async (contents, type) => {
         for (let j = 0; j < dates.length; j++) {
           let date = dates[j];
           let toAddValue = parseInt(data[i][j + 4], 10);  
-          countryToTotal[country][j][date] += toAddValue;
+          // find the index where this date
+          // console.log(countryToTotal[country][j]);
+          // return new Error("stop")
+          countryToTotal[country][j].value += toAddValue;
         }
       }
 
@@ -106,15 +110,3 @@ const parseData = async (contents, type) => {
 
 
 main();
-
-  // to fix:
-
-  // contents = contents.replace("Korea, South", 'South Korea')
-  // contents = contents.replace('Taiwan*', 'Taiwan')
-  // contents = contents.replace('Congo (Kinshasa)', 'Congo')
-  // contents = contents.replace("Cote d'Ivoire", 'Ivory Coast')
-  // contents = contents.replace("Congo (Brazzaville)", 'Ivory Coast')
-  // contents = contents.replace("Bahamas, The", 'Bahamas')
-  // contents = contents.replace("Gambia, The", 'Gambia') 
-
-  // contents = contents.replace("'", '')
