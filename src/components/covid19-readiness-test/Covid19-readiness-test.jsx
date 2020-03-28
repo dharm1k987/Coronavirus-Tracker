@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export class Covid19ReadinessTest extends Component {
@@ -60,15 +63,13 @@ export class Covid19ReadinessTest extends Component {
         currentPoints: 1
       },
     ];
-    const startState = {
+    this.state = {
       quizState: 0, // 0: Intro Screen, 1: Quiz Screen, 2: Result Screen
       actionAmount: 10,
       disabledBtnList: Array(10).fill(false),
       actionList,
       totalScore: 0,
     };
-    this.state = startState;
-    this.randomizeActions();
   }
 
   shuffleArray(array) {
@@ -90,10 +91,12 @@ export class Covid19ReadinessTest extends Component {
     });
   }
 
-  randomizeActions() {
-    let currActionList = this.state.actionList;
-    this.shuffleArray(currActionList);
-    this.setState({ actionList: currActionList });
+  componentDidMount() {
+    if (this.state.actionList) {
+      let currActionList = this.state.actionList;
+      this.shuffleArray(currActionList);
+      this.setState({ actionList: currActionList });
+    }
   }
 
   restartQuiz() {
@@ -205,7 +208,17 @@ export class Covid19ReadinessTest extends Component {
   render() {
 
     return (
+      <div>
+      <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
+        
+        <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
+            <HomeIcon/>
+            <div>Home</div>
+          </Link>   
+        
+        </div>
       <div className="center w-90 w-70-ns">
+
         {this.state.quizState === 0 ? <div>
           <div className="f2 tc pv4 b">COVID-19 Readiness Test</div>
           <div className="f4 pv2 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
@@ -222,7 +235,7 @@ export class Covid19ReadinessTest extends Component {
             <ReplayIcon />
           </button>
           <div className="tc">
-            {this.state.actionList.map((ai, i) => <div>
+            {this.state.actionList.map((ai, i) => <div key={uuidv4()}>
               <button onClick={(e) => this.onClickAction(i)} 
                 className={`ba b center w-80
                   bw1
@@ -251,6 +264,7 @@ export class Covid19ReadinessTest extends Component {
               </div>
             </button>
         </div>: <div></div>}
+      </div>
       </div>
       
     );

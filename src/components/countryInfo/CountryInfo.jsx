@@ -25,15 +25,8 @@ class CountryInfo extends React.Component {
     }
   }
 
-  toTitleCase(str) {
-    if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
-    return str.replace(/\w\S*/g, function(txt){
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
   getLiveStats(country) {
-    return axios.get(`${process.env.REACT_APP_API_URL}/live-stats/${country.toLowerCase()}`);
+    return axios.get(`${process.env.REACT_APP_API_URL}/live-stats/${country.toUpperCase()}`);
   }
 
   getParsedNews(url) {
@@ -55,7 +48,7 @@ class CountryInfo extends React.Component {
   
 
   componentDidMount() {
-    let query = this.state.country + " coronavirus";
+    let query = this.state.country.toLowerCase() + " coronavirus";
     let url = `news.google.com/rss/search?q=${encodeURIComponent(query)}&maxitems=4`
     this.getLiveStats(this.state.country).then(res => {
       if (!res.data.countryStats) this.setState({ notFound: true })
@@ -88,7 +81,7 @@ class CountryInfo extends React.Component {
       }).catch(e => console.log(e));
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/timelines/${this.state.country.toLowerCase()}`)
+      .get(`${process.env.REACT_APP_API_URL}/timelines/${this.state.country.toUpperCase()}`)
       .then(res => {
         let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => a.date);
         dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
@@ -144,7 +137,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Top Stories in {this.toTitleCase(this.state.country)}
+              Top Stories in {this.state.country}
           </p>
           <div className="flex">
           <div className="center flex">
