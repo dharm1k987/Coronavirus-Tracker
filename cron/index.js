@@ -52,6 +52,7 @@ scrape(options, (error, result) => {
       if (obj.country.includes('Diamond Princess')) obj.country = 'Diamond Princess'
       if (obj.country.includes('union')) obj.country = 'Reunion'
       if (obj.country.includes('Cura')) obj.country = 'Curacao'
+      if (obj.country.includes('Zaandam')) obj.country = 'MS Zandam'
       if (obj.country.includes('Total:')) obj.country = 'Total:'
 
       obj.country = obj.country.toUpperCase();
