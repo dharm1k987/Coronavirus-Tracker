@@ -28,7 +28,8 @@ const postStats = async (stats) => {
     if (stats[i].country.includes('DIAMOND')) stats[i].country = 'DIAMOND PRINCESS'
     if (stats[i].country.includes('UNION')) stats[i].country = 'REUNION'
     if (stats[i].country.includes('CURA')) stats[i].country = 'CURACAO'
-    if (stats[i].country.includes('TOTAL:')) country = 'TOTAL:'
+    if (stats[i].country.includes('ZAANDAM')) stats[i].country = 'MS ZAANDAM'
+    if (stats[i].country.includes('TOTAL:')) stats[i].country = 'TOTAL:'
 
     const newStat = await Stat.updateOne(
       { country: stats[i].country },

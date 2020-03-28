@@ -50,6 +50,7 @@ const countryReplace = require('../helpers/countryReplace').countryReplace;
     if (timeline.country.includes('DIAMOND')) timeline.country = 'DIAMOND PRINCESS'
     if (timeline.country.includes('UNION')) timeline.country = 'REUNION'
     if (timeline.country.includes('CURA')) timeline.country = 'CURACAO'
+    if (timeline.country.includes('ZAANDAM')) timeline.country = 'MS ZAANDAM'
     if (timeline.country.includes('TOTAL:')) timeline.country = 'TOTAL:'
 
     const newTimeline = await Timeline.updateOne({ country: timeline.country, type: type }, { data: timeline.data, type: type },
