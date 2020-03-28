@@ -25,6 +25,10 @@ const postStats = async (stats) => {
     if (stats[i].country == 'GAMBIA, THE') stats[i].country = 'GAMBIA';
     if (stats[i].country == 'UK') stats[i].country = 'UNITED KINGDOM';
     if (stats[i].country == 'US') stats[i].country = 'USA';
+    if (stats[i].country == 'CZECHIA') stats[i].country = 'CZECH REPUBLIC';
+    if (stats[i].country == 'GUINEABISSAU') stats[i].country = 'GUINEA-BISSAU';
+    if (stats[i].country == 'TIMORLESTE') stats[i].country = 'TIMOR-LESTE';
+    if (stats[i].country == 'CAR') stats[i].country = 'CENTRAL AFRICAN REPUBLIC';
     if (stats[i].country.includes('DIAMOND')) stats[i].country = 'DIAMOND PRINCESS'
     if (stats[i].country.includes('UNION')) stats[i].country = 'REUNION'
     if (stats[i].country.includes('CURA')) stats[i].country = 'CURACAO'
@@ -51,4 +55,3 @@ module.exports = {
   postStats,
   getStatsOf
 };
-
