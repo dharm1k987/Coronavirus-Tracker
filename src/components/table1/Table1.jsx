@@ -130,7 +130,7 @@ export class Table1 extends Component {
               this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
                 <div key={s.country} onClick={(e) => this.goToCountryInfo(s.country.toUpperCase())}>
                   <a href={`/${s.country}`}>
-                      <div className="br3 flex mv2 pt1 ba b--moon-gray bg-white">
+                      <div className="br3 flex mv2 pt1 ba b--moon-gray bg-white items-center">
                         <p className="dark-gray ma0 w-50 pv2 pl4">{s.country}</p>
                         <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
                         <div className="w-10 pv2 pr2 center mid-gray">

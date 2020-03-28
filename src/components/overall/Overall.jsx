@@ -166,7 +166,7 @@ export class Overall extends Component {
                         this.state.flag ? 
                         <div className="flex items-center justify-center flex-wrap content-center mb3">
                             <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div>
-                            <div className="f1 b">{this.state.placeName}</div>
+                            <div className="f1-ns f2 b">{this.state.placeName}</div>
                         </div>
                         : this.state.placeName
                     }
