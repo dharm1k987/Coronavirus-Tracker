@@ -54,10 +54,10 @@ scrape(options, (error, result) => {
       if (obj.country.includes('Cura')) obj.country = 'Curacao'
       if (obj.country.includes('Total:')) obj.country = 'Total:'
 
-      obj.country = obj.country.toLowerCase();
+      obj.country = obj.country.toUpperCase();
       objArray.push(obj);
 
-      if (obj.country == 'total:') break;
+      if (obj.country == 'TOTAL:') break;
 
     }
 

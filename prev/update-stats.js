@@ -46,18 +46,7 @@ const uploadStats = async () => {
     }
     formattedList.push(countryObj);
   }
-  console.log(formattedList)
-  // console.log("Pushing to server...");
-  // const res2 = await fetch('http://localhost:9000/live-stats/update', {
-  //   method: 'post',
-  //   body: JSON.stringify({
-  //     newStats: formattedList
-  //   }),
-  //   headers: { 'Content-Type': 'application/json' },
-  // }).then(res => res.json());
-  // console.log("Done! Here is a snippet of the result: ");
-  // console.log(res2.stats[0]);
-  
+  console.log(formattedList) 
 };
 uploadStats();
 
