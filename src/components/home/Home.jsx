@@ -23,7 +23,7 @@ class Home extends React.Component {
     axios
       .get(`${process.env.REACT_APP_API_URL}/live-stats`)
       .then(res => {
-        const world = res.data.stats.filter(s => s.country === "total:")[0];
+        const world = res.data.stats.filter(s => s.country === "TOTAL:")[0];
         this.setState({
           liveStats: res.data.stats,
           world
@@ -70,7 +70,7 @@ class Home extends React.Component {
       </Link>
       </div>
       <div className="w-70-ns w-90 center ba bw1 b shadow-4 br3 bg-white b--light-red f5 mt3">
-      <Link to="/readiness-test" className="flex justify-center white b--light-red br3 light-red">
+      <Link to="/readiness-test" className="hover-red flex justify-center white b--light-red br3 light-red">
         <VerifiedUserIcon className="mv2 mh2"/>
         <div className="mv2">COVID-19 Pandemic Readiness Test</div>
       </Link>

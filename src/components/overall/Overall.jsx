@@ -40,13 +40,6 @@ export class Overall extends Component {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    toTitleCase(str) {
-        if (str === "usa" || str === "uae" || str === "uk") return str.toUpperCase();
-        return str.replace(/\w\S*/g, function(txt){
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-      }
-
     getLineGraph() {
         this.setState({
             showLine: !this.state.showLine,
@@ -108,7 +101,7 @@ export class Overall extends Component {
     }
 
     componentDidMount(props) {
-        axios.get(`https://restcountries.eu/rest/v2/name/${this.state.placeName}`)
+        axios.get(`https://restcountries.eu/rest1/v2/name/${this.state.placeName}`)
             .then(res => {
                 if (res.data.length > 0) this.setState({ flag: res.data[0].flag })
             })
@@ -151,9 +144,9 @@ export class Overall extends Component {
                         this.state.flag ? 
                         <div className="flex items-center justify-center flex-wrap content-center">
                             <div className="w-10-ns w-20 mh2"><img src={`${this.state.flag}`}/></div>
-                            <div>{this.toTitleCase(this.state.placeName)}</div>
+                            <div>{this.state.placeName}</div>
                         </div>
-                        : this.toTitleCase(this.state.placeName)
+                        : this.state.placeName
                     }
                         
                     </div>
