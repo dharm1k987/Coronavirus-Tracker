@@ -66,14 +66,14 @@ class Home extends React.Component {
 
   render() {
     return (<div>
-      <div className="w-90 center ba bw1 b shadow-3 br3 bg-white f5 blue mt3">
+      <div className="w-70-ns w-90 center ba bw1 b shadow-4 br3 bg-white f5 blue mt3">
       <Link to="/guide" className="flex justify-center">
         <InfoIcon className="mv2 mh2"/>
         <div className="mv2">What do I need to know?</div>
       </Link>
       </div>
-      <div className="w-90 center ba bw1 b shadow-3 br3 bg-white f5 blue mt3">
-      <Link to="/readiness-test" className="flex justify-center">
+      <div className="w-70-ns w-90 center ba bw1 b shadow-4 br3 bg-white b--light-red f5 mt3">
+      <Link to="/readiness-test" className="flex justify-center white b--light-red br3 light-red">
         <VerifiedUserIcon className="mv2 mh2"/>
         <div className="mv2">COVID-19 Pandemic Readiness Test</div>
       </Link>

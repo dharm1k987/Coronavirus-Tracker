@@ -60,7 +60,6 @@ export class Covid19ReadinessTest extends Component {
         currentPoints: 1
       },
     ];
-    this.shuffleArray(actionList);
     const startState = {
       quizState: 0, // 0: Intro Screen, 1: Quiz Screen, 2: Result Screen
       actionAmount: 10,
@@ -69,6 +68,7 @@ export class Covid19ReadinessTest extends Component {
       totalScore: 0,
     };
     this.state = startState;
+    this.randomizeActions();
   }
 
   shuffleArray(array) {
@@ -83,6 +83,19 @@ export class Covid19ReadinessTest extends Component {
   startQuiz() {
     this.setState({ quizState: 1 });
   }
+
+  goToIntroScreen() {
+    this.setState({
+      quizState: 0, // 0: Intro Screen, 1: Quiz Screen, 2: Result Screen
+    });
+  }
+
+  randomizeActions() {
+    let currActionList = this.state.actionList;
+    this.shuffleArray(currActionList);
+    this.setState({ actionList: currActionList });
+  }
+
   restartQuiz() {
     const actionList = [
       {
@@ -136,9 +149,16 @@ export class Covid19ReadinessTest extends Component {
         currentPoints: 1
       },
     ];
-    this.shuffleArray(actionList);
+    this.randomizeActions();
+    this.resetQuizState(actionList);
+    this.goToIntroScreen();
+  }
+
+  resetQuizState(actionList) {
+    for (let i = 0; i < this.state.actionAmount; i++) {
+      actionList[i].currentPoints = actionList[i].actualPoints;
+    }
     this.setState({
-      quizState: 0, // 0: Intro Screen, 1: Quiz Screen, 2: Result Screen
       actionAmount: 10,
       disabledBtnList: Array(10).fill(false),
       actionList,
@@ -197,15 +217,17 @@ export class Covid19ReadinessTest extends Component {
             </button>
         </div>: <div></div>}
         {this.state.quizState === 1 ? <div>
-          <div className="f4 tc b mv4">Pick from Most Important to Least Important</div>
+          <div className="f4 tc b mt4 mb2">Pick from Most Important to Least Important</div>
+          <button onClick={(e) => this.resetQuizState(this.state.actionList)} className="mb4 mt1 flex center br-pill light-red ba pa2 bg-white shadow-4 bw1 b--light-red">
+            <ReplayIcon />
+          </button>
           <div className="tc">
             {this.state.actionList.map((ai, i) => <div>
-              <button onClick={(e) => this.onClickAction(i)} className="br3 pa3 ma3 flex center tc w-80"
-                style={{
-                  background: this.state.disabledBtnList[i] ? 'green' : '#d1d9ff',
-                  color: this.state.disabledBtnList[i] ? 'white' : '#373737',
-                  boxShadow: this.state.disabledBtnList[i] ? 'inset 2px 2px 1px rgba(0, 0, 0, 0.4)' : '2px 2px 1px rgba(0, 0, 0, 0.4)'
-                }}
+              <button onClick={(e) => this.onClickAction(i)} 
+                className={`ba b center w-80
+                  bw1
+                  ${this.state.disabledBtnList[i] ? 'bg-green white b--white' : 'b--blue bg-white blue shadow-4'}
+                  br3 f5 pa3 ma2`}
               >
                 <div className="tc w-100">{ai.str}</div>
               </button>
@@ -222,7 +244,7 @@ export class Covid19ReadinessTest extends Component {
             "Nice try! See if you can review your priorities again" :
             "Awesome! You are ready! Share this with your family and friends to let them know you can take care of yourself" }</div>
           <div className="f6 tc mv1">(Highest Possible Rating: A+)</div>
-            <button className="ba bw1 b b--blue shadow-3 br3 f5 blue w-100 mv5 bg-white" onClick={(e) => this.startQuiz()}>
+            <button className="ba bw1 b b--blue shadow-3 br3 f5 blue w-100 mv5 bg-white" onClick={(e) => this.restartQuiz()}>
               <div className="flex justify-center">
                 <ReplayIcon className="mv2"/>
                 <div className="mv2 mh2">Retry quiz</div>
