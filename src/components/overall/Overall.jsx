@@ -101,11 +101,34 @@ export class Overall extends Component {
     }
 
     componentDidMount(props) {
-        axios.get(`https://restcountries.eu/rest1/v2/name/${this.state.placeName}`)
-            .then(res => {
-                if (res.data.length > 0) this.setState({ flag: res.data[0].flag })
-            })
-            .catch(e => console.log(e))
+        // some conversions are nessesary
+        let placeToSearch = this.state.placeName
+        if (placeToSearch) {
+            placeToSearch = placeToSearch.toUpperCase()
+            
+            if (placeToSearch === 'SOUTH KOREA') placeToSearch = 'Korea (Republic of)'
+            if (placeToSearch === 'NORTH MACEDONIA') placeToSearch = 'Macedonia'
+            if (placeToSearch === 'FAEROE ISLANDS') placeToSearch = 'Faroe Islands'
+            if (placeToSearch === 'CHANNEL ISLANDS') placeToSearch = 'Jersey'
+            if (placeToSearch === 'VATICAN CITY') placeToSearch = 'Vatican'
+            if (placeToSearch === 'BRITISH VIRGIN ISLANDS') placeToSearch = 'Virgin Islands'
+            if (placeToSearch === 'ST. VINCENT GRENADINES') placeToSearch = 'Grenadines'
+
+
+            
+
+
+            axios.get(`https://restcountries.eu/rest/v2/name/${placeToSearch}`)
+                .then(res => {
+                    if (res.data.length > 0) {
+                        // special case for Sudan and India, we should sort it because the actual flags are in reverse
+                        if (placeToSearch === "INDIA" || placeToSearch === "SUDAN") res.data = res.data.reverse()
+                        this.setState({ flag: res.data[0].flag })
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+
     }
 
     options() {
@@ -139,18 +162,17 @@ export class Overall extends Component {
                 </div>
 
                 <div className="tc mb3 mh2 br2">
-                    <div className="f1 b mt2 mb0 pa0 mid-gray" >
                     {
                         this.state.flag ? 
-                        <div className="flex items-center justify-center flex-wrap content-center">
-                            <div className="w-10-ns w-20 mh2"><img src={`${this.state.flag}`}/></div>
-                            <div>{this.state.placeName}</div>
+                        <div className="flex items-center justify-center flex-wrap content-center mb3">
+                            <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div>
+                            <div className="f1 b">{this.state.placeName}</div>
                         </div>
                         : this.state.placeName
                     }
+                    
                         
-                    </div>
-
+                    
 
                     <div className="tc">
                         {!this.state.place ?
