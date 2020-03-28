@@ -7,6 +7,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import axios from 'axios';
 
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
@@ -26,7 +27,8 @@ export class Overall extends Component {
             placeTimeline: props.timelines,
             timelineData: null,
             showLine: false,
-            btnText: 'Show Graph'
+            btnText: 'Show Graph',
+            flag: null
         }
 
         this.getLineGraph = this.getLineGraph.bind(this)
@@ -105,6 +107,14 @@ export class Overall extends Component {
         return null;
     }
 
+    componentDidMount(props) {
+        axios.get(`https://restcountries.eu/rest/v2/name/${this.state.placeName}`)
+            .then(res => {
+                if (res.data.length > 0) this.setState({ flag: res.data[0].flag })
+            })
+            .catch(e => console.log(e))
+    }
+
     options() {
         return (
             {
@@ -136,9 +146,19 @@ export class Overall extends Component {
                 </div>
 
                 <div className="tc mb3 mh2 br2">
-                    <p className="f1 b mt2 mb0 pa0 mid-gray" >
-                        {this.toTitleCase(this.state.placeName)}
-                    </p>
+                    <div className="f1 b mt2 mb0 pa0 mid-gray" >
+                    {
+                        this.state.flag ? 
+                        <div className="flex items-center justify-center flex-wrap content-center">
+                            <div className="w-10-ns w-20 mh2"><img src={`${this.state.flag}`}/></div>
+                            <div>{this.toTitleCase(this.state.placeName)}</div>
+                        </div>
+                        : this.toTitleCase(this.state.placeName)
+                    }
+                        
+                    </div>
+
+
                     <div className="tc">
                         {!this.state.place ?
                             <CircularProgress /> :

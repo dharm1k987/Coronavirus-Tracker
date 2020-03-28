@@ -90,12 +90,12 @@ class CountryInfo extends React.Component {
       axios
       .get(`${process.env.REACT_APP_API_URL}/timelines/${this.state.country.toLowerCase()}`)
       .then(res => {
-        let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
+        let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => a.date);
         dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
 
-        let confirmedSum = res.data.countryTimelines.timelinesConfirmed[0].data.map(f => f[Object.keys(f)])
-        let recoveredSum = res.data.countryTimelines.timelinesRecovered[0].data.map(f => f[Object.keys(f)])
-        let deathSum = res.data.countryTimelines.timelinesDeath[0].data.map(f => f[Object.keys(f)])
+        let confirmedSum = res.data.countryTimelines.timelinesConfirmed[0].data.map(f => f.value)
+        let recoveredSum = res.data.countryTimelines.timelinesRecovered[0].data.map(f => f.value)
+        let deathSum = res.data.countryTimelines.timelinesDeath[0].data.map(f => f.value)
 
         this.setState({
           timelines: { labels: dates, timelinesDeath: deathSum,
@@ -139,6 +139,9 @@ class CountryInfo extends React.Component {
       }
       </div>
 
+	    <input type="hidden" name="IL_IN_ARTICLE" />
+
+
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
               Top Stories in {this.toTitleCase(this.state.country)}
@@ -157,6 +160,8 @@ class CountryInfo extends React.Component {
                 {newsAggregation.length === 0 ? <CircularProgress /> : newsAggregation}
               </div>
           </div>
+
+	    <input type="hidden" name="IL_IN_ARTICLE" />
 
       </div>
     );

@@ -2,11 +2,9 @@ import React from 'react';
 import { Overall, Table1 } from '..'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import InfoIcon from '@material-ui/icons/Info';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
-const fs = require('fs')
 const moment = require('moment')
 
 
@@ -35,7 +33,7 @@ class Home extends React.Component {
     axios
     .get(`${process.env.REACT_APP_API_URL}/timelines/`)
     .then(res => {
-      let dates = res.data.timelinesConfirmed[0].data.map(a => Object.keys(a)[0]);
+      let dates = res.data.timelinesConfirmed[0].data.map(a => a.date);
       dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
       let confirmedSum = dates.map(() => 0)
       let recoveredSum = dates.map(() => 0)
@@ -45,16 +43,15 @@ class Home extends React.Component {
 
       for (let i = 0; i < numRecords; i++) {
         res.data.timelinesConfirmed[i].data.forEach((f, index) => {
-          confirmedSum[index] += f[Object.keys(f)]
+          confirmedSum[index] += f.value
         })
         res.data.timelinesRecovered[i].data.forEach((f, index) => {
-          recoveredSum[index] += f[Object.keys(f)]
+          recoveredSum[index] += f.value
         })
         res.data.timelinesDeath[i].data.forEach((f, index) => {
-          deathSum[index] += f[Object.keys(f)]
+          deathSum[index] += f.value
         })
-      }
-     
+      } 
 
       this.setState({
         timelines: { labels: dates, timelinesDeath: deathSum,
@@ -79,7 +76,12 @@ class Home extends React.Component {
       </Link>
       </div>
       <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
+	     <input type="hidden" name="IL_IN_ARTICLE" />
+
       <Table1 stats={this.state.liveStats} />
+
+	   <input type="hidden" name="IL_IN_ARTICLE" />
+
       </div>
     );
   }

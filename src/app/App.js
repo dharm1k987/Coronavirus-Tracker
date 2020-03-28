@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Navbar } from '../components'
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from '../components/home/Home';
 import CountryInfo from '../components/countryInfo/CountryInfo';
 import NoRouteMatch from '../components/NoRouteMatch/NoRouteMatch';

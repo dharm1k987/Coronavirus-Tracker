@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Doughnut, Line } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
 
 class Piechart extends Component {
@@ -14,6 +14,7 @@ class Piechart extends Component {
             <Doughnut
             data={this.props.data}
             options={{
+		animation: { duration: 0 },
                 legend:{
                 display:false,
                 position:'right'

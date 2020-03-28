@@ -52,7 +52,7 @@ export class Table1 extends Component {
 
   static getDerivedStateFromProps(props, state) {
 
-    if (state.stats.length == 0) {
+    if (state.stats.length === 0) {
       if (props.stats) {
         return {
           stats: props.stats,
@@ -115,7 +115,7 @@ export class Table1 extends Component {
     return (
       <div>
         <div className="center">
-          <div className="w-70-ns w-90 center br2">
+          <div className="w-70-ns w-90 center br2 mt3">
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
@@ -136,7 +136,7 @@ export class Table1 extends Component {
             {
               this.state.filteredStats.filter(s => s.country !== "total:").map(s => (
                 <div key={s.country} onClick={(e) => this.goToCountryInfo(s.country.toLowerCase())}>
-                  <Link to={`/${s.country}`}>
+                  <a href={`/${s.country}`}>
                       <div className="br3 flex mv2 pt1 ba b--moon-gray bg-white">
                         <p className="dark-gray ma0 w-50 pv2 pl4">{this.toTitleCase(s.country)}</p>
                         <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
@@ -144,7 +144,7 @@ export class Table1 extends Component {
                           <ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/>
                         </div>
                       </div>
-                  </Link>
+                  </a>
                 </div>)
               )
             }
