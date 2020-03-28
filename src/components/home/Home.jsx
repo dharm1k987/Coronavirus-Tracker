@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import InfoIcon from '@material-ui/icons/Info';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 const fs = require('fs')
 const moment = require('moment')
@@ -70,7 +71,12 @@ class Home extends React.Component {
         <InfoIcon className="mv2 mh2"/>
         <div className="mv2">What do I need to know?</div>
       </Link>
-
+      </div>
+      <div className="w-90 center ba bw1 b shadow-3 br3 bg-white f5 blue mt3">
+      <Link to="/readiness-test" className="flex justify-center">
+        <VerifiedUserIcon className="mv2 mh2"/>
+        <div className="mv2">COVID-19 Pandemic Readiness Test</div>
+      </Link>
       </div>
       <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
       <Table1 stats={this.state.liveStats} />

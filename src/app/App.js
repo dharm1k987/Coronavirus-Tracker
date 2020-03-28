@@ -6,6 +6,7 @@ import Home from '../components/home/Home';
 import CountryInfo from '../components/countryInfo/CountryInfo';
 import NoRouteMatch from '../components/NoRouteMatch/NoRouteMatch';
 import { Guide } from '../components/guide/Guide';
+import { Covid19ReadinessTest } from '../components/covid19-readiness-test/covid19-readiness-test';
 
 class App extends React.Component {
 
@@ -20,6 +21,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/readiness-test" component={Covid19ReadinessTest} />
           <Route exact path="/guide" component={Guide} />
           <Route exact path="/404" component={NoRouteMatch} />
           <Route exact path="/:country" component={CountryInfo} />
