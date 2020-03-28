@@ -10,9 +10,14 @@ async function countryReplace(country) {
         if (country == 'GAMBIA, THE') country = 'GAMBIA';
         if (country == 'UK') country = 'UNITED KINGDOM';
         if (country == 'US') country = 'USA';
+        if (country == 'CZECHIA') country = 'CZECH REPUBLIC';
+        if (country == 'GUINEABISSAU') country = 'GUINEA-BISSAU';
+        if (country == 'TIMORLESTE') country = 'TIMOR-LESTE';
+        if (country == 'CAR') country = 'CENTRAL AFRICAN REPUBLIC';
         if (country.includes('DIAMOND')) country = 'DIAMOND PRINCESS'
         if (country.includes('UNION')) country = 'REUNION'
         if (country.includes('CURA')) country = 'CURACAO'
+        if (country.includes('ZAANDAM')) country = 'MS ZAANDAM'
         if (country.includes('TOTAL:')) country = 'TOTAL:'
     
         return resolve(country)
