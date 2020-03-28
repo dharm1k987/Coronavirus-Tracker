@@ -149,7 +149,7 @@ export class Covid19ReadinessTest extends Component {
         currentPoints: 1
       },
     ];
-    this.randomizeActions();
+    this.shuffleArray(actionList);
     this.resetQuizState(actionList);
     this.goToIntroScreen();
   }
