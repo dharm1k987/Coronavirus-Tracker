@@ -11,10 +11,8 @@ let finalArrayRecovered = []; // stores all the json objects to pass to backend
 
 async function helper(type) {
     // type = Confirmed, Deaths or Recovered
-    // console.log("helper called")
     let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_${type}_global.csv`;
     let res = await axios.get(url); // res = content of csv file
-    // console.log("res finished")
     await parseData(res.data, type.toLowerCase()) // WAIT for parsing to complete, we need to parse csv's separately
 }
 
@@ -73,13 +71,11 @@ const parseData = async (contents, type) => {
         let country = data[i][1].toLowerCase();
 
         // if we haven't mapped this country yet, then set up something like this:
-        // countryToTotal = { 'canada': [{'1/21': 0}, {'1/22': 0}, ...], ...}
         if (!(country in countryToTotal)) {
           countryToTotal[country] = dates.map(date => {
             let obj = {};
             obj["date"] = date;
             obj["value"] = 0;
-            // obj[[date]] = 0;
             return obj;
           });  
         }
@@ -89,7 +85,6 @@ const parseData = async (contents, type) => {
           let date = dates[j];
           let toAddValue = parseInt(data[i][j + 4], 10);  
           // find the index where this date
-          // console.log(countryToTotal[country][j]);
           // return new Error("stop")
           countryToTotal[country][j].value += toAddValue;
         }
