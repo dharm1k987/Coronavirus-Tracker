@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const bodyParser = require('body-parser')
+const compression = require('compression')
 
 app.use(
   bodyParser.urlencoded({
@@ -10,6 +11,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
+app.use(compression());
 
 app.use((req, res, next) => {
   console.log(req.headers.origin);
