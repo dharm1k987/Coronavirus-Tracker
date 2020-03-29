@@ -31,24 +31,25 @@ class Home extends React.Component {
       });
 
     axios
-    .get(`${process.env.REACT_APP_API_URL}/timelines/`)
+    .get(`${process.env.REACT_APP_API_URL}/timelines/total`)
     .then(res => {
-      let dates = res.data.timelinesConfirmed[0].data.map(a => a.date);
+      let prefix = res.data.countryTimelines; // this can be change to remove countryTimelines if not querying country
+      let dates = prefix.timelinesConfirmed[0].data.map(a => a.date);
       dates = dates.map(slashDate => moment(slashDate, 'MM/DD/YYYY').format('MMM D'))
       let confirmedSum = dates.map(() => 0)
       let recoveredSum = dates.map(() => 0)
       let deathSum = dates.map(() => 0)
 
-      let numRecords = res.data.timelinesConfirmed.length;
+      let numRecords = prefix.timelinesConfirmed.length;
 
       for (let i = 0; i < numRecords; i++) {
-        res.data.timelinesConfirmed[i].data.forEach((f, index) => {
+        prefix.timelinesConfirmed[i].data.forEach((f, index) => {
           confirmedSum[index] += f.value
         })
-        res.data.timelinesRecovered[i].data.forEach((f, index) => {
+        prefix.timelinesRecovered[i].data.forEach((f, index) => {
           recoveredSum[index] += f.value
         })
-        res.data.timelinesDeath[i].data.forEach((f, index) => {
+        prefix.timelinesDeath[i].data.forEach((f, index) => {
           deathSum[index] += f.value
         })
       } 
