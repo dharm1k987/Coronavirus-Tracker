@@ -9,11 +9,30 @@ let finalArrayConfirmed = []; // stores all the json objects to pass to backend
 let finalArrayDeaths = []; // stores all the json objects to pass to backend
 let finalArrayRecovered = []; // stores all the json objects to pass to backend
 
+let totalArrayConfirmed = []; 
+let totalArrayDeaths = []; 
+let totalArrayRecovered = []; 
+
 async function helper(type) {
     // type = Confirmed, Deaths or Recovered
     let url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_${type}_global.csv`;
     let res = await axios.get(url); // res = content of csv file
     await parseData(res.data, type.toLowerCase()) // WAIT for parsing to complete, we need to parse csv's separately
+}
+
+function addTotal(dateToValues, linkedArray) {
+  // if the array is empty (first time calling), just set it to the values passed in and return
+  if (linkedArray.length == 0) return linkedArray.push(...dateToValues)
+
+  // otherwise we should go through the list and add
+  let dates = linkedArray.map(pair => pair.date);
+
+  dateToValues.forEach(pair => {
+    const { date, value } = pair
+    let index = dates.indexOf(date)
+    if (index === -1) return
+    linkedArray[index].value += value
+  })
 }
 
 async function main() {
@@ -27,14 +46,19 @@ async function main() {
 
   await finalArrayConfirmed.forEach((c) => {
     Object.keys(c).forEach(country => {
+      addTotal(c[country], totalArrayConfirmed)
+
       axios.post(`http://localhost:9000/timeline/update/confirmed`, {
         newTimeline: { country: country, data: c[country] }
       })
     })
 
   })
+
   await finalArrayDeaths.forEach((c) => {
     Object.keys(c).forEach(function(country) {
+      addTotal(c[country], totalArrayDeaths)
+
       axios.post(`http://localhost:9000/timeline/update/deaths`, {
         newTimeline: { country: country, data: c[country] }
       })
@@ -42,10 +66,22 @@ async function main() {
   })
   await finalArrayRecovered.forEach((c) => {
     Object.keys(c).forEach(function(country) {
+      addTotal(c[country], totalArrayRecovered)
+
       axios.post(`http://localhost:9000/timeline/update/recovered`, {
         newTimeline: { country: country, data: c[country] }
       })
     })
+  })
+
+  await axios.post(`http://localhost:9000/timeline/update/confirmed`, {
+    newTimeline: { country: 'TOTAL', data: totalArrayConfirmed }
+  })
+  await axios.post(`http://localhost:9000/timeline/update/deaths`, {
+    newTimeline: { country: 'TOTAL', data: totalArrayDeaths }
+  })
+  await axios.post(`http://localhost:9000/timeline/update/recovered`, {
+    newTimeline: { country: 'TOTAL', data: totalArrayRecovered }
   })
 }
 
