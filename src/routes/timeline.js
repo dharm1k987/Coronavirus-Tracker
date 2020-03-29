@@ -9,13 +9,13 @@ const {
     app.get('/timelines', async (req, res, next) => {
       // all timelines
       const timelines = await getTimelines();
-      res.send(timelines);
+      res.set('Cache-Control', 'public, max-age=300').send(timelines);
     });
 
     app.get('/timelines/:country', async (req, res, next) => {
       const { country } = req.params;
       const countryTimelines = await getTimelinesOf(country);
-      res.send({ countryTimelines });
+      res.set('Cache-Control', 'public, max-age=300').send({ countryTimelines });
     });
 
     app.post('/timeline/update/:type', async (req, res, next) => {
