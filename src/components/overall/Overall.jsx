@@ -162,17 +162,21 @@ export class Overall extends Component {
                 </div>
 
                 <div className="tc mb3 mh2 br2">
-                    {
-                        this.state.flag ? 
-                        <div className="flex items-center justify-center flex-wrap content-center mb3">
-                            <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div>
-                            <div className="f1-ns f2 b">{this.state.placeName}</div>
-                        </div>
-                        : this.state.placeName
-                    }
-                    
-                        
-                    
+
+                    <div className="flex items-center justify-center flex-wrap content-center mb3">
+                        { this.state.flag ? 
+                            
+                            <div className="flex items-center justify-center flex-wrap content-center mb3">
+                                <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div>
+                                <div className="f1-ns f2 b">{this.state.placeName}</div>
+                            </div> :
+                            <div className="flex items-center justify-center flex-wrap content-center mb3">
+                                <div className="w-10-ns w-20 mh2"></div>
+                                <div className="f1-ns f2 b">{this.state.placeName}</div>
+                            </div>
+                        }
+
+                    </div>
 
                     <div className="tc">
                         {!this.state.place ?
