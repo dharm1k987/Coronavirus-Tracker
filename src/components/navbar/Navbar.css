@@ -8,7 +8,7 @@
 
 .appbar {
 	align-items: center;
-	background-image: url('../../uploads/coronavirus.jpeg');
+/*	background-image: url('../../uploads/coronavirus.jpeg'); */
 	filter: grayscale(0.25);
 	
 }

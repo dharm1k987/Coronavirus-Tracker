@@ -10,10 +10,6 @@ import { Covid19ReadinessTest } from '../components/covid19-readiness-test/Covid
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="apply-font mid-gray">

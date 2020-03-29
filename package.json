@@ -39,13 +39,14 @@
     "react-awesome-slider": "^4.1.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-chartjs-2": "^2.9.0",
-    "react-devtools": "^4.5.0",
     "react-confetti": "^5.0.1",
+    "react-devtools": "^4.5.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "rss-parser": "^3.7.5",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "env-cmd react-scripts start",

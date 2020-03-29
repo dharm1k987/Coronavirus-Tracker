@@ -4,14 +4,12 @@ import { CircularProgress } from '@material-ui/core';
 import Timeline from '../timeline/Timeline'
 import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import axios from 'axios';
 
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, Dot } from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide, Dot } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import { number } from 'prop-types';
 
 
 
@@ -43,7 +41,7 @@ export class Overall extends Component {
     getLineGraph() {
         this.setState({
             showLine: !this.state.showLine,
-            btnText: this.state.btnText == 'Show Graph' ? 'Hide Graph' : 'Show Graph'
+            btnText: this.state.btnText === 'Show Graph' ? 'Hide Graph' : 'Show Graph'
         })
     }
 
@@ -57,14 +55,14 @@ export class Overall extends Component {
             borderColor: colour,
             pointStyle: 'rect',
             pointBackgroundColor: colour,
-            data: dataArray.filter((_,i) => i % skip == 0) 
+            data: dataArray.filter((_,i) => i % skip === 0) 
         }                                                         
     }
 
     static createTimelineData(props) {
         const skip = 5;
         return {
-            labels: props.timelines.labels.filter((_,i) => i % skip == 0),
+            labels: props.timelines.labels.filter((_,i) => i % skip === 0),
             datasets: [
                 Overall.customizeTimeline('Deaths', '#ff725c', props.timelines.timelinesDeath),
                 Overall.customizeTimeline('Recovered', '#19a974', props.timelines.timelinesRecovered),
@@ -92,7 +90,7 @@ export class Overall extends Component {
 
 
 
-    static getDerivedStateFromProps(props, state) {
+    static getDerivedStateFromProps(props) {
 
         if (props.timelines && props.place) return { timelineData: Overall.createTimelineData(props), graph: Overall.createPiechart(props), place: props.place }
         if (!props.timelines && props.place) return { graph: Overall.createPiechart(props), place: props.place }
@@ -105,18 +103,15 @@ export class Overall extends Component {
         let placeToSearch = this.state.placeName
         if (placeToSearch) {
             placeToSearch = placeToSearch.toUpperCase()
-            
+            if (placeToSearch === 'WORLD') return
+
             if (placeToSearch === 'SOUTH KOREA') placeToSearch = 'Korea (Republic of)'
             if (placeToSearch === 'NORTH MACEDONIA') placeToSearch = 'Macedonia'
             if (placeToSearch === 'FAEROE ISLANDS') placeToSearch = 'Faroe Islands'
             if (placeToSearch === 'CHANNEL ISLANDS') placeToSearch = 'Jersey'
             if (placeToSearch === 'VATICAN CITY') placeToSearch = 'Vatican'
             if (placeToSearch === 'BRITISH VIRGIN ISLANDS') placeToSearch = 'Virgin Islands'
-            if (placeToSearch === 'ST. VINCENT GRENADINES') placeToSearch = 'Grenadines'
-
-
-            
-
+            if (placeToSearch === 'ST. VINCENT GRENADINES') placeToSearch = 'Grenadines'         
 
             axios.get(`https://restcountries.eu/rest/v2/name/${placeToSearch}`)
                 .then(res => {
@@ -138,7 +133,7 @@ export class Overall extends Component {
                    yAxes :[
                       {
                          ticks :{
-                            callback: function(value, index, values) {
+                            callback: function(value) {
                                 return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             },
                             maxTicksLimit:5,
@@ -163,18 +158,9 @@ export class Overall extends Component {
 
                 <div className="tc mb3 mh2 br2">
 
-                    <div className="flex items-center justify-center flex-wrap content-center mb3">
-                        { this.state.flag ? 
-                            
-                            <div className="flex items-center justify-center flex-wrap content-center mb3">
-                                <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div>
-                                <div className="f1-ns f2 b">{this.state.placeName}</div>
-                            </div> :
-                            <div className="flex items-center justify-center flex-wrap content-center mb3">
-                                <div className="w-10-ns w-20 mh2"></div>
-                                <div className="f1-ns f2 b">{this.state.placeName}</div>
-                            </div>
-                        }
+                    <div className="flex items-center justify-center flex-wrap content-center mb3">                            
+                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div> : null }
+                        <div className="f1-ns f2 b">{this.state.placeName}</div>                       
 
                     </div>
 
@@ -186,12 +172,8 @@ export class Overall extends Component {
                             </p>
                         }
                         <div className="f4 mid-gray b">
-                            {
-                                !this.state.place ? null :
-                                <div>
-                                    Active: {this.numberWithCommas(this.state.place.activeCases)}
-                                </div>
-                            }
+                            Active: {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0 }
+
                         </div>
                     </div>
                 </div>

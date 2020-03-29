@@ -77,11 +77,11 @@ class Home extends React.Component {
       </Link>
       </div>
       <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
-	     <input type="hidden" name="IL_IN_ARTICLE" />
+	    	     <input type="hidden" name="IL_IN_ARTICLE" /> 
 
       <Table1 stats={this.state.liveStats} />
 
-	   <input type="hidden" name="IL_IN_ARTICLE" />
+	    {/*  <input type="hidden" name="IL_IN_ARTICLE" /> */}
 
       </div>
     );

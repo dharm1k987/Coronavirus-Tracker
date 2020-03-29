@@ -3,10 +3,6 @@ import { Line } from 'react-chartjs-2';
 
 
 class Timeline extends Component {
-    constructor(props) {
-        super(props);
-    }
-
 
     render() {
         return (

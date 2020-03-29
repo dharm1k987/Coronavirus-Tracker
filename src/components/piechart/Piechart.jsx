@@ -3,11 +3,6 @@ import { Doughnut } from 'react-chartjs-2';
 
 
 class Piechart extends Component {
-
-    constructor(props) {
-        super(props);
-        
-    }
     
     render() {
         return (
