@@ -47,6 +47,7 @@ export class Overall extends Component {
 
     static customizeTimeline(label, colour, dataArray) {
         const skip = 5;
+        const filteredArray = dataArray.filter((_,i) => i % skip === 0);
         return {
             label: label,
             fill: false,
@@ -55,14 +56,15 @@ export class Overall extends Component {
             borderColor: colour,
             pointStyle: 'rect',
             pointBackgroundColor: colour,
-            data: dataArray.filter((_,i) => i % skip === 0) 
+            data: filteredArray.slice(Math.max(filteredArray.length - 10, 0))
         }                                                         
     }
 
     static createTimelineData(props) {
         const skip = 5;
+        let filteredProps = props.timelines.labels.filter((_,i) => i % skip === 0);
         return {
-            labels: props.timelines.labels.filter((_,i) => i % skip === 0),
+            labels: filteredProps.slice(Math.max(filteredProps.length - 10, 0)),
             datasets: [
                 Overall.customizeTimeline('Deaths', '#ff725c', props.timelines.timelinesDeath),
                 Overall.customizeTimeline('Recovered', '#19a974', props.timelines.timelinesRecovered),
@@ -81,8 +83,7 @@ export class Overall extends Component {
                     '#ff725c',
                     '#19a974',
                 ],
-                data: [props.place.activeCases, props.place.totalDeaths, props.place.
-                    totalRecovered]
+                data: [props.place.activeCases, props.place.totalDeaths, props.place.totalRecovered]
                 }
             ]
         }
@@ -251,6 +252,7 @@ export class Overall extends Component {
                     </div>
                 </div>
                 {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
+                <input type="hidden" name="IL_IN_TAG" value="1"/>
 
             </div>
           );

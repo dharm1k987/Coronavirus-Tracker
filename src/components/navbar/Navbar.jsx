@@ -10,10 +10,7 @@ export class Navbar extends Component {
 
   render() {
 
-    return (
-        
-        <div>
-          <div>
+    return (      
           <AppBar position="static" className="appbar">
               <Toolbar>
               <Typography variant="h6" color="inherit" className="title">
@@ -24,11 +21,7 @@ export class Navbar extends Component {
               </p> */}
                 {/* <Button color="inherit">Login</Button> */}
               </Toolbar>
-            </AppBar>
-
-          </div>
-        </div>
-      
+            </AppBar>  
     );
   }
 }

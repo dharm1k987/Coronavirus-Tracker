@@ -6,7 +6,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root_outside {
+/* #root_outside {
     position: relative;
 }
 
@@ -19,7 +19,7 @@
     background: linear-gradient(180deg, rgb(230, 230, 230) 0%, rgba(255,255,255,1) 46%, rgba(255,255,255,1) 49%);
     filter: blur(1px);
 
-}
+} */
 
 #root {
     position: relative;

@@ -1,3 +1,8 @@
 .swap:hover {
     cursor: pointer;
 }
+
+.backArrow:hover,
+.frontArrow:hover {
+    cursor: pointer
+}

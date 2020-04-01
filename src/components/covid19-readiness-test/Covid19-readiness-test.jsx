@@ -208,7 +208,7 @@ export class Covid19ReadinessTest extends Component {
   render() {
 
     return (
-      <div>
+      <div className="h-100">
       <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
         
         <Link to="/" className="ba bg-white  b f3 blue mt3 custom">

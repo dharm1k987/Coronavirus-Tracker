@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Navbar } from '../components'
+import { Navbar, Footer } from '../components'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from '../components/home/Home';
 import CountryInfo from '../components/countryInfo/CountryInfo';
@@ -12,7 +12,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="apply-font mid-gray">
+      <div className="apply-font mid-gray vh-100">
       <Navbar />
       <Router>
         <Switch>
@@ -23,6 +23,7 @@ class App extends React.Component {
           <Route exact path="/:country" component={CountryInfo} />
         </Switch>
       </Router>
+      <Footer />
     </div>
     )
     }
