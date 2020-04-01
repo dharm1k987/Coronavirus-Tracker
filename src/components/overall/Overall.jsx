@@ -152,15 +152,15 @@ export class Overall extends Component {
     render() {
         return (
             <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
-                <div className="center flex pa3 mid-gray">
+                <div className="center flex ph3 pt3 mid-gray">
                     <p className="ma0"> Live </p>
                     <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
                 </div>
 
                 <div className="tc mb3 mh2 br2">
 
-                    <div className="flex items-center justify-center flex-wrap content-center mb3">                            
-                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="ba" src={`${this.state.flag}`}/></div> : null }
+                    <div className="flex items-center justify-center flex-wrap content-center mb2">                            
+                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="ba mv3" src={`${this.state.flag}`}/></div> : null }
                         <div className="f1-ns f2 b">{this.state.placeName}</div>                       
 
                     </div>
@@ -173,8 +173,7 @@ export class Overall extends Component {
                             </p>
                         }
                         <div className="f4 mid-gray b">
-                            Active: {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0 }
-
+                            Active: <span className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0 } </span>
                         </div>
                     </div>
                 </div>
@@ -182,7 +181,7 @@ export class Overall extends Component {
                 <CarouselProvider
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
-                        naturalSlideHeight={125}
+                        naturalSlideHeight={113}
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
                     <Slider>
@@ -204,8 +203,8 @@ export class Overall extends Component {
                     } */}
                 </div>
 
-                <div className="flex pb4">
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2 pt3 br2">
+                <div className="flex pv3">
+                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt0 br2">
                         <div className="b ma2 mid-gray">Deaths</div>
                         <div className="light-red">{this.numberWithCommas(
                             this.state.place ? this.state.place.totalDeaths : this.state.place 
@@ -244,7 +243,7 @@ export class Overall extends Component {
 
                     </div>
 
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt3 br2">
+                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt0 br2">
                         <div className="b ma2 mid-gray">Recovered</div>
                         <div className="green">{this.numberWithCommas(
                             this.state.place ? this.state.place.totalRecovered : this.state.place 
