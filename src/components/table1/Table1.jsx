@@ -64,8 +64,9 @@ export class Table1 extends Component {
   }
 
   filterCountryList(countryStr) {
+    let column = this.state.sortColumn;
     let num = this.state.sort === 'upper' ? 1 : -1
-    const orderedStats = this.state.stats.sort(() => eval('a[column]') < eval('b[column]') ? num : -1*num);
+    const orderedStats = this.state.stats.sort((a, b) => eval('a[column]') < eval('b[column]') ? num : -1*num);
 
     if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: orderedStats})
     this.setState({
