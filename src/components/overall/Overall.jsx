@@ -26,10 +26,12 @@ export class Overall extends Component {
             timelineData: null,
             showLine: false,
             btnText: 'Show Graph',
-            flag: null
+            flag: null,
+            log: false
         }
 
         this.getLineGraph = this.getLineGraph.bind(this)
+        this.options = this.options.bind(this)
     }
     
     numberWithCommas(x) {
@@ -128,25 +130,51 @@ export class Overall extends Component {
     }
 
     options() {
-        return (
+        let s = this.state;
+        let result = 
             {
                 scales: {
                    yAxes :[
                       {
-                         ticks :{
-                            callback: function(value) {
-                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          type: s.log ? 'logarithmic' : 'linear',
+                          position: 'left',
+
+                         ticks :{                            
+                            callback: function (value, index, values) {
+                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;//pass tick values as a string into Number function
                             },
-                            maxTicksLimit:5,
-                         }
+
+                            maxTicksLimit: s.log ? 10 : 5,
+                         },
+                         afterBuildTicks: function(chartObj) {
+                            if (!s.log) return
+
+                            chartObj.max = 1000000
+                            chartObj.min = 1
+                            chartObj.ticks = [];
+                            chartObj.ticks.push(1);
+                            chartObj.ticks.push(10);
+                            chartObj.ticks.push(100);
+                            chartObj.ticks.push(1000);
+                            chartObj.ticks.push(10000);
+                            chartObj.ticks.push(100000);
+                            chartObj.ticks.push(1000000);
+                        }
                       }
                    ]
                 },
                 legend: {
                     display: false,
+                    labels: {
+                        padding: 4,
+                        boxWidth: 10,
+                    }
+                    
                 }
-             }
-        )
+            }
+
+        return result
+        
     }
 
     render() {
@@ -181,13 +209,17 @@ export class Overall extends Component {
                 <CarouselProvider
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
-                        naturalSlideHeight={113}
+                        naturalSlideHeight={117}
+
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
                     <Slider>
                     <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
                     {this.state.timelineData ? 
-                    <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
+                    <Slide index={1}>{this.state.timelineData ? 
+                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })}/>
+                        
+                     : null }
                     </Slide> : null }
                     </Slider>
 
@@ -225,7 +257,8 @@ export class Overall extends Component {
                     <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
 
                     {this.state.timelineData ? 
-                    <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
+                    <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })}/>
+                    : null }
                     </Slide> : null }
                     </Slider>
 
