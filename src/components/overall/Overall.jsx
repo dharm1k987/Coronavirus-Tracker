@@ -77,7 +77,7 @@ export class Overall extends Component {
 
     static createPiechart(props) {
         return {
-            labels: ['Recovered', 'Active Cases', 'Deaths', ],
+            labels: ['Recovered', 'Active Cases', 'Deaths',],
             datasets: [
                 {
                     backgroundColor: [
@@ -85,7 +85,7 @@ export class Overall extends Component {
                         '#A463F2',
                         '#ff725c',
                     ],
-                    data: [props.place.totalRecovered, props.place.activeCases, props.place.totalDeaths, ]
+                    data: [props.place.totalRecovered, props.place.activeCases, props.place.totalDeaths,]
                 }
             ]
         }
@@ -107,7 +107,7 @@ export class Overall extends Component {
         if (placeToSearch) {
             placeToSearch = placeToSearch.toUpperCase()
             if (placeToSearch === 'WORLD') {
-                this.setState({ flag: '/earth.png'})
+                this.setState({ flag: '/earth.png' })
             }
 
             if (placeToSearch === 'SOUTH KOREA') placeToSearch = 'Korea (Republic of)'
@@ -229,10 +229,10 @@ export class Overall extends Component {
 
                             {/* Deaths */}
                             <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                        <div className="b ma0 mid-gray">Deaths</div>
-                                        <div className="light-red">{this.numberWithCommas(
-                                            this.state.place ? this.state.place.totalDeaths : this.state.place
-                                        )}</div>
+                                <div className="b ma0 mid-gray">Deaths</div>
+                                <div className="light-red">{this.numberWithCommas(
+                                    this.state.place ? this.state.place.totalDeaths : this.state.place
+                                )}</div>
                             </div>
 
                         </div>
@@ -253,28 +253,22 @@ export class Overall extends Component {
                                 )}</div>
                             </div>
                         </div>
-
                     </div>
-
-
-                    
                 </div>
 
                 <div className="flex-ns justify-center">
+                    {/* Line Graph */}
                     <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4">
                         {this.state.timelineData ?
-                                                <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
-                                                : null}
+                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
+                            : null}
                     </div>
 
                     {/* Piechart */}
-                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4 pv4">                    
-                        {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}  
+                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4 pv4">
+                        {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}
                     </div>
                 </div>
-
-                {/* Line Graph */}
-
 
             </div>
         );
