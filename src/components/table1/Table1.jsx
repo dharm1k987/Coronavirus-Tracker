@@ -147,11 +147,11 @@ export class Table1 extends Component {
     return (
       <div>
         <div className="center">
-          <div className="w-70-ns w-90 center br2 mt3">
+          <div className="w-50-ns w-90 center br2 mt3">
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
-        <div className="mv3 w-70-ns w-90 center mh2 ba b--moon-gray br3">
+        <div className="mv3 w-50-ns w-90 center mh2 ba b--moon-gray br3">
 
 
 

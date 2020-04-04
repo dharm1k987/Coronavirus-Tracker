@@ -217,118 +217,64 @@ export class Overall extends Component {
                         <div className="f1-ns f2 b">{this.state.placeName}</div>
                     </div>
 
-                    <div className="flex mb3 justify-around-ns justify-center">
-                        {/* Total */}
-                        <div className="f2-ns f4 b tc mh0-ns mh4">
-                            <div className="b ma0 mid-gray">Total</div>
-                            <div className="gold">{this.numberWithCommas(
-                                this.state.place ? this.state.place.totalCases : this.state.place
-                            )}</div>
-                        </div>
-                        {/* Active */}
-                        <div className="f2-ns f4 mid-gray b tc mh0-ns mh4">
-                            <div className="b ma0 mid-gray">Active</div>
-                            <div className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0} </div>
-                        </div>
-                    </div>
+                    <div className="flex justify-center justify-around-ns">
+                        <div className="flex flex-column mb3">
+                            {/* Total */}
+                            <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
+                                <div className="b ma0 mid-gray">Total</div>
+                                <div className="gold">{this.numberWithCommas(
+                                    this.state.place ? this.state.place.totalCases : this.state.place
+                                )}</div>
+                            </div>
 
-                    {/* Deaths, Total, Recovered */}
-                    <div className="flex mb3 justify-around-ns justify-center">
-                        {/* Deaths */}
-                        <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                    <div className="b ma0 mid-gray">Deaths</div>
-                                    <div className="light-red">{this.numberWithCommas(
-                                        this.state.place ? this.state.place.totalDeaths : this.state.place
-                                    )}</div>
+                            {/* Deaths */}
+                            <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                        <div className="b ma0 mid-gray">Deaths</div>
+                                        <div className="light-red">{this.numberWithCommas(
+                                            this.state.place ? this.state.place.totalDeaths : this.state.place
+                                        )}</div>
+                            </div>
+
                         </div>
 
-                        {/* Recoveries */}
-                        <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                            <div className="b ma0 mid-gray">Recovered</div>
-                            <div className="green">{this.numberWithCommas(
-                                this.state.place ? this.state.place.totalRecovered : this.state.place
-                            )}</div>
+                        {/* Deaths, Total, Recovered */}
+                        <div className="flex flex-column mb3">
+                            {/* Active */}
+                            <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
+                                <div className="b ma0 mid-gray">Active</div>
+                                <div className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0} </div>
+                            </div>
+
+                            {/* Recoveries */}
+                            <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                <div className="b ma0 mid-gray">Recovered</div>
+                                <div className="green">{this.numberWithCommas(
+                                    this.state.place ? this.state.place.totalRecovered : this.state.place
+                                )}</div>
+                            </div>
                         </div>
+
                     </div>
+
+
                     
+                </div>
+
+                <div className="flex-ns justify-center">
+                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4">
+                        {this.state.timelineData ?
+                                                <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
+                                                : null}
+                    </div>
+
+                    {/* Piechart */}
+                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4 pv4">                    
+                        {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}  
+                    </div>
                 </div>
 
                 {/* Line Graph */}
-                <div className="flex flex-column ma3 w-50-ns w-90 center ba b--light-silver bg-white br4">
 
-                    {this.state.timelineData ?
-                                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
-                                            : null}
-
-                </div>
-
-                {/* Piechart */}
-                <div className="ma3 w-50-ns w-90 center ba b--light-silver bg-white br4 pv4">
-                    
-                    {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}  
-
-                </div>
-
-
-
-
-
-
-
-                {/* Mobile Carousel */}
-                {/* <div className="dn-l db center w-50-ns w-90  ba b--light-silver br4 tc">
-                    <span className="h3">Graph</span>
-                    <CarouselProvider
-                        lockOnWindowScroll={true}
-                        naturalSlideWidth={200}
-                        naturalSlideHeight={117}
-                        totalSlides={`${this.state.timelineData ? 2 : 1}`}
-                        className="mt3"
-                    >
-                        <Slider>
-                            <Slide index={0}>{this.state.graph ? <Piechart data={this.state.graph} /> : null}</Slide>
-                            {this.state.timelineData ?
-                                <Slide index={1}>{this.state.timelineData ?
-                                    <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
-                                    : null}
-                                </Slide> : null}
-                        </Slider>
-
-                        <div className="dotDiv mb3">
-                            {this.state.graph ? <Dot slide={0} className="dotCust"> {this.state.timelineData ? <ArrowBackIcon /> : null}</Dot> : null}
-                            {this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null}
-                        </div>
-                    </CarouselProvider>
-                </div> */}
-
-                {/* Desktop + Mobile, but carousel for mobile is above*/}
-                {/* Carousel for Desktop */}
-                {/* <div className="db-l dn ma3 w-30-ns w-90 center ba b--light-silver bg-white br4 tc">
-                    <span className="h3">Graph</span>
-                    <CarouselProvider
-                        lockOnWindowScroll={true}
-                        naturalSlideWidth={200}
-                        naturalSlideHeight={100}
-                        infinite={true}
-                        className="mt3"
-                        totalSlides={`${this.state.timelineData ? 2 : 1}`}
-                    >
-
-                        <Slider classNameAnimation="sliderAnimation">
-                            <Slide index={0}>{this.state.graph ? <Piechart data={this.state.graph} /> : null}</Slide>
-
-                            {this.state.timelineData ?
-                                <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
-                                    : null}
-                                </Slide> : null}
-                        </Slider>
-
-                        <div className="dotDiv mb3">
-                            {this.state.graph ? <Dot slide={0} className="dotCust"> {this.state.timelineData ? <ArrowBackIcon /> : null} </Dot> : null}
-                            {this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null}
-                        </div>
-                    </CarouselProvider>
-                </div> */}
 
             </div>
         );

@@ -23,7 +23,7 @@ class App extends React.Component {
           <Route exact path="/:country" component={CountryInfo} />
         </Switch>
       </Router>
-      {/* TODO: <Footer /> */}
+      {/* <Footer /> */}
     </div>
     )
     }

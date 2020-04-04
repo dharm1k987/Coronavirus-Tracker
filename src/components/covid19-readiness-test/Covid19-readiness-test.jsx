@@ -209,7 +209,7 @@ export class Covid19ReadinessTest extends Component {
 
     return (
       <div className="h-100">
-      <div className="center w-90 w-70-ns">
+      <div className="center w-90 w-70-ns ">
         {this.state.quizState === 0 ? <div>
           <div className="f2 tc pv4 b">COVID-19 Readiness Test</div>
           <div className="f4 pv2 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
