@@ -45,7 +45,7 @@ class CountryInfo extends React.Component {
   timeSincePosted(postTime) {
     return moment().diff(moment(postTime));
   }
-  
+
 
   componentDidMount() {
     let query = this.state.country.toLowerCase() + " coronavirus";
@@ -80,7 +80,7 @@ class CountryInfo extends React.Component {
         this.setState({ news });
       }).catch(e => console.log(e));
 
-      axios
+    axios
       .get(`${process.env.REACT_APP_API_URL}/timelines/${this.state.country.toUpperCase()}`)
       .then(res => {
         let dates = res.data.countryTimelines.timelinesConfirmed[0].data.map(a => a.date);
@@ -91,9 +91,11 @@ class CountryInfo extends React.Component {
         let deathSum = res.data.countryTimelines.timelinesDeath[0].data.map(f => f.value)
 
         this.setState({
-          timelines: { labels: dates, timelinesDeath: deathSum,
-             timelinesConfirmed: confirmedSum,
-             timelinesRecovered: recoveredSum}
+          timelines: {
+            labels: dates, timelinesDeath: deathSum,
+            timelinesConfirmed: confirmedSum,
+            timelinesRecovered: recoveredSum
+          }
         })
 
 
@@ -110,51 +112,43 @@ class CountryInfo extends React.Component {
       }} />);
     }
     const newsAggregation = this.state.news.splice(0, 20).map((item) => {
-      return <NewsBlock key={uuidv4()} item={item}/>
+      return <NewsBlock key={uuidv4()} item={item} />
     })
 
     return (
       <div>
-    <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
-      
-        <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
-            <HomeIcon/>
+        <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
+          <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
+            <HomeIcon />
             <div>Home</div>
-          </Link>   
-        
+          </Link>
         </div>
 
-      <div className="flex mt2"> 
-      {
-        this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats} 
-        timelines={this.state.timelines ? this.state.timelines : null} />
-        : null
-      }
-      </div>
-
-	    <input type="hidden" name="IL_IN_ARTICLE" />
-
+        <div>
+          {
+              this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats}
+                timelines={this.state.timelines ? this.state.timelines : null} />
+                : null
+          }
+        </div>    
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-              Top Stories in {this.state.country}
+            Top Stories in {this.state.country}
           </p>
           <div className="flex">
-          <div className="center flex">
-            <p className="ma0"> Live </p>
-            <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
-          </div>
+            <div className="center flex">
+              <p className="ma0"> Live </p>
+              <div><RadioButtonCheckedIcon className="liveBtn" /> </div>
+            </div>
           </div>
         </div>
 
-          <div className="tc ">
-
-              <div className="f3">
-                {newsAggregation.length === 0 ? <CircularProgress /> : newsAggregation}
-              </div>
+        <div className="tc ">
+          <div className="f3">
+            {newsAggregation.length === 0 ? <CircularProgress /> : newsAggregation}
           </div>
-
-	    <input type="hidden" name="IL_IN_ARTICLE" />
+        </div>
 
       </div>
     );

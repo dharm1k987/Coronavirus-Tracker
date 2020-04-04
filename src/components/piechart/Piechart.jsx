@@ -9,10 +9,12 @@ class Piechart extends Component {
             <Doughnut
             data={this.props.data}
             options={{
-		animation: { duration: 0 },
                 legend:{
-                display:false,
-                position:'right'
+                display:true,
+                labels: {
+                    padding: 4,
+                    boxWidth: 10,
+                },
                 }
             }}
             className=""

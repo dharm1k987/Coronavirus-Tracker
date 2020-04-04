@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
+import ReplyIcon from '@material-ui/icons/Reply';
 import { Link } from 'react-router-dom';
 import PeopleIcon from '@material-ui/icons/People';
 import PanToolIcon from '@material-ui/icons/PanTool';
@@ -136,14 +137,15 @@ export class Guide extends Component {
     // ADVERT
     return (
       <div className="center w-90 w-70-ns">
-        <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
-            <HomeIcon/>
-            <div>Home</div>
-          </Link> 
         <input type="hidden" name="IL_IN_ARTICLE" />
+        <div className="ba bw1 b shadow-4 br3 bg-white f5 blue mt3">
+          <Link to="/" className="flex justify-center">
+            <ReplyIcon className="mv2 mh2"/>
+          </Link>
+        </div>
 
         {/* <div id="ezoic-pub-ad-placeholder-102"> </div> */}
-        <p className="mv4 f2 f1-ns b tc">How do I stay safe?</p>
+        <p className="mb4 mt1 f2 f1-ns b tc">How do I stay safe?</p>
         {this.state.tipList.map(tip => <TipCard {...tip}  key={uuidv4()}/>)}
 
 	    <input type="hidden" name="IL_IN_ARTICLE" />

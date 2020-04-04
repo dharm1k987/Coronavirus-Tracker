@@ -8,8 +8,8 @@ class Timeline extends Component {
 
     render() {
         return (
-            <div className="ma3 w-70-ns w-90 ph3 pv1 center ba b--light-silver bg-white br4">
-                <div className="logText">
+            <div className="pa4">
+                <div className="flex justify-center mb3">
                     <label className="h6 ph1">Log</label>
                     <Checkbox className="checkbox-mui" onChange={this.props.click}></Checkbox>
                 </div>

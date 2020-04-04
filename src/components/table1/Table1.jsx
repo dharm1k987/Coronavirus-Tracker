@@ -151,11 +151,11 @@ export class Table1 extends Component {
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
-        <div className="mv3 w-70-ns w-90 center mh2">
+        <div className="mv3 w-70-ns w-90 center mh2 ba b--moon-gray br3">
 
 
 
-           <div className="ba flex pv2 bg-light-gray br3">
+           <div className="flex pv2 bb b--moon-gray br3 br--top bg-near-white">
             <div className="w-50 pv2 pl4 b">Country
               <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('country')}/>
@@ -173,7 +173,7 @@ export class Table1 extends Component {
               this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
                 <div key={s.country} onClick={() => this.goToCountryInfo(s.country.toUpperCase())}>
                   <a href={`/${s.country}`}>
-                      <div className="br3 flex mv2 pt1 ba b--moon-gray bg-white items-center">
+                      <div className="flex mv2 pt1 bb b--moon-gray bg-white items-center">
                         <p className="dark-gray ma0 w-50 pv2 pl4">{s.country}</p>
                         <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
                         <div className="w-10 pv2 pr2 center mid-gray">

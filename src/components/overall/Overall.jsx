@@ -33,7 +33,7 @@ export class Overall extends Component {
         this.getLineGraph = this.getLineGraph.bind(this)
         this.options = this.options.bind(this)
     }
-    
+
     numberWithCommas(x) {
         if (!x) return 0;
         if (x === '--') { return '--' }
@@ -49,7 +49,7 @@ export class Overall extends Component {
 
     static customizeTimeline(label, colour, dataArray) {
         const skip = 5;
-        const filteredArray = dataArray.filter((_,i) => i % skip === 0);
+        const filteredArray = dataArray.filter((_, i) => i % skip === 0);
         return {
             label: label,
             fill: false,
@@ -59,33 +59,33 @@ export class Overall extends Component {
             pointStyle: 'rect',
             pointBackgroundColor: colour,
             data: filteredArray.slice(Math.max(filteredArray.length - 10, 0))
-        }                                                         
+        }
     }
 
     static createTimelineData(props) {
         const skip = 5;
-        let filteredProps = props.timelines.labels.filter((_,i) => i % skip === 0);
+        let filteredProps = props.timelines.labels.filter((_, i) => i % skip === 0);
         return {
             labels: filteredProps.slice(Math.max(filteredProps.length - 10, 0)),
             datasets: [
-                Overall.customizeTimeline('Deaths', '#ff725c', props.timelines.timelinesDeath),
                 Overall.customizeTimeline('Recovered', '#19a974', props.timelines.timelinesRecovered),
-                Overall.customizeTimeline('Confirmed', '#ffb700', props.timelines.timelinesConfirmed)
+                Overall.customizeTimeline('Total', '#ffb700', props.timelines.timelinesConfirmed),
+                Overall.customizeTimeline('Deaths', '#ff725c', props.timelines.timelinesDeath),
             ]
         }
     }
 
     static createPiechart(props) {
         return {
-            labels: ['Active Cases','Deaths','Recoveries'],
+            labels: ['Recovered', 'Active Cases', 'Deaths', ],
             datasets: [
-                {                    
-                backgroundColor: [
-                    '#ffb700',
-                    '#ff725c',
-                    '#19a974',
-                ],
-                data: [props.place.activeCases, props.place.totalDeaths, props.place.totalRecovered]
+                {
+                    backgroundColor: [
+                        '#19a974',
+                        '#A463F2',
+                        '#ff725c',
+                    ],
+                    data: [props.place.totalRecovered, props.place.activeCases, props.place.totalDeaths, ]
                 }
             ]
         }
@@ -106,7 +106,9 @@ export class Overall extends Component {
         let placeToSearch = this.state.placeName
         if (placeToSearch) {
             placeToSearch = placeToSearch.toUpperCase()
-            if (placeToSearch === 'WORLD') return
+            if (placeToSearch === 'WORLD') {
+                this.setState({ flag: '/earth.png'})
+            }
 
             if (placeToSearch === 'SOUTH KOREA') placeToSearch = 'Korea (Republic of)'
             if (placeToSearch === 'NORTH MACEDONIA') placeToSearch = 'Macedonia'
@@ -114,7 +116,7 @@ export class Overall extends Component {
             if (placeToSearch === 'CHANNEL ISLANDS') placeToSearch = 'Jersey'
             if (placeToSearch === 'VATICAN CITY') placeToSearch = 'Vatican'
             if (placeToSearch === 'BRITISH VIRGIN ISLANDS') placeToSearch = 'Virgin Islands'
-            if (placeToSearch === 'ST. VINCENT GRENADINES') placeToSearch = 'Grenadines'         
+            if (placeToSearch === 'ST. VINCENT GRENADINES') placeToSearch = 'Grenadines'
 
             axios.get(`https://restcountries.eu/rest/v2/name/${placeToSearch}`)
                 .then(res => {
@@ -126,27 +128,45 @@ export class Overall extends Component {
                 })
                 .catch(e => console.log(e))
         }
+    }
 
+    piechartOptions() {
+        return {
+            legend: {
+                display: true,
+                labels: {
+                    padding: 4,
+                    boxWidth: 10,
+                }
+            }
+        }
     }
 
     options() {
         let s = this.state;
-        let result = 
-            {
-                scales: {
-                   yAxes :[
-                      {
-                          type: s.log ? 'logarithmic' : 'linear',
-                          position: 'left',
+        let result =
+        {
+            scales: {
+                xAxes: [
+                    {
+                        gridLines: {
+                            drawOnChartArea: false
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        type: s.log ? 'logarithmic' : 'linear',
+                        position: 'left',
 
-                         ticks :{                            
+                        ticks: {
                             callback: function (value, index, values) {
-                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;//pass tick values as a string into Number function
+                                return ""; // value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //pass tick values as a string into Number function
                             },
 
                             maxTicksLimit: s.log ? 10 : 5,
-                         },
-                         afterBuildTicks: function(chartObj) {
+                        },
+                        afterBuildTicks: function (chartObj) {
                             if (!s.log) return
 
                             chartObj.max = 1000000
@@ -159,135 +179,159 @@ export class Overall extends Component {
                             chartObj.ticks.push(10000);
                             chartObj.ticks.push(100000);
                             chartObj.ticks.push(1000000);
+                        },
+                        gridLines: {
+                            drawOnChartArea: false,
+                            display: false
                         }
-                      }
-                   ]
-                },
-                legend: {
-                    display: false,
-                    labels: {
-                        padding: 4,
-                        boxWidth: 10,
                     }
-                    
+                ]
+            },
+            legend: {
+                display: true,
+                labels: {
+                    padding: 4,
+                    boxWidth: 10,
                 }
+
             }
+        }
 
         return result
-        
+
     }
 
     render() {
         return (
-            <div className="ma3 w-70-ns w-90 center ba b--light-silver bg-white br4">
-                <div className="center flex ph3 pt3 mid-gray">
-                    <p className="ma0"> Live </p>
-                    <div><RadioButtonCheckedIcon className="liveBtn"/> </div>
-                </div>
-
-                <div className="tc mb3 mh2 br2">
-
-                    <div className="flex items-center justify-center flex-wrap content-center mb2">                            
-                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="ba mv3" src={`${this.state.flag}`}/></div> : null }
-                        <div className="f1-ns f2 b">{this.state.placeName}</div>                       
-
+            <div>
+                <div className="ma3 w-50-ns w-90 center ba b--light-silver bg-white br4 tc">
+                    {/* Live Button */}
+                    <div className="center flex ph3 pt3 mid-gray">
+                        <p className="ma0"> Live </p>
+                        <div><RadioButtonCheckedIcon className="liveBtn" /> </div>
                     </div>
 
-                    <div className="tc">
-                        {!this.state.place ?
-                            <CircularProgress /> :
-                            <p className="f2 b mb1 gold">
-                            { this.numberWithCommas(this.state.place.totalCases) }
-                            </p>
-                        }
-                        <div className="f4 mid-gray b">
-                            Active: <span className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0 } </span>
+                    {/* Country */}
+                    <div className="flex mb2 justify-center items-center flex-wrap">
+                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="mv3" src={`${this.state.flag}`} /></div> : null}
+                        <div className="f1-ns f2 b">{this.state.placeName}</div>
+                    </div>
+
+                    <div className="flex mb3 justify-around-ns justify-center">
+                        {/* Total */}
+                        <div className="f2-ns f4 b tc mh0-ns mh4">
+                            <div className="b ma0 mid-gray">Total</div>
+                            <div className="gold">{this.numberWithCommas(
+                                this.state.place ? this.state.place.totalCases : this.state.place
+                            )}</div>
+                        </div>
+                        {/* Active */}
+                        <div className="f2-ns f4 mid-gray b tc mh0-ns mh4">
+                            <div className="b ma0 mid-gray">Active</div>
+                            <div className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0} </div>
                         </div>
                     </div>
+
+                    {/* Deaths, Total, Recovered */}
+                    <div className="flex mb3 justify-around-ns justify-center">
+                        {/* Deaths */}
+                        <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                    <div className="b ma0 mid-gray">Deaths</div>
+                                    <div className="light-red">{this.numberWithCommas(
+                                        this.state.place ? this.state.place.totalDeaths : this.state.place
+                                    )}</div>
+                        </div>
+
+                        {/* Recoveries */}
+                        <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                            <div className="b ma0 mid-gray">Recovered</div>
+                            <div className="green">{this.numberWithCommas(
+                                this.state.place ? this.state.place.totalRecovered : this.state.place
+                            )}</div>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div className="dn-l db center f2-ns f3 b pa2 tc mh2  pt3 br2">
-                <CarouselProvider
+
+                {/* Line Graph */}
+                <div className="flex flex-column ma3 w-50-ns w-90 center ba b--light-silver bg-white br4">
+
+                    {this.state.timelineData ?
+                                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
+                                            : null}
+
+                </div>
+
+                {/* Piechart */}
+                <div className="ma3 w-50-ns w-90 center ba b--light-silver bg-white br4 pv4">
+                    
+                    {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}  
+
+                </div>
+
+
+
+
+
+
+
+                {/* Mobile Carousel */}
+                {/* <div className="dn-l db center w-50-ns w-90  ba b--light-silver br4 tc">
+                    <span className="h3">Graph</span>
+                    <CarouselProvider
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
                         naturalSlideHeight={117}
-
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
+                        className="mt3"
                     >
-                    <Slider>
-                    <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
-                    {this.state.timelineData ? 
-                    <Slide index={1}>{this.state.timelineData ? 
-                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })}/>
-                        
-                     : null }
-                    </Slide> : null }
-                    </Slider>
+                        <Slider>
+                            <Slide index={0}>{this.state.graph ? <Piechart data={this.state.graph} /> : null}</Slide>
+                            {this.state.timelineData ?
+                                <Slide index={1}>{this.state.timelineData ?
+                                    <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
+                                    : null}
+                                </Slide> : null}
+                        </Slider>
 
-                    <div className="dotDiv">
-                        { this.state.graph ? <Dot slide={0} className="dotCust"> { this.state.timelineData ? <ArrowBackIcon/> : null }</Dot> : null }
-                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null }
-                    </div>
-                </CarouselProvider>
-                    {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
-                    {
-                        this.state.timelineData ? <Button variant="contained" className="showBtn" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
-                        : null
-                    } */}
-                </div>
+                        <div className="dotDiv mb3">
+                            {this.state.graph ? <Dot slide={0} className="dotCust"> {this.state.timelineData ? <ArrowBackIcon /> : null}</Dot> : null}
+                            {this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null}
+                        </div>
+                    </CarouselProvider>
+                </div> */}
 
-                <div className="flex pv3">
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt0 br2">
-                        <div className="b ma2 mid-gray">Deaths</div>
-                        <div className="light-red">{this.numberWithCommas(
-                            this.state.place ? this.state.place.totalDeaths : this.state.place 
-                        )}</div>
-
-                    </div>
-
-                    <div className="db-l dn f2-ns f3 b fl w-70 tc mh2 br2">
+                {/* Desktop + Mobile, but carousel for mobile is above*/}
+                {/* Carousel for Desktop */}
+                {/* <div className="db-l dn ma3 w-30-ns w-90 center ba b--light-silver bg-white br4 tc">
+                    <span className="h3">Graph</span>
                     <CarouselProvider
                         lockOnWindowScroll={true}
                         naturalSlideWidth={200}
                         naturalSlideHeight={100}
                         infinite={true}
+                        className="mt3"
                         totalSlides={`${this.state.timelineData ? 2 : 1}`}
                     >
 
-                    <Slider classNameAnimation="sliderAnimation">
-                    <Slide index={0}>{ this.state.graph ? <Piechart data={this.state.graph} /> : null }</Slide>
+                        <Slider classNameAnimation="sliderAnimation">
+                            <Slide index={0}>{this.state.graph ? <Piechart data={this.state.graph} /> : null}</Slide>
 
-                    {this.state.timelineData ? 
-                    <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })}/>
-                    : null }
-                    </Slide> : null }
-                    </Slider>
+                            {this.state.timelineData ?
+                                <Slide index={1}>{this.state.timelineData ? <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
+                                    : null}
+                                </Slide> : null}
+                        </Slider>
 
-                    <div className="dotDiv">
-                        { this.state.graph ? <Dot slide={0} className="dotCust"> { this.state.timelineData ? <ArrowBackIcon/> : null } </Dot> : null }
-                        { this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null }
-                    </div>
-
-                </CarouselProvider>
-                        {/* { this.state.graph ? <Piechart data={this.state.graph} /> : null }
-                        {
-                            this.state.timelineData ? <Button variant="contained" onClick={this.getLineGraph}>{this.state.btnText}</Button> 
-                            : null
-                        }  */}
-
-                    </div>
-
-                    <div className="f2-ns f3 b fl w-50 pa2 tc mh2  pt0 br2">
-                        <div className="b ma2 mid-gray">Recovered</div>
-                        <div className="green">{this.numberWithCommas(
-                            this.state.place ? this.state.place.totalRecovered : this.state.place 
-                        )}</div>                        
-                    </div>
-                </div>
-                {this.state.timelineData && this.state.showLine? <Timeline data={this.state.timelineData} options={this.options()}/> : null }
-                <input type="hidden" name="IL_IN_TAG" value="1"/>
+                        <div className="dotDiv mb3">
+                            {this.state.graph ? <Dot slide={0} className="dotCust"> {this.state.timelineData ? <ArrowBackIcon /> : null} </Dot> : null}
+                            {this.state.timelineData ? <Dot slide={1} className="dotCust"> <ArrowForwardIcon /> </Dot> : null}
+                        </div>
+                    </CarouselProvider>
+                </div> */}
 
             </div>
-          );
+        );
     }
 }
 

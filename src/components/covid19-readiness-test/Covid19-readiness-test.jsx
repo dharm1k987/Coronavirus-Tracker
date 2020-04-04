@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
-import HomeIcon from '@material-ui/icons/Home';
+import ReplyIcon from '@material-ui/icons/Reply';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -209,25 +209,21 @@ export class Covid19ReadinessTest extends Component {
 
     return (
       <div className="h-100">
-      <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
-        
-        <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
-            <HomeIcon/>
-            <div>Home</div>
-          </Link>   
-        
-        </div>
       <div className="center w-90 w-70-ns">
-
         {this.state.quizState === 0 ? <div>
           <div className="f2 tc pv4 b">COVID-19 Readiness Test</div>
           <div className="f4 pv2 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
-            <button className="ba bw1 b b--green shadow-3 br3 f5 green w-100 mv5 bg-white" onClick={(e) => this.startQuiz()}>
+            <button className="ba bw1 b b--green shadow-3 br3 f5 green w-100 mt5 mb2 bg-white" onClick={(e) => this.startQuiz()}>
               <div className="flex justify-center">
                 <PlayArrowIcon className="mv2"/>
                 <div className="mv2 mh2">Start</div>
               </div>
             </button>
+            <div className="ba bw1 b shadow-4 br3 bg-white f5 blue mt3">
+              <Link to="/" className="flex justify-center">
+                <ReplyIcon className="mv2 mh2"/>
+              </Link>
+            </div>
         </div>: <div></div>}
         {this.state.quizState === 1 ? <div>
           <div className="f4 tc b mt4 mb2">Pick from Most Important to Least Important</div>
