@@ -6,3 +6,26 @@
 .frontArrow:hover {
     cursor: pointer
 }
+
+table {
+    border-collapse: collapse;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    overflow: hidden;
+}
+td {
+    padding: 0.5rem;
+    background: #fff;    
+  }
+
+th {
+    background: #f4f4f4;
+    padding: 0.5rem;
+    border-bottom: 1px solid #aaa9aa;
+}
+
+tr {
+    border-bottom: 1px solid #aaa9aa; 
+    border-left: 1px solid #f4f4f4; 
+    border-right: 1px solid #f4f4f4;
+}

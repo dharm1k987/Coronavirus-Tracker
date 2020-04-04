@@ -8,6 +8,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import { v4 as uuidv4 } from 'uuid';
+
 export class Table1 extends Component {
 
 
@@ -66,7 +68,7 @@ export class Table1 extends Component {
   filterCountryList(countryStr) {
     let column = this.state.sortColumn;
     let num = this.state.sort === 'upper' ? 1 : -1
-    const orderedStats = this.state.stats.sort((a, b) => eval('a[column]') < eval('b[column]') ? num : -1*num);
+    const orderedStats = this.state.stats.sort((a, b) => a[column] < b[column] ? num : -1*num);
 
     if (!countryStr.trim()) return this.setState({ searchValue: '', filteredStats: orderedStats})
     this.setState({
@@ -99,34 +101,16 @@ export class Table1 extends Component {
       userSee = this.state.stats
       noSeeNext = []
     }
-      
-    switch (type) {
-      case 'country':
-        let stats = this.state.stats.sort((a,b) => a.country > b.country ? num: -1*num)
-        userSee.sort((a,b) => a.country > b.country ? num: -1*num)
-        noSeePrev.push(...userSee, ...noSeeNext)
-        this.setState({
-          stats: stats,
-          sortColumn: 'country',
-          filteredStats: noSeePrev
 
-        })      
+    let stats = this.state.stats.sort((a,b) => a[type] < b[type] ? num: -1*num)
+    userSee.sort((a,b) => a[type] > b[type] ? num: -1*num)
+    noSeePrev.push(...userSee, ...noSeeNext)
+    this.setState({
+      stats: stats,
+      sortColumn: type,
+      filteredStats: noSeePrev
 
-        break;
-      case 'activeCases':
-        let stats1 = this.state.stats.sort((a,b) => a.activeCases > b.activeCases ? num: -1*num)
-        userSee.sort((a,b) => a.activeCases > b.activeCases ? num: -1*num)
-        noSeePrev.push(...userSee, ...noSeeNext)
-        this.setState({
-          stats: stats1,
-          sortColumn: 'activeCases',
-          filteredStats: noSeePrev
-        })
-        break;
-    
-      default:
-        break;
-    }
+    })     
   }
 
   paginate(e) {
@@ -151,31 +135,88 @@ export class Table1 extends Component {
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>
-        <div className="mv3 w-50-ns w-90 center mh2 ba b--moon-gray br3">
+        <div className="center">
 
+          <table className="mv3 w-50-ns w-90 center ">
+            <thead>
+              <tr>
+                {
+                  [['Country', 'country'], ['Active Cases', 'activeCases'], ['New Cases','newCases'],
+                   ['More']].map(e => {
+                    return(
+                    <th key={uuidv4()}>
+                      {e[0] !== 'More' ? e[0] : null}
+                      { e[0] !== 'More' ?
+                      <span className="swap" style={this.state.sortColumn === e[1] ? {color: '#2962ff'} : null}>
+                        <ImportExportIcon onClick={() => this.handleSort(e[1])}/>
+                      </span>
+                      : null }
+                    </th>
+                    )})
+                }
+              </tr>
+            </thead>
+            <tbody>
 
+              {
+                this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
+                  <tr key={s.country} onClick={() => this.goToCountryInfo(s.country.toUpperCase())}>
+                    
+                          <td>{s.country}</td>
+                          <td>{this.numberWithCommas(s.activeCases)}</td>
+                          {
+                            s.newCases > 0 ? <td className="light-purple">+{this.numberWithCommas(s.newCases)}</td>
+                            : <td>{this.numberWithCommas(s.newCases)}</td>
+                          }
+                          <td><a href={`/${s.country}`}><ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/></a></td>
+                    
+                  </tr>)
+                ).slice(this.state.page * this.state.maxPerPage, this.state.maxPerPage * (this.state.page + 1))
+              }
 
-           <div className="flex pv2 bb b--moon-gray br3 br--top bg-near-white">
-            <div className="w-50 pv2 pl4 b">Country
+            </tbody>
+          </table>
+
+           {/* <div className="flex pv2 items-center bb b--moon-gray br3 br--top bg-near-white justify-around">
+            <div className="dark-gray ma0 w-50 pv2  b">Country
               <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('country')}/>
               </span>
             </div>
-            <div className="w-40 pv2 tc b">Active Cases
+            <div className="dark-gray ma0 w-50 pv2  b">Active Cases
               <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
                 <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
               </span>
             </div>
+            <div className="dark-gray ma0 w-50 pv2  b">New Cases
+              <span className="swap" style={this.state.sortColumn === 'newCases' ? {color: '#2962ff'} : null}>
+                <ImportExportIcon onClick={() => this.handleSort('newCases')}/>
+              </span>
+            </div>
+            <div className="dark-gray ma0 w-50 pv2  b">Total Deaths
+              <span className="swap" style={this.state.sortColumn === 'totalDeaths' ? {color: '#2962ff'} : null}>
+                <ImportExportIcon onClick={() => this.handleSort('newCases')}/>
+              </span>
+            </div>
+            <div className="dark-gray ma0 w-50 pv2  b">New Deaths
+              <span className="swap" style={this.state.sortColumn === 'newDeaths' ? {color: '#2962ff'} : null}>
+                <ImportExportIcon onClick={() => this.handleSort('newDeaths')}/>
+              </span>
+            </div>
           </div>
-          
-          <div>
+           */}
+          {/* <div>
             {
               this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
                 <div key={s.country} onClick={() => this.goToCountryInfo(s.country.toUpperCase())}>
                   <a href={`/${s.country}`}>
-                      <div className="flex mv2 pt1 bb b--moon-gray bg-white items-center">
+                      <div className="flex mv2 pt1 bb b--moon-gray bg-white items-center justify-around">
                         <p className="dark-gray ma0 w-50 pv2 pl4">{s.country}</p>
-                        <p className="dark-gray ma0 w-40 pa2 tc">{this.numberWithCommas(s.activeCases)}</p>
+                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.activeCases)}</p>
+                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.newCases)}</p>
+                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.totalDeaths)}</p>
+                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.newDeaths)}</p>
+
                         <div className="w-10 pv2 pr2 center mid-gray">
                           <ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/>
                         </div>
@@ -184,29 +225,29 @@ export class Table1 extends Component {
                 </div>)
               ).slice(this.state.page * this.state.maxPerPage, this.state.maxPerPage * (this.state.page + 1))
             }
-          </div> 
+          </div>  */}
 
-          <div className="flex justify-around mt4 items-center">
-            <div className="flex flex-column items-center">
-              <div>
-                <ArrowBackIcon className="backArrow" onClick={() => this.paginate('back')}></ArrowBackIcon>
-                <ArrowForwardIcon className="frontArrow" onClick={() => this.paginate('forward')}></ArrowForwardIcon>
+            <div className="flex mt4 items-center mv3 w-50-ns w-90 center justify-center">
+              <div className="flex flex-column items-center">
+                <div>
+                  <ArrowBackIcon className="backArrow" onClick={() => this.paginate('back')}></ArrowBackIcon>
+                  <ArrowForwardIcon className="frontArrow" onClick={() => this.paginate('forward')}></ArrowForwardIcon>
+                </div>
+                <div className="ml2">Page: { this.state.page } of {Math.max(Math.ceil(this.state.filteredStats.length / this.state.maxPerPage) - 1, 0)}</div>
               </div>
-              <div className="ml2">Page: { this.state.page } of {Math.max(Math.ceil(this.state.filteredStats.length / this.state.maxPerPage) - 1, 0)}</div>
-            </div>
-            <div>
-                <FormControl className="pl2">
-                  <select onChange={this.handlePageChange} defaultValue={this.state.maxPerPage} className="pl2 bg-white br2">
-                    <option value={10}>10</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                    <option value={this.state.stats.length}>All</option>
-                  </select>
-                  <FormHelperText>Per Page</FormHelperText>
-                </FormControl>
-            </div>
+              <div className="pl4">
+                  <FormControl>
+                    <select onChange={this.handlePageChange} defaultValue={this.state.maxPerPage} className="pl2 bg-white br2">
+                      <option value={10}>10</option>
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                      <option value={this.state.stats.length}>All</option>
+                    </select>
+                    <FormHelperText>Per Page</FormHelperText>
+                  </FormControl>
+              </div>
 
-        </div>
+          </div>
         </div>
 
     </div>
