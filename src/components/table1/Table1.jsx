@@ -192,7 +192,7 @@ export class Table1 extends Component {
                 <ArrowBackIcon className="backArrow" onClick={() => this.paginate('back')}></ArrowBackIcon>
                 <ArrowForwardIcon className="frontArrow" onClick={() => this.paginate('forward')}></ArrowForwardIcon>
               </div>
-              <div className="ml2">Page: { this.state.page } of {Math.ceil(this.state.filteredStats.length / this.state.maxPerPage) - 1}</div>
+              <div className="ml2">Page: { this.state.page } of {Math.max(Math.ceil(this.state.filteredStats.length / this.state.maxPerPage) - 1, 0)}</div>
             </div>
             <div>
                 <FormControl className="pl2">
