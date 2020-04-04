@@ -55,6 +55,9 @@ scrape(options, (error, result) => {
       if (obj.country.includes('Zaandam')) obj.country = 'MS Zandam'
       if (obj.country.includes('Total:')) obj.country = 'Total:'
 
+      // new row added, serves same purpose as total, so just ignore it
+      if (obj.country === 'World') continue
+
       obj.country = obj.country.toUpperCase();
       objArray.push(obj);
 
