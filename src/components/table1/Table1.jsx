@@ -132,6 +132,10 @@ export class Table1 extends Component {
       <div>
         <div className="center">
           <div className="w-50-ns w-90 center br2 mt3">
+            <h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Ota;y</b>.
+                You can <b>sort</b> as you wish, use the <b>search bar</b>, change the table to list <b>COVID 19 stats</b> for more than 20 rows at once. To find out
+                more information and <b>global news</b> about a country, simply click on blue chevron.
+            </h2>
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
           </div>
         </div>

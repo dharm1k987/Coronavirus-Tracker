@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import "./Home.css"
 
 const moment = require('moment')
 
@@ -79,10 +80,10 @@ class Home extends React.Component {
 
       <div className="w-70-ns w-90 center ba tc shadow-4 br3 mt3 flex flex-column pa1">
         <div className="mv2">
-          <h1 className="f2 b">COVID-19 CORONAVIRUS UPDATE</h1> 
+          <h1>COVID-19 CORONAVIRUS UPDATE</h1> 
         </div>
         <div className="">
-          <h2 className="f6 fw1 pa1">
+          <h2>
 
             This site will serve as a <b>tracker</b> to the worldwide <b>COVID 19 Coronavirus pandemic</b>, that originated in <b>Wuhan, China</b>.
             <br></br><br></br>

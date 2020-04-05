@@ -221,7 +221,8 @@ export class Overall extends Component {
                         <div className="flex flex-column mb3">
                             {/* Total */}
                             <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
-                                <div className="b ma0 mid-gray">Total</div>
+                                <h1 className="b ma0 mid-gray f2-ns f4">Total</h1>
+
                                 <div className="gold">{this.numberWithCommas(
                                     this.state.place ? this.state.place.totalCases : this.state.place
                                 )}</div>
@@ -229,11 +230,27 @@ export class Overall extends Component {
 
                             {/* Deaths */}
                             <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                <div className="b ma0 mid-gray">Deaths</div>
-                                <div className="light-red">{this.numberWithCommas(
-                                    this.state.place ? this.state.place.totalDeaths : this.state.place
-                                )}</div>
+                                <h1 className="b ma0 mid-gray f2-ns f4">Deaths</h1>
+
+                                {/* Flex column */}
+                                {/* <div className="light-red"> {this.state.place ? this.numberWithCommas(this.state.place.totalDeaths) : 0} </div>
+                                <div className="dark-red f6"> {this.state.place ? 
+                                    this.state.place.newDeaths !== 0 ? <span>+ ({this.numberWithCommas(this.state.place.newDeaths)})</span>
+                                    : null
+                                : null}
+                            </div> */}
+
+                            {/* Flex row */}
+                            <div className="light-red"> {this.state.place ? 
+                                    <span className="flex items-center">{this.numberWithCommas(this.state.place.totalDeaths) }
+                                     <span className="f7 f3-ns ml2 dark-red"> (+{this.numberWithCommas(this.state.place.newDeaths)})</span>
+                                    </span>
+                                : 0} </div>
+
+
+
                             </div>
+
 
                         </div>
 
@@ -241,13 +258,18 @@ export class Overall extends Component {
                         <div className="flex flex-column mb3">
                             {/* Active */}
                             <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
-                                <div className="b ma0 mid-gray">Active</div>
-                                <div className="light-purple"> {this.state.place ? this.numberWithCommas(this.state.place.activeCases) : 0} </div>
+                                <h1 className="b ma0 mid-gray f2-ns f4 ">Active</h1>
+                                <div className="light-purple"> {this.state.place ? 
+                                    <span className="flex items-center">{this.numberWithCommas(this.state.place.activeCases) }
+                                     <span className="f7 f3-ns ml2 purple"> (+{this.numberWithCommas(this.state.place.newCases)})</span>
+                                    </span>
+                                : 0} </div>
+
                             </div>
 
                             {/* Recoveries */}
                             <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                <div className="b ma0 mid-gray">Recovered</div>
+                                <h1 className="b ma0 mid-gray f2-ns f4 ">Recovered</h1>
                                 <div className="green">{this.numberWithCommas(
                                     this.state.place ? this.state.place.totalRecovered : this.state.place
                                 )}</div>
@@ -265,7 +287,7 @@ export class Overall extends Component {
                     : null }
 
                     {/* Piechart */}
-                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4 pv4">
+                    <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4">
                         {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}
                     </div>
                 </div>
