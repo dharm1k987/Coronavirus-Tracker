@@ -177,56 +177,6 @@ export class Table1 extends Component {
             </tbody>
           </table>
 
-           {/* <div className="flex pv2 items-center bb b--moon-gray br3 br--top bg-near-white justify-around">
-            <div className="dark-gray ma0 w-50 pv2  b">Country
-              <span className="swap" style={this.state.sortColumn === 'country' ? {color: '#2962ff'} : null}>
-                <ImportExportIcon onClick={() => this.handleSort('country')}/>
-              </span>
-            </div>
-            <div className="dark-gray ma0 w-50 pv2  b">Active Cases
-              <span className="swap" style={this.state.sortColumn === 'activeCases' ? {color: '#2962ff'} : null}>
-                <ImportExportIcon onClick={() => this.handleSort('activeCases')}/>
-              </span>
-            </div>
-            <div className="dark-gray ma0 w-50 pv2  b">New Cases
-              <span className="swap" style={this.state.sortColumn === 'newCases' ? {color: '#2962ff'} : null}>
-                <ImportExportIcon onClick={() => this.handleSort('newCases')}/>
-              </span>
-            </div>
-            <div className="dark-gray ma0 w-50 pv2  b">Total Deaths
-              <span className="swap" style={this.state.sortColumn === 'totalDeaths' ? {color: '#2962ff'} : null}>
-                <ImportExportIcon onClick={() => this.handleSort('newCases')}/>
-              </span>
-            </div>
-            <div className="dark-gray ma0 w-50 pv2  b">New Deaths
-              <span className="swap" style={this.state.sortColumn === 'newDeaths' ? {color: '#2962ff'} : null}>
-                <ImportExportIcon onClick={() => this.handleSort('newDeaths')}/>
-              </span>
-            </div>
-          </div>
-           */}
-          {/* <div>
-            {
-              this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
-                <div key={s.country} onClick={() => this.goToCountryInfo(s.country.toUpperCase())}>
-                  <a href={`/${s.country}`}>
-                      <div className="flex mv2 pt1 bb b--moon-gray bg-white items-center justify-around">
-                        <p className="dark-gray ma0 w-50 pv2 pl4">{s.country}</p>
-                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.activeCases)}</p>
-                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.newCases)}</p>
-                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.totalDeaths)}</p>
-                        <p className="dark-gray ma0 w-40 pa2 pl4">{this.numberWithCommas(s.newDeaths)}</p>
-
-                        <div className="w-10 pv2 pr2 center mid-gray">
-                          <ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/>
-                        </div>
-                      </div>
-                  </a>
-                </div>)
-              ).slice(this.state.page * this.state.maxPerPage, this.state.maxPerPage * (this.state.page + 1))
-            }
-          </div>  */}
-
             <div className="flex mt4 items-center mv3 w-50-ns w-90 center justify-center">
               <div className="flex flex-column items-center">
                 <div>

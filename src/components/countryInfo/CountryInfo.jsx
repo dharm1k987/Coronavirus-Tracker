@@ -126,7 +126,7 @@ class CountryInfo extends React.Component {
 
         <div>
           {
-              this.state.countryStats && this.state.country ? <Overall placeName={this.state.country} place={this.state.countryStats}
+              this.state.countryStats && this.state.country ? <Overall placeName={this.state.country.toUpperCase()} place={this.state.countryStats}
                 timelines={this.state.timelines ? this.state.timelines : null} />
                 : null
           }
@@ -134,7 +134,7 @@ class CountryInfo extends React.Component {
 
         <div className="tc pt4 mb2 mh2 br2">
           <p className="f3 gray b mt2 mb0 pa0" >
-            Top Stories in {this.state.country}
+            Top Stories in {this.state.country.toUpperCase()}
           </p>
           <div className="flex">
             <div className="center flex">

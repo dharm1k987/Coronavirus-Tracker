@@ -258,11 +258,11 @@ export class Overall extends Component {
 
                 <div className="flex-ns justify-center">
                     {/* Line Graph */}
+                    {this.state.timelineData ? 
                     <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4">
-                        {this.state.timelineData ?
-                            <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
-                            : null}
+                        <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
                     </div>
+                    : null }
 
                     {/* Piechart */}
                     <div className="mv3 w-30-ns w-90 mh2-ns center ba b--light-silver bg-white br4 pv4">
