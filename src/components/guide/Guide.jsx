@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
-import ReplyIcon from '@material-ui/icons/Reply';
-import { Link } from 'react-router-dom';
 import PeopleIcon from '@material-ui/icons/People';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
@@ -13,6 +11,7 @@ import GradientIcon from '@material-ui/icons/Gradient';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
 import TipCard from './tip-card/TipCard';
+import HomeBtn from '../HomeBtn/HomeBtn';
 
 
 export class Guide extends Component {
@@ -138,11 +137,7 @@ export class Guide extends Component {
     return (
       <div className="center w-90 w-70-ns">
         <input type="hidden" name="IL_IN_ARTICLE" />
-        <div className="ba bw1 b shadow-4 br3 bg-white f5 blue mt3">
-          <Link to="/" className="flex justify-center">
-            <ReplyIcon className="mv2 mh2"/>
-          </Link>
-        </div>
+        <HomeBtn />
 
         {/* <div id="ezoic-pub-ad-placeholder-102"> </div> */}
         <p className="mb4 mt1 f2 f1-ns b tc">How do I stay safe?</p>

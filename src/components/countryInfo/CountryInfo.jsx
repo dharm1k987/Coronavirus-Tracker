@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { NewsBlock } from './newsBlock/NewsBlock'
 import { v4 as uuidv4 } from 'uuid';
 import { Overall } from '..'
@@ -8,8 +7,8 @@ import moment from "moment";
 import { CircularProgress } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
+import HomeBtn from '../HomeBtn/HomeBtn';
 import { Redirect } from 'react-router-dom';
-import HomeIcon from '@material-ui/icons/Home';
 const Parser = require('rss-parser');
 
 class CountryInfo extends React.Component {
@@ -117,12 +116,7 @@ class CountryInfo extends React.Component {
 
     return (
       <div>
-        <div className="w-70-ns w-90 mt-0 mb-0 mr-auto ml-auto">
-          <Link to="/" className="ba bg-white  b f3 blue mt3 custom">
-            <HomeIcon />
-            <div>Home</div>
-          </Link>
-        </div>
+        <div className="w-50-ns w-90 center"><HomeBtn /></div>
 
         <div>
           {

@@ -8,9 +8,6 @@
 }
 
 table {
-    border-collapse: collapse;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
     overflow: hidden;
 }
 td {
@@ -24,8 +21,6 @@ th {
     border-bottom: 1px solid #aaa9aa;
 }
 
-tr {
-    border-bottom: 1px solid #aaa9aa; 
-    border-left: 1px solid #f4f4f4; 
-    border-right: 1px solid #f4f4f4;
+tr:hover {
+    cursor: pointer;
 }

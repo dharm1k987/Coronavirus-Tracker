@@ -9,6 +9,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import { v4 as uuidv4 } from 'uuid';
+import {withRouter} from 'react-router-dom';
+
 
 export class Table1 extends Component {
 
@@ -79,10 +81,6 @@ export class Table1 extends Component {
     });
   }
 
-  goToCountryInfo(countryStr) {
-    console.log("Go to: ", countryStr);
-  }
-
   handleSort(type) {
 
     if (this.state.sort === 'upper') this.setState({sort: 'lower'})
@@ -127,21 +125,24 @@ export class Table1 extends Component {
     this.setState({ maxPerPage: parseInt(e.target.value, 10), page: 0 })
   }
 
+  handleRowClick(country) {
+    this.props.history.push(`/${country}`);
+  }
+
   render() {
     return (
       <div>
         <div className="center">
           <div className="w-50-ns w-90 center br2 mt3">
-            <h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Ota;y</b>.
+            <div className="pa2"><h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Italy</b>.
                 You can <b>sort</b> as you wish, use the <b>search bar</b>, change the table to list <b>COVID 19 stats</b> for more than 20 rows at once. To find out
-                more information and <b>global news</b> about a country, simply click on blue chevron.
-            </h2>
-            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br2"></input>
+                more information and <b>global news</b> about a country, simply click on it.</h2>
+            </div>
+            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br-pill"></input>
           </div>
         </div>
         <div className="center">
-
-          <table className="mv3 w-50-ns w-90 center ">
+          <table className="mv3 w-50-ns w-90 center ba br4">
             <thead>
               <tr>
                 {
@@ -164,16 +165,14 @@ export class Table1 extends Component {
 
               {
                 this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
-                  <tr key={s.country} onClick={() => this.goToCountryInfo(s.country.toUpperCase())}>
-                    
+                  <tr onClick={(e) => this.handleRowClick(s.country)} key={s.country} className="ba">
                           <td>{s.country}</td>
                           <td>{this.numberWithCommas(s.activeCases)}</td>
                           {
                             s.newCases > 0 ? <td className="light-purple">+{this.numberWithCommas(s.newCases)}</td>
                             : <td>{this.numberWithCommas(s.newCases)}</td>
                           }
-                          <td><a href={`/${s.country}`}><ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/></a></td>
-                    
+                          <td><ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/></td>
                   </tr>)
                 ).slice(this.state.page * this.state.maxPerPage, this.state.maxPerPage * (this.state.page + 1))
               }
@@ -209,4 +208,4 @@ export class Table1 extends Component {
   }
 }
 
-export default Table1;
+export default withRouter(Table1);
