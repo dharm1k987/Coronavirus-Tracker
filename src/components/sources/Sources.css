@@ -1,0 +1,10 @@
+.main-card {
+    /* max-width: 345px; */
+    border-radius: 1rem !important;
+}
+
+.card-media {
+    height: 140px;
+    background-size: contain !important;
+    margin-top: 10px;
+}

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Confetti from 'react-confetti';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
-import HomeBtn from '../HomeBtn/HomeBtn';
 import { v4 as uuidv4 } from 'uuid';
+import HomeBtn from '../HomeBtn/HomeBtn';
 
 
 export class Covid19ReadinessTest extends Component {
@@ -207,19 +207,18 @@ export class Covid19ReadinessTest extends Component {
   render() {
 
     return (
-      <div className="h-100">
       <div className="center w-90 w-70-ns ">
         {this.state.quizState === 0 ? <div>
           <div className="f2 tc pv4 b">COVID-19 Readiness Test</div>
           <div className="f4 pv2 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
             <button className="ba bw1 b b--green shadow-3 br3 f5 green w-100 mt5 mb2 bg-white" onClick={(e) => this.startQuiz()}>
-
               <div className="flex justify-center">
                 <PlayArrowIcon className="mv2"/>
                 <div className="mv2 mh2">Start</div>
               </div>
             </button>
             <HomeBtn />
+
         </div>: <div></div>}
         {this.state.quizState === 1 ? <div>
           <div className="f4 tc b mt4 mb2">Pick from Most Important to Least Important</div>
@@ -232,7 +231,7 @@ export class Covid19ReadinessTest extends Component {
                 className={`ba b center w-80
                   bw1
                   ${this.state.disabledBtnList[i] ? 'bg-green white b--white' : 'b--blue bg-white blue shadow-4'}
-                  br3 f5 pa3 ma2`}
+                  br3 f5 pa2 ma2`}
               >
                 <div className="tc w-100">{ai.str}</div>
               </button>
@@ -257,8 +256,7 @@ export class Covid19ReadinessTest extends Component {
             </button>
         </div>: <div></div>}
       </div>
-      </div>
-      
+     
     );
   }
 }

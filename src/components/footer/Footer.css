@@ -1,5 +1,10 @@
-.footer {
-  bottom: 0;
-  align-items: center;
-  background-color: #37474f  !important;
+.botNav {
+  background-color: #EEEEEE !important;
+  position:absolute;
+  left:0;
+  bottom:0;
+  right:0;
+  /* bottom:0;
+  width:100%;
+  box-sizing: border-box; */
 }
