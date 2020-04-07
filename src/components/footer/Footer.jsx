@@ -25,7 +25,7 @@ class Footer extends Component {
             }}
             showLabels
           >
-            <BottomNavigationAction label="Created by the COVID-19 Trackers" disableRipple disableTouchRipple disabled/>
+            {/* <BottomNavigationAction label="Created by the COVID-19 Trackers" disableRipple disableTouchRipple disabled/> */}
             <BottomNavigationAction component={Link} to="/" value='home' label="Home" icon={<HomeIcon />}/>
             <BottomNavigationAction component={Link} to="/sources" value='sources' label="Sources" icon={<BookIcon />}/>
           </BottomNavigation>
