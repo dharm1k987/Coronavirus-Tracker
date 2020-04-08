@@ -8,6 +8,7 @@ import NoRouteMatch from '../components/NoRouteMatch/NoRouteMatch';
 import { Guide } from '../components/guide/Guide';
 import { Covid19ReadinessTest } from '../components/covid19-readiness-test/Covid19-readiness-test';
 import { Sources } from '../components/sources/Sources';
+import AboutUs from '../components/AboutUs/AboutUs';
 
 
 class App extends React.Component {
@@ -21,6 +22,7 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/readiness-test" component={Covid19ReadinessTest} />
           <Route exact path="/guide" component={Guide} />
+          <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/sources" component={Sources} />
           <Route exact path="/404" component={NoRouteMatch} />
           <Route exact path="/:country" component={CountryInfo} />
