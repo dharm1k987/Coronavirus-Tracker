@@ -100,7 +100,7 @@ class AboutUs extends React.Component {
         </div>
         ))}
       </div>
-      <h1 className="f2 tc pt5 pb3">Connect With Us</h1>
+      {/* <h1 className="f2 tc pt5 pb3">Connect With Us</h1>
       <p className="">Have tips, feedback or ideas? Let us know below!</p>
       <textarea
         value={this.state.feedback}
@@ -108,7 +108,7 @@ class AboutUs extends React.Component {
         placeholder="Type your heart out..."
         maxlength="250"
         onChange={(e) => this.updateFeedback(e.target.value)}/>
-      <Btn colour={"blue"} icon={(<SendIcon />)} handleOnClick={() => this.sendFeedback()}>Send</Btn>
+      <Btn colour={"blue"} icon={(<SendIcon />)} handleOnClick={() => this.sendFeedback()}>Send</Btn> */}
     </div>);
   }
 }
