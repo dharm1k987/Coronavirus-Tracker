@@ -1,5 +1,5 @@
 {
-  "name": "temp",
+  "name": "provinces",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,12 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fetch": "^1.1.0",
-    "json2xls": "^0.1.2",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
-    "parse5": "^5.1.1",
-    "tabletojson": "^2.0.4",
-    "website-scraper": "^4.2.0"
+    "wtf_wikipedia": "^8.1.1"
   }
 }
