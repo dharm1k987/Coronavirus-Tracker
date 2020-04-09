@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card } from '@material-ui/core';
+import './TCCard.css'
 
 
-
-function TCCard(props) {
-  return (
-    <Card className="center ba b--light-silver pa3">
-      {props.children}
-    </Card>
-  );
+export class TCCard extends Component {
+  render() {
+    let classes = `center ba b--light-silver pa3 custom-card ${this.props.className}`
+    return (
+      <Card className={classes}>
+        {this.props.children}
+      </Card>
+    );
+  }
 }
+
 
 export default TCCard;
 

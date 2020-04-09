@@ -11,7 +11,7 @@ export class Navbar extends Component {
     return (      
           <AppBar position="static" className="appbar">
               <Toolbar>
-              <h1 className="f3 tc pv3 b ma0">
+              <h1 className="f3 tc mv3 b ma0">
                 COVID-19 (Coronavirus)
               </h1>
               </Toolbar>

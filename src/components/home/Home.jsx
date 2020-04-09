@@ -1,10 +1,11 @@
 import React from 'react';
 import { Overall, Table1 } from '..'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import { LinkBtn } from '../ui/LinkBtn/LinkBtn'
 import "./Home.css"
+import TCCard from '../ui/TCCard/TCCard';
 
 const moment = require('moment')
 
@@ -65,25 +66,22 @@ class Home extends React.Component {
 
   render() {
     return (<div>
-      <div className="w-70-ns w-90 center ba bw1 b shadow-4 br3 bg-white f5 blue mt3">
-      <Link to="/guide" className="flex justify-center">
-        <InfoIcon className="mv2 mh2"/>
-        <div className="mv2">What do I need to know?</div>
-      </Link>
-      </div>
-      <div className="w-70-ns w-90 center ba bw1 b shadow-4 br3 bg-white b--light-red f5 mt3">
-      <Link to="/readiness-test" className="hover-red flex justify-center white b--light-red br3 light-red">
-        <VerifiedUserIcon className="mv2 mh2"/>
-        <div className="mv2">COVID-19 Pandemic Readiness Test</div>
-      </Link>
+      <div className="w-70-ns w-90 center">
+        <LinkBtn colour="blue" icon={<InfoIcon />} link="/guide">What do I need to know?</LinkBtn>
       </div>
 
-      <div className="w-70-ns w-90 center ba tc shadow-4 br3 mt3 flex flex-column pa1">
-        <div className="mv2">
-          <h1>COVID-19 CORONAVIRUS UPDATE</h1> 
-        </div>
-        <div className="">
-          <h2>
+
+      <div className="w-70-ns w-90 center">
+      <LinkBtn colour="light-red" icon={<VerifiedUserIcon />} link="/readiness-test">COVID-19 Pandemic Readiness Test</LinkBtn>
+
+      </div>
+
+     
+
+      <div className="mt3 w-70-ns w-90 tc center">
+        <TCCard>
+          <h1 className="mid-gray">COVID-19 CORONAVIRUS UPDATE</h1> 
+          <h2 className="mid-gray">
 
             This site will serve as a <b>tracker</b> to the worldwide <b>COVID 19 Coronavirus pandemic</b>, that originated in <b>Wuhan, China</b>.
             <br></br><br></br>
@@ -97,14 +95,13 @@ class Home extends React.Component {
             Our goal is to provide <b>accurate information</b>, while at the same time keep it <b>succinct and relevant</b> instead of a full encyclopedia.
 
           </h2> 
-        </div>
+        </TCCard>
       </div>
+
       <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
-	    	     <input type="hidden" name="IL_IN_ARTICLE" /> 
 
-      <Table1 stats={this.state.liveStats} />
+        <Table1 stats={this.state.liveStats} />
 
-	    {/*  <input type="hidden" name="IL_IN_ARTICLE" /> */}
 
       </div>
     );

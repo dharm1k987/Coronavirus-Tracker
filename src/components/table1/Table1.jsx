@@ -132,17 +132,15 @@ export class Table1 extends Component {
   render() {
     return (
       <div>
-        <div className="center">
-          <div className="w-50-ns w-90 center br2 mt3">
-            <div className="pa2"><h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Italy</b>.
+          <div className="w-60-ns w-70-m w-90 center mt3">
+            <div><h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Italy</b>.
                 You can <b>sort</b> as you wish, use the <b>search bar</b>, change the table to list <b>COVID 19 stats</b> for more than 20 rows at once. To find out
                 more information and <b>global news</b> about a country, simply click on it.</h2>
             </div>
-            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br-pill"></input>
+            <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br3"></input>
           </div>
-        </div>
         <div className="center">
-          <table className="mv3 w-50-ns w-90 center ba br4">
+          <table className="mv3 w-60-ns w-70-m w-90 center ba br4">
             <thead>
               <tr>
                 {
@@ -183,6 +181,7 @@ export class Table1 extends Component {
             <div className="flex mt4 items-center mv3 w-50-ns w-90 center justify-center">
               <div className="flex flex-column items-center">
                 <div>
+                  {/* Not worth changing */}
                   <ArrowBackIcon className="backArrow" onClick={() => this.paginate('back')}></ArrowBackIcon>
                   <ArrowForwardIcon className="frontArrow" onClick={() => this.paginate('forward')}></ArrowForwardIcon>
                 </div>

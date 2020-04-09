@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { SourceImage } from '../ui/SourceImage/SourceImage'
 import { v4 as uuidv4 } from 'uuid';
-import './Sources.css';
 import HomeBtn from '../HomeBtn/HomeBtn';
+import { TCCard } from '../ui/TCCard/TCCard'
 
 
 const listings = [
@@ -47,40 +46,40 @@ export class Sources extends Component {
     render() {
         return (
             <div className="center w-90 w-70-ns">
-            
-              <h1 className="f2 tc pt4 b">Data Sources</h1>
+
+              <HomeBtn />            
+              <h1 className="f2 tc mv2 b">Data Sources</h1>
               <h2 className="tc">The following cards indicate which sources are used on this website to provide the most accurate COVID-19 information.
               In each card is also listed how the information is being used, for your convenience.
               </h2>
 
-            <HomeBtn />
 
               <div className="flex flex-row flex-column-ns flex-wrap items-center justify-center mb3">
                 {
                     listings.map(e => {
                         return (
-                            <Card className="main-card mt3 mh3-ns ba b--light-silver bg-white w-40-ns" key={uuidv4()}>
-                                <CardActionArea disabled>
-                                    <CardMedia
-                                    className="card-media"
-                                    image={e.image}
-                                    title="Contemplative Reptile"
-                                    />
-                                    <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2" className="mid-gray tc">
-                                        {e.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p">
-                                        {e.description}
-                                    </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions>
-                                    <Button size="small" color="primary" onClick={() => window.open(e.website, '_blank')}>
-                                    Learn More
-                                    </Button>
-                                </CardActions>
-                            </Card>
+                            <div className="mt3 mh3-ns w-40-ns w-90-m" key={uuidv4()}>
+                                <TCCard>
+                                
+                                    <CardActionArea disabled>
+                                        <SourceImage image={e.image} />
+                                        <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2" className="mid-gray tc">
+                                            {e.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {e.description}
+                                        </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                        {/* Leave this one as well */}
+                                        <Button size="small" color="primary" onClick={() => window.open(e.website, '_blank')}>
+                                        Learn More
+                                        </Button>
+                                    </CardActions>
+                                </TCCard>
+                            </div>
                         )
                     })
                 }

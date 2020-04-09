@@ -1,0 +1,5 @@
+.card-media {
+    height: 140px;
+    background-size: contain !important; 
+    margin-top: 10px;
+}

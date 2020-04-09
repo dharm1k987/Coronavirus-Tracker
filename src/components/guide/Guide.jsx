@@ -139,8 +139,7 @@ export class Guide extends Component {
         <input type="hidden" name="IL_IN_ARTICLE" />
         <HomeBtn />
 
-        {/* <div id="ezoic-pub-ad-placeholder-102"> </div> */}
-        <p className="mb4 mt1 f2 f1-ns b tc">How do I stay safe?</p>
+        <h1 className="f2 tc mv3 b">How do I stay safe?</h1>
         {this.state.tipList.map(tip => <TipCard {...tip}  key={uuidv4()}/>)}
 
 	    <input type="hidden" name="IL_IN_ARTICLE" />

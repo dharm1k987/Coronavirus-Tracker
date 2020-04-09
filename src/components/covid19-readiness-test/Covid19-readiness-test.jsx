@@ -4,6 +4,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
 import { v4 as uuidv4 } from 'uuid';
 import HomeBtn from '../HomeBtn/HomeBtn';
+import { Btn } from '../ui/Btn/Btn'
 
 
 export class Covid19ReadinessTest extends Component {
@@ -208,25 +209,28 @@ export class Covid19ReadinessTest extends Component {
 
     return (
       <div className="center w-90 w-70-ns ">
+        <HomeBtn />
+
         {this.state.quizState === 0 ? <div>
-          <div className="f2 tc pv4 b">COVID-19 Readiness Test</div>
-          <div className="f4 pv2 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
-            <button className="ba bw1 b b--green shadow-3 br3 f5 green w-100 mt5 mb2 bg-white" onClick={(e) => this.startQuiz()}>
-              <div className="flex justify-center">
-                <PlayArrowIcon className="mv2"/>
-                <div className="mv2 mh2">Start</div>
-              </div>
-            </button>
-            <HomeBtn />
+          <div className="f2 tc mv3 b">COVID-19 Readiness Test</div>
+          <div className="f4 mv3 ph3 tc-ns"><b>Instructions:</b> Order the items in the list from <b>most important</b> to <b>least important</b></div>
+              <Btn colour="green" icon={<PlayArrowIcon />} handleOnClick={(e) => this.startQuiz()}>Start</Btn>
+
 
         </div>: <div></div>}
         {this.state.quizState === 1 ? <div>
           <div className="f4 tc b mt4 mb2">Pick from Most Important to Least Important</div>
+
+          {/* <Btn colour="red" icon={<ReplayIcon />} handleOnClick={(e) => this.resetQuizState(this.state.actionList)} /> */}
+
+          {/* Not sure how to do this one, start guess is above */}
           <button onClick={(e) => this.resetQuizState(this.state.actionList)} className="mb4 mt1 flex center br-pill light-red ba pa2 bg-white shadow-4 bw1 b--light-red">
             <ReplayIcon />
           </button>
+          
           <div className="tc">
             {this.state.actionList.map((ai, i) => <div key={uuidv4()}>
+              {/* Leave this one alone */}
               <button onClick={(e) => this.onClickAction(i)} 
                 className={`ba b center w-80
                   bw1
@@ -240,20 +244,23 @@ export class Covid19ReadinessTest extends Component {
         </div> : <div></div>}
         {this.state.quizState === 2 ? <div>
           {this.state.totalScore > 32 ? <Confetti /> : <div></div>}
-          <div className="f2 tc pt4 pb3 b">Your COVID-19 Pandemic Rating</div>
+          <div className="f2 tc mt4 mb3 b">Your COVID-19 Pandemic Rating</div>
           <div className="flex justify-center">
-            <div className="f-headline dib justify-center lh-title tc b mv4 pv3 ph4 ba bw0 br4 bg-gold white shadow-4">{this.getGrade()}</div>
+            <div className="f-headline dib justify-center lh-title tc b mv4 mv3 ph4 ba bw0 br4 bg-gold white shadow-4">{this.getGrade()}</div>
           </div>
           <div className="f3 tc mt4">{this.state.totalScore < 30 ?
             "Nice try! See if you can review your priorities again" :
             "Awesome! You are ready! Share this with your family and friends to let them know you can take care of yourself" }</div>
           <div className="f6 tc mv1">(Highest Possible Rating: A+)</div>
-            <button className="ba bw1 b b--blue shadow-3 br3 f5 blue w-100 mv5 bg-white" onClick={(e) => this.restartQuiz()}>
+
+            <Btn colour="blue" icon={<ReplayIcon />} handleOnClick={(e) => this.restartQuiz()}>Retry Quiz</Btn>
+
+            {/* <button className="ba bw1 b b--blue shadow-3 br3 f5 blue w-100 mv5 bg-white" onClick={(e) => this.restartQuiz()}>
               <div className="flex justify-center">
                 <ReplayIcon className="mv2"/>
                 <div className="mv2 mh2">Retry quiz</div>
               </div>
-            </button>
+            </button> */}
         </div>: <div></div>}
       </div>
      

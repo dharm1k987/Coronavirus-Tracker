@@ -4,6 +4,7 @@ import Timeline from '../timeline/Timeline'
 import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import axios from 'axios';
+import TCCard from '../ui/TCCard/TCCard';
 
 export class Overall extends Component {
 
@@ -194,91 +195,83 @@ export class Overall extends Component {
 
     render() {
         return (
-            <div>
-                <div className="ma3 w-50-ns w-70-m w-90 center ba b--light-silver bg-white br4 tc">
-                    {/* Live Button */}
-                    <div className="center flex ph3 pt3 mid-gray">
-                        <p className="ma0"> Live </p>
-                        <div><RadioButtonCheckedIcon className="liveBtn" /> </div>
-                    </div>
-
-                    {/* Country */}
-                    <div className="flex mb2 justify-center items-center flex-wrap">
-                        {this.state.flag ? <div className="w-10-ns w-20 mh2"><img className="mv3" alt={`${this.state.placeName} COVID-19`} src={`${this.state.flag}`} /></div> : null}
-                        <div className="f1-ns f2 b">{this.state.placeName}</div>
-                    </div>
-
-                    <div className="flex justify-center justify-around-ns">
-                        <div className="flex flex-column mb3">
-                            {/* Total */}
-                            <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
-                                <h1 className="b ma0 mid-gray f2-ns f4">Total</h1>
-
-                                <div className="gold">{this.numberWithCommas(
-                                    this.state.place ? this.state.place.totalCases : this.state.place
-                                )}</div>
-                            </div>
-
-                            {/* Deaths */}
-                            <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                <h1 className="b ma0 mid-gray f2-ns f4">Deaths</h1>
-
-                                {/* Flex column */}
-                                {/* <div className="light-red"> {this.state.place ? this.numberWithCommas(this.state.place.totalDeaths) : 0} </div>
-                                <div className="dark-red f6"> {this.state.place ? 
-                                    this.state.place.newDeaths !== 0 ? <span>+ ({this.numberWithCommas(this.state.place.newDeaths)})</span>
-                                    : null
-                                : null}
-                            </div> */}
-
-                            {/* Flex row */}
-                            <div className="light-red"> {this.state.place ? 
-                                    <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.totalDeaths) }
-                                     <span className="f7 f3-ns ml2 dark-red"> (+{this.numberWithCommas(this.state.place.newDeaths)})</span>
-                                    </span>
-                                : 0} </div>
-
-
-
-                            </div>
-
-
+            <div className="mv3">
+                {/* Live, Country and Stats */}
+                <div className="mv3 w-50-ns w-70-m w-90 center">
+                    <TCCard>
+                        {/* Live Button */}
+                        <div className="center flex ph3 mt3 mid-gray">
+                            <p className="ma0"> Live </p>
+                            <div><RadioButtonCheckedIcon className="liveBtn" /> </div>
                         </div>
 
-                        {/* Deaths, Total, Recovered */}
-                        <div className="flex flex-column mb3">
-                            {/* Active */}
-                            <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
-                                <h1 className="b ma0 mid-gray f2-ns f4 ">Active</h1>
-                                <div className="light-purple"> {this.state.place ? 
-                                    <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.activeCases) }
-                                     <span className="f7 f3-ns ml2 purple"> (+{this.numberWithCommas(this.state.place.newCases)})</span>
-                                    </span>
-                                : 0} </div>
+                        {/* Country */}
+                        <div className="flex mb2 justify-center items-center flex-wrap mid-gray">
+                            {this.state.flag ? <div className="w-10-ns w-20-m w-20 mh2"><img className="mv3" alt={`${this.state.placeName} COVID-19`} src={`${this.state.flag}`} /></div> : null}
+                            <div className="f1-ns f2-m f2 b">{this.state.placeName}</div>
+                        </div>
+
+                        <div className="flex justify-center justify-around-ns">
+                            <div className="flex flex-column mb3">
+                                {/* Total */}
+                                <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4">Total</h1>
+
+                                    <div className="gold f3-m">{this.numberWithCommas(
+                                        this.state.place ? this.state.place.totalCases : this.state.place
+                                    )}</div>
+                                </div>
+
+                                {/* Deaths */}
+                                <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4">Deaths</h1>
+
+                                {/* Flex row */}
+                                <div className="light-red f3-m"> {this.state.place ? 
+                                        <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.totalDeaths) }
+                                        <span className="f7 f3-ns f5-m ml2 dark-red"> (+{this.numberWithCommas(this.state.place.newDeaths)})</span>
+                                        </span>
+                                    : 0} </div>
+
+                                </div>
 
                             </div>
 
-                            {/* Recoveries */}
-                            <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                <h1 className="b ma0 mid-gray f2-ns f4 ">Recovered</h1>
-                                <div className="green">{this.numberWithCommas(
-                                    this.state.place ? this.state.place.totalRecovered : this.state.place
-                                )}</div>
+                            {/* Deaths, Total, Recovered */}
+                            <div className="flex flex-column mb3">
+                                {/* Active */}
+                                <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4 ">Active</h1>
+                                    <div className="light-purple f3-m"> {this.state.place ? 
+                                        <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.activeCases) }
+                                        <span className="f7 f3-ns f5-m ml2 purple"> (+{this.numberWithCommas(this.state.place.newCases)})</span>
+                                        </span>
+                                    : 0} </div>
+
+                                </div>
+
+                                {/* Recoveries */}
+                                <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4 ">Recovered</h1>
+                                    <div className="green f3-m">{this.numberWithCommas(
+                                        this.state.place ? this.state.place.totalRecovered : this.state.place
+                                    )}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </TCCard>
                 </div>
 
-                <div className="flex-ns flex-column-m justify-center items-center">
+                <div className="mv3 flex-ns flex-column-m justify-center items-center">
                     {/* Line Graph */}
                     {this.state.timelineData ? 
-                    <div className="mv3 w-30-ns w-50-m w-90 mh2-ns center ba b--light-silver bg-white br4">
+                    <div className="w-30-ns w-70-m w-90 center mh2-ns">
                         <Timeline data={this.state.timelineData} options={this.options()} click={() => this.setState({ log: !this.state.log })} />
                     </div>
                     : null }
 
                     {/* Piechart */}
-                    <div className="mv3 w-30-ns w-50-m w-90 mh2-ns center ba b--light-silver bg-white br4">
+                    <div className="w-30-ns w-70-m w-90 center mh2-ns">
                         {this.state.graph ? <Piechart data={this.state.graph} options={this.piechartOptions()} /> : null}
                     </div>
                 </div>

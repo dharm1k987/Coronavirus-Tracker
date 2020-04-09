@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { Navbar, Footer } from '../components'
+import { Footer } from '../components/ui/footer/Footer'
+import { Navbar } from '../components/ui/navbar/Navbar'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from '../components/home/Home';
 import CountryInfo from '../components/countryInfo/CountryInfo';

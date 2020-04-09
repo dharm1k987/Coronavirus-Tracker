@@ -126,10 +126,10 @@ class CountryInfo extends React.Component {
           }
         </div>    
 
-        <div className="tc pt4 mb2 mh2 br2">
-          <p className="f3 gray b mt2 mb0 pa0" >
+        <div className="tc mt4 mb2 mh2 br2">
+          <h1 className="f3 mid-gray b mt2 mb0 pa0" >
             Top Stories in {this.state.country.toUpperCase()}
-          </p>
+          </h1>
           <div className="flex">
             <div className="center flex">
               <p className="ma0"> Live </p>

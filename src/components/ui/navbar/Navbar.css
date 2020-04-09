@@ -8,5 +8,5 @@
 
 .appbar {
 	align-items: center;
-	background-color: #37474f !important;	
+	background-color: #37474f !important; /* required */
 }

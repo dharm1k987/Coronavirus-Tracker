@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import './NewsBlock.css'
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -10,6 +8,8 @@ import { Collapse } from '@material-ui/core';
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import WebIcon from '@material-ui/icons/Web';
+import TCCard from '../../ui/TCCard/TCCard';
+import NewsListItem from '../../ui/NewsListItem/NewsListItem';
 
 export class NewsBlock extends Component {
 
@@ -39,56 +39,48 @@ export class NewsBlock extends Component {
         const { item } = this.props
         return (
 
-            <div className="tl br3 mid-gray ma3 ph4 pv2 w-70-ns w-90 center ba b--light-silver bg-white">
-                <ListItem button onClick={this.handleClick} className="listItem">
-          
-                    <h1 className="f4">{item.title}</h1>
-                    {this.state.open ? <ExpandLess style={{"color":"cornflowerblue"}}/> :
-                    <ExpandMore style={{"color":"cornflowerblue"}}/>}
-                </ListItem>
-                <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem button className="listItemInner">
-                            <ListItemIcon>
-                                <WebIcon />
-                            </ListItemIcon>                            
-                            <ListItemText primary={item.publisher} />
-                        </ListItem>
-                        <a href={item.link} target="_blank">
-                            <ListItem button className="listItemInner">
+            <div  className="w-70-ns w-90 center mid-gray mv3">
+                <TCCard>
+                    <NewsListItem handleOnClick={this.handleClick} className="listItem">
+                        <h1 className="f5 mid-gray">
+                            {item.title}
+                        </h1>
+                        {this.state.open ? <ExpandLess style={{"color":"cornflowerblue"}}/> :
+                        <ExpandMore style={{"color":"cornflowerblue"}}/>}
+                    </NewsListItem>
+           
+                    <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NewsListItem className="listItemInner">
                                 <ListItemIcon>
-                                    <LinkOutlinedIcon/>
+                                    <WebIcon />
                                 </ListItemIcon>                            
-                                <ListItemText primary="Go to article" />
-                            </ListItem>
-                        </a>
-                        <ListItem button className="listItemInner">
-                            <ListItemIcon>
-                                <AccessTimeIcon/>
-                            </ListItemIcon>                            
-                            <ListItemText primary={item.pubDate} />
-                        </ListItem>
-                    </List>
+                                <ListItemText primary={item.publisher} className="mid-gray"/>
+                            </NewsListItem>
 
-                </Collapse>
+                            <a href={item.link} target="_blank">
+                                <NewsListItem className="listItemInner">
+                                    <ListItemIcon>
+                                            <LinkOutlinedIcon/>
+                                        </ListItemIcon>                            
+                                    <ListItemText primary="Go to article" />
+                                </NewsListItem>
+                             </a>
+                             
+                            <NewsListItem className="listItemInner">
+                                <ListItemIcon>
+                                        <AccessTimeIcon/>
+                                    </ListItemIcon>                            
+                                <ListItemText primary={item.pubDate} className="mid-gray"/>
+                            </NewsListItem>
+                        </List>
 
+                    </Collapse>
+
+                </TCCard>
             </div>
-        
-        // <div>
-        //     <a href={item.link} className="no-hv-underline">
-        //     <div className="tl shadow-1 br2 mid-gray ma3 ph4 pv3 w-90 center ba bw1 news_block">
-                
-        //         <div>
-        //             <h2 className="f5 b gray">{item.publisher}</h2>
-        //             <h1 className="f4">{item.title}</h1>
 
-        //             <h1 className="f6 gray pt2">{item.pubDate}</h1>
-                
-        //         </div>
 
-        //     </div>
-        //     </a>
-        // </div>
 
         );
     }

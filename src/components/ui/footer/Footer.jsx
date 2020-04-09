@@ -7,7 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import './Footer.css';
 import { Link } from 'react-router-dom';
 
-class Footer extends Component {
+export class Footer extends Component {
 
     constructor(props) {
         super(props);
