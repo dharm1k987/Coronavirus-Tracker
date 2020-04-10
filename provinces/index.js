@@ -1,4 +1,7 @@
-const wtf = require('wtf_wikipedia')
+const wtf = require('wtf_wikipedia');
+const fetch = require('node-fetch');
+
+const outStr = (str) => console.log(str);
 
 async function china() {
     // https://en.wikipedia.org/wiki/Template:2019%E2%80%9320_coronavirus_pandemic_data/China_medical_cases_by_province
@@ -36,6 +39,7 @@ async function china() {
         // break after total deaths
         if (textProper === 'totalDeaths') break
     }
+    outStr("State info received: CHINA");
     return result;
 
 }
@@ -57,6 +61,7 @@ async function canada() {
         // stop after Nunavut
         if (obj.state === 'NUNAVUT') break
     }
+    outStr("State info received: CANADA");
     return result;
 
 }
@@ -85,14 +90,43 @@ async function usa() {
         // stop after Wyoming
         if (obj.state === 'WYOMING') break
     }
+    outStr("State info received: USA");
     return result;
 }
 
 
 async function main() {
-    // console.log(await china())
-    // console.log(await canada())
-    console.log(await usa());
+    outStr("Fetching state information...");
+    const statesStats = [
+        {
+            country: "CHINA",
+            stateList: await china()
+        },
+        {
+            country: "USA",
+            stateList: await usa()
+        },
+        {
+            country: "CANADA",
+            stateList: await canada()
+        },
+    ];
+    outStr("Updating API...");
+    fetch('http://localhost:9000/live-stats/states/update', {
+        method: 'post',
+        body: JSON.stringify({
+            statesStats
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(res => res.json()).then(res => {
+        console.log("Done!");
+      })
+      .catch(err => {
+        console.log("An error occured, email admins:")
+        console.log(err)
+      })
     
     // each of these will return an array like: [ {state: ..., activeCases: ..., totalRecovered: ..., totalDeaths: ...}, {...}]
     // one by one, do a fetch call similar to how we did in here: https://github.com/track-coronavirus/oneoff-scripts/blob/master/cron/index.js#L67
