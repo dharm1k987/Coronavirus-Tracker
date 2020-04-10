@@ -1,5 +1,6 @@
 const {
-  Stat
+  Stat,
+  StateInfo
 } = require('../schemas');
 
 const countryReplace  = require('../helpers/countryReplace').countryReplace;
@@ -26,8 +27,28 @@ const postStats = async (stats) => {
   return updated;
 };
 
+const postStateStats = async (statesStats) => {
+  const stateInfos = [
+    ...statesStats[0].stateList.map(s => { return { country: statesStats[0].country, ...s }}),
+    ...statesStats[1].stateList.map(s => { return { country: statesStats[1].country, ...s }}),
+    ...statesStats[2].stateList.map(s => { return { country: statesStats[2].country, ...s }}),
+  ];
+  for (let i = 0; i < stateInfos.length; i++) {
+    const updatedStates = await StateInfo.updateOne(
+      { country: stateInfos[i].country, state: stateInfos[i].state },
+      { ...stateInfos[i], },
+      { upsert: true }
+    );
+  }
+  return true;
+};
+
+const getStateStatsByCountry = async (country) => {
+  const stateStats = await StateInfo.find({ country });
+  return stateStats;
+}
+
 const getStatsOf = async (country) => {
-  country = country.toUpperCase()
   const countryStats = await Stat.findOne({ country });
   return countryStats;
 };
@@ -35,5 +56,7 @@ const getStatsOf = async (country) => {
 module.exports = {
   getStats,
   postStats,
-  getStatsOf
+  postStateStats,
+  getStatsOf,
+  getStateStatsByCountry
 };
