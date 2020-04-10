@@ -132,7 +132,7 @@ export class Table2 extends Component {
             <thead>
               <tr>
                 {
-                  [['State', 'state'], ['Active Cases', 'activeCases'], ['Recovered','totalRecovered:'],
+                  [['State', 'state'], ['Active Cases', 'activeCases'], ['Recovered','totalRecovered'],
                   ['Deaths', 'totalDeaths']].map(e => {
                     return(
                     <th key={uuidv4()}>
