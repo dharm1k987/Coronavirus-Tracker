@@ -9,6 +9,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
 import HomeBtn from '../HomeBtn/HomeBtn';
 import { Redirect } from 'react-router-dom';
+import { Table2 } from '../table2/Table2';
 const Parser = require('rss-parser');
 
 class CountryInfo extends React.Component {
@@ -20,7 +21,8 @@ class CountryInfo extends React.Component {
       news: [],
       graph: null,
       notFound: false,
-      timelines: null
+      timelines: null,
+      stateStats: []
     }
   }
 
@@ -100,10 +102,17 @@ class CountryInfo extends React.Component {
 
       }).catch(e => console.log(e))
 
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/live-stats/${this.state.country.toUpperCase()}/states`)
+      .then(res => {
+        this.setState({ stateStats: res.data.stateStats })
+      }).catch(e => console.log(e))
+
 
   }
 
   render() {
+      
     if (this.state.notFound) {
       return (<Redirect to={{
         pathname: '/404',
@@ -124,7 +133,12 @@ class CountryInfo extends React.Component {
                 timelines={this.state.timelines ? this.state.timelines : null} />
                 : null
           }
-        </div>    
+        </div> 
+
+        {/* Add table for CAD, CHN, USA */}
+        {
+          this.state.stateStats.length > 0 ? <Table2 stats={this.state.stateStats}/> : null 
+        } 
 
         <div className="tc mt4 mb2 mh2 br2">
           <h1 className="f3 mid-gray b mt2 mb0 pa0" >

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import "./Table1.css"
 import ImportExportIcon from '@material-ui/icons/ImportExport';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -12,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {withRouter} from 'react-router-dom';
 
 
-export class Table1 extends Component {
+export class Table2 extends Component {
 
 
   numberWithCommas(x) {
@@ -26,19 +23,15 @@ export class Table1 extends Component {
     this.paginate = this.paginate.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
 
-    // activeCases: 23605
-    // country: "China"
-    // newCases: 167
-    // newDeaths: 30
-    // seriousAndCritical: 5737
-    // totalCases: 99999
-    // totalDeaths: 3042
-    // totalRecovered: 53929
+    // state: 'NORTHWEST TERRITORIES',
+    // activeCases: 4,
+    // totalRecovered: 1,
+    // totalDeaths: 0
 
 
     this.state = {
       columns: [
-        { name: 'country', title: 'Country' },
+        { name: 'state', title: 'State' },
         { name: 'totalCases', title: 'Cases' }
       ],
       stats: [],
@@ -77,7 +70,7 @@ export class Table1 extends Component {
       searchValue: countryStr,
       page: 0,
       filteredStats: orderedStats
-        .filter(s => s.country.toUpperCase().includes(countryStr.toUpperCase()))
+        .filter(s => s.state.toUpperCase().includes(countryStr.toUpperCase()))
     });
   }
 
@@ -125,35 +118,28 @@ export class Table1 extends Component {
     this.setState({ maxPerPage: parseInt(e.target.value, 10), page: 0 })
   }
 
-  handleRowClick(country) {
-    this.props.history.push(`/${country}`);
-  }
-
   render() {
     return (
       <div>
           <div className="w-60-ns w-70-m w-90 center mt3">
-            <div><h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Italy</b>.
-                You can <b>sort</b> as you wish, use the <b>search bar</b>, change the table to list <b>COVID 19 stats</b> for more than 20 rows at once. To find out
-                more information and <b>global news</b> about a country, simply click on it.</h2>
+            <div><h2>The following table lists the <b>Coronavirus statistics</b> for each state and province of this country. The data is fetched and parsed
+             from <b>Wikipedia</b>, so it is not completly live. Real values may differ slightly.</h2>
             </div>
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br3"></input>
           </div>
-        <div className="center">
+        <div className="center w-90 overflow-x-scroll">
           <table className="mv3 w-60-ns w-70-m w-90 center ba br4">
             <thead>
               <tr>
                 {
-                  [['Country', 'country'], ['Active Cases', 'activeCases'], ['New Cases','newCases'],
-                   ['More']].map(e => {
+                  [['State', 'state'], ['Active Cases', 'activeCases'], ['Recovered','totalRecovered:'],
+                  ['Deaths', 'totalDeaths']].map(e => {
                     return(
                     <th key={uuidv4()}>
-                      {e[0] !== 'More' ? e[0] : null}
-                      { e[0] !== 'More' ?
+                      { e[0] }
                       <span className="swap" style={this.state.sortColumn === e[1] ? {color: '#2962ff'} : null}>
                         <ImportExportIcon onClick={() => this.handleSort(e[1])}/>
                       </span>
-                      : null }
                     </th>
                     )})
                 }
@@ -162,15 +148,13 @@ export class Table1 extends Component {
             <tbody>
 
               {
-                this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
-                  <tr onClick={(e) => this.handleRowClick(s.country)} key={s.country} className="ba b--moon-gray">
-                          <td>{s.country}</td>
+                this.state.filteredStats.map(s => (
+                  <tr key={s.state} className="ba b--moon-gray">
+                          <td>{s.state}</td>
                           <td>{this.numberWithCommas(s.activeCases)}</td>
-                          {
-                            s.newCases > 0 ? <td className="light-purple">+{this.numberWithCommas(s.newCases)}</td>
-                            : <td>{this.numberWithCommas(s.newCases)}</td>
-                          }
-                          <td><ArrowForwardIosIcon style={{"color":"cornflowerblue"}}/></td>
+                          <td>{this.numberWithCommas(s.totalRecovered)}</td>
+                          <td>{this.numberWithCommas(s.totalDeaths)}</td>
+
                   </tr>)
                 ).slice(this.state.page * this.state.maxPerPage, this.state.maxPerPage * (this.state.page + 1))
               }
@@ -207,4 +191,4 @@ export class Table1 extends Component {
   }
 }
 
-export default withRouter(Table1);
+export default withRouter(Table2);
