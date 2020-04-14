@@ -100,8 +100,6 @@ class Home extends React.Component {
       <div className="mt3 w-60-ns w-90 tc center">
         <SiteIntro />
       </div>
-
-
       </div>
     );
   }

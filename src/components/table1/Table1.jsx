@@ -142,7 +142,7 @@ export class Table1 extends Component {
           </div>
         <TCCard className="mv3 w-60-ns w-70-m w-90 center ba br4">
           <table className="center w-100 mid-gray">
-            <thead className="f4">
+            <thead className="f6">
               <tr>
                 {
                   [['Country', 'country'], ['Active', 'activeCases'], ['New','newCases'],

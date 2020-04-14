@@ -147,9 +147,9 @@ class CountryInfo extends React.Component {
         </div> 
 
         {/* Add table for CAD, CHN, USA */}
-        {/* FIXME: need to fix table entries to show correct data {
+        {
           this.state.stateStats.length > 0 ? <Table2 stats={this.state.stateStats}/> : null 
-        } */}
+        }
 
         <div className="tc mt4 mb2 mh2 br2">
           <h1 className="f3 mid-gray b mt2 mb0 pa0" >

@@ -7,6 +7,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import { v4 as uuidv4 } from 'uuid';
 import {withRouter} from 'react-router-dom';
+import { TCCard } from '../ui/TCCard/TCCard';
 
 
 export class Table2 extends Component {
@@ -120,36 +121,36 @@ export class Table2 extends Component {
 
   render() {
     return (
-      <div>
-          <div className="w-60-ns w-70-m w-90 center mt3">
+      <div className="mid-gray">
+          <div className="w-60-ns w-70-m w-90 center mt3 mid-gray">
             <div><h2>The following table lists the <b>Coronavirus statistics</b> for each state and province of this country. The data is fetched and parsed
              from <b>Wikipedia</b>, so it is not completly live. Real values may differ slightly.</h2>
             </div>
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br3"></input>
           </div>
-        <div className="center w-90 overflow-x-scroll">
-          <table className="mv3 w-60-ns w-70-m w-90 center ba br4">
-            <thead>
+        <TCCard className="mv3 w-60-ns w-70-m w-90 center ba br4">
+          <table className="center w-100 mid-gray">
+            <thead className="f6">
               <tr>
-                {
-                  [['State', 'state'], ['Active Cases', 'activeCases'],
-                  ['Deaths', 'totalDeaths']].map(e => {
-                    return(
-                    <th key={uuidv4()}>
-                      { e[0] }
-                      <span className="swap" style={this.state.sortColumn === e[1] ? {color: '#2962ff'} : null}>
-                        <ImportExportIcon onClick={() => this.handleSort(e[1])}/>
-                      </span>
-                    </th>
-                    )})
-                }
-              </tr>
+                  {
+                    [['State', 'state'], ['Active', 'activeCases'],
+                    ['Deaths', 'totalDeaths']].map(e => {
+                      return(
+                      <th key={uuidv4()}>
+                        { e[0] }
+                        <span className="swap" style={this.state.sortColumn === e[1] ? {color: '#2962ff'} : null}>
+                          <ImportExportIcon onClick={() => this.handleSort(e[1])}/>
+                        </span>
+                      </th>
+                      )})
+                  }
+                </tr>
             </thead>
             <tbody>
 
               {
                 this.state.filteredStats.map(s => (
-                  <tr key={s.state} className="ba b--moon-gray">
+                  <tr key={s.state} className="bb b--moon-gray">
                           <td>{s.state}</td>
                           <td>{this.numberWithCommas(s.activeCases)}</td>
                           {/* <td>{this.numberWithCommas(s.totalRecovered)}</td> */}
@@ -184,7 +185,7 @@ export class Table2 extends Component {
               </div>
 
           </div>
-        </div>
+        </TCCard>
 
     </div>
     );

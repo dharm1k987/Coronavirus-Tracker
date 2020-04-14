@@ -207,12 +207,13 @@ export class Overall extends Component {
                         </div>
 
                         {/* Country */}
-                        <div className="flex mb2 justify-center items-center flex-wrap mid-gray">
+                        <div className="flex mb2 justify-center items-center flex-wrap mid-gray tc">
                             {this.state.flag ? <div className="w-10-ns w-20-m w-20 mh2"><img className="mv3" alt={`${this.state.placeName} COVID-19`} src={`${this.state.flag}`} /></div> : null}
                             <div className="f1-ns f2-m f2 b">{this.state.placeName}</div>
                         </div>
 
                         <div className="flex justify-center justify-around-ns">
+                            {/* Total and Active column */}
                             <div className="flex flex-column mb3">
                                 {/* Total */}
                                 <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
@@ -223,14 +224,12 @@ export class Overall extends Component {
                                     )}</div>
                                 </div>
 
-                                {/* Deaths */}
-                                <div className="f2-ns f4 b fl tc mh0-ns mh4">
-                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4">Deaths</h1>
-
-                                {/* Flex row */}
-                                <div className="light-red f3-m"> {this.state.place ? 
-                                        <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.totalDeaths) }
-                                        <span className="f7 f3-ns f5-m ml2 dark-red"> (+{this.numberWithCommas(this.state.place.newDeaths)})</span>
+                                {/* Active */}
+                                <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4 ">Active</h1>
+                                    <div className="light-purple f3-m"> {this.state.place ? 
+                                        <span className="flex flex-column items-center justify-center">{this.numberWithCommas(this.state.place.activeCases) }
+                                        <span className="f7 f3-ns f5-m purple"> (+{this.numberWithCommas(this.state.place.newCases)})</span>
                                         </span>
                                     : 0} </div>
 
@@ -238,31 +237,34 @@ export class Overall extends Component {
 
                             </div>
 
-                            {/* Deaths, Total, Recovered */}
+                            {/* Recovered and Deaths column */}
                             <div className="flex flex-column mb3">
-                                {/* Active */}
-                                <div className="f2-ns f4 mid-gray b tc mh0-ns mh4 mb3">
-                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4 ">Active</h1>
-                                    <div className="light-purple f3-m"> {this.state.place ? 
-                                        <span className="flex items-center justify-center">{this.numberWithCommas(this.state.place.activeCases) }
-                                        <span className="f7 f3-ns f5-m ml2 purple"> (+{this.numberWithCommas(this.state.place.newCases)})</span>
-                                        </span>
-                                    : 0} </div>
-
-                                </div>
 
                                 {/* Recoveries */}
-                                <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                <div className="f2-ns f4 b tc mh0-ns mh4 mb3">
                                     <h1 className="b ma0 mid-gray f2-ns f3-m f4 ">Recovered</h1>
                                     <div className="green f3-m">{this.numberWithCommas(
                                         this.state.place ? this.state.place.totalRecovered : this.state.place
                                     )}</div>
                                 </div>
+
+                                {/* Deaths */}
+                                <div className="f2-ns f4 b fl tc mh0-ns mh4">
+                                    <h1 className="b ma0 mid-gray f2-ns f3-m f4">Deaths</h1>
+                                    {/* Flex row */}
+                                    <div className="light-red f3-m"> {this.state.place ? 
+                                            <span className="flex flex-column items-center justify-center">{this.numberWithCommas(this.state.place.totalDeaths) }
+                                            <span className="f7 f3-ns f5-m dark-red"> (+{this.numberWithCommas(this.state.place.newDeaths)})</span>
+                                            </span>
+                                        : 0} </div>
+                                </div>
+
                             </div>
                         </div>
                     </TCCard>
                 </div>
                 <ShareBar />
+
 
                 <div className="mv3 flex-ns flex-column-m justify-center items-center">
                     {/* Line Graph */}

@@ -9,10 +9,13 @@ import FacebookIcon from'@material-ui/icons/Facebook';
 import TwitterIcon from'@material-ui/icons/Twitter';
 import LinkedInIcon from'@material-ui/icons/LinkedIn';
 import WhatsAppIcon from'@material-ui/icons/WhatsApp';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import { LinkBtn } from '../ui/LinkBtn/LinkBtn'
 
 export class ShareBar extends Component {
   render() {
     return (
+      <div className="flex flex-column w-20-ns w-90 center justify-center">
       <div className="flex justify-center">
         <FacebookShareButton
           className="mh3"
@@ -46,6 +49,10 @@ export class ShareBar extends Component {
             <div className="green"><WhatsAppIcon/></div>
           </WhatsappShareButton>
       </div>
+      <div>
+          <LinkBtn colour="orange" icon={<LocalCafeIcon />} link="https://www.buymeacoffee.com/trackcorona" external>Buy me a Coffee</LinkBtn>
+      </div>
+    </div>
     );
   }
 
