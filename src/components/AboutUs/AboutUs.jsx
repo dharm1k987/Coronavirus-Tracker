@@ -4,7 +4,9 @@ import axios from 'axios';
 import TCCard from '../ui/TCCard/TCCard';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import SendIcon from '@material-ui/icons/Send';
 import HomeBtn from '../HomeBtn/HomeBtn';
+import Btn from '../ui/Btn/Btn';
 
 class AboutUs extends React.Component {
 
@@ -33,38 +35,17 @@ class AboutUs extends React.Component {
           desc: "It pays to be safe. Hospitals are being squeezed, medical professionals around the world are being overworked, and victims of the COVID-19 virus are having a bad time. Hence, we make sure that you can depend on us to stay up to date on safety measures and information needed to stay healthy and get through this difficult time with as much ease as possible."
         },
       ],
-      teamList: [
-        {
-          name: "Vinit Soni",
-          education: "Computer Science @ University of Waterloo",
-          contactLink: "https://linkedin.com/in/vinitsoni",
-          githubLink: "https://github.com/cybervinit",
-          imgSrc: "vinit_pic.jpg",
-          "imgAlt": "vinit_covid"
-        },
-        {
-          name: "Mirza Abubacker",
-          education: "Business Technology Management @ Ryerson University",
-          contactLink: "https://linkedin.com/in/mirza-abubacker",
-          imgSrc: "mirza_pic.jpg",
-          "imgAlt": "mirza_covid"
-        },
-        {
-          name: "Dharmik Shah",
-          education: "Computer Science @ University of Toronto",
-          contactLink: "https://www.linkedin.com/in/dharmikshah987/",
-          githubLink: "https://github.com/dharm1k987",
-          imgSrc: "dharmik_pic.jpg",
-          imgAlt: "dharmik_covid"
-        },
-      ],
-      feedback: ""
+      feedback: "",
+      feedbackBtnIsDisabled: false
     };
   }
 
-  sendFeedback() {
-    axios.post(`${process.env.REACT_APP_API_URL}/feedback`, {
+  async sendFeedback() {
+    await axios.post(`${process.env.REACT_APP_API_URL}/feedback`, {
       feedbackMsg: this.state.feedback
+    });
+    this.setState({
+      feedbackBtnIsDisabled: true
     });
   }
 
@@ -85,26 +66,22 @@ class AboutUs extends React.Component {
       </TCCard>
       <h1 className="f2 tc mt4 mb2 ">The Team</h1>
       <div className="flex flex-wrap w-100 w-80-l center">
-        {this.state.teamList.map(m => (
-        <div className="center w-30-l mv3" key={uuidv4()}>
-          <TCCard>
-            <div className="tc mt4">
-              <img className="h5 w5 h-75-ns w-75-ns br-100 dib" src={`${m.imgSrc}`} alt={`${m.imgAlt}`}/>
-            </div>
-            <h1 className="f3 tc mt3 mb1 mid-gray">{m.name}</h1>
-            <p className="f5 tc mv2 mid-gray">{m.education}</p>
-            <a href={`${m.contactLink}`} target="_blank" className="flex justify-center mid-gray">
-              <LinkedInIcon className="mh2"/>
-              <p>Contact me</p>
-            </a>
-            {m.githubLink ? <a href={`${m.githubLink}`} target="_blank" className="flex justify-center mid-gray">
-              <GitHubIcon className="mh2"/>
-              <p>GitHub</p>
-            </a> : <div></div>}
-          </TCCard>
-        </div>
-        ))}
+        <TCCard className="mid-gray">
+        <p className="f5 mid-gray">We’re a team of individuals focused on playing a crucial role in the fight against COVID-19. With our goals outlined above, we’re focused on incorporating those tenets with all of our features being rolled out, to give everyone visiting our site the best info possible. Connect with us below!</p>
+        </TCCard>
       </div>
+      <h1 className="f2 tc pt5 pb3">Connect With Us</h1>
+      <p className="">Have tips, feedback or ideas? Let us know below!</p>
+      <textarea
+        value={this.state.feedback}
+        className="ba b--light-silver br2 w-100 pa2"
+        placeholder="Type your heart out..."
+        maxlength="250"
+        onChange={(e) => this.updateFeedback(e.target.value)}/>
+      <Btn
+        isDisabled={this.state.feedbackBtnIsDisabled}
+        colour={"blue"}
+        icon={(<SendIcon />)} handleOnClick={() => this.sendFeedback()}>Send</Btn>
     </div>);
   }
 }
