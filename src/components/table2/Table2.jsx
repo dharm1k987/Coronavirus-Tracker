@@ -132,7 +132,7 @@ export class Table2 extends Component {
             <thead>
               <tr>
                 {
-                  [['State', 'state'], ['Active Cases', 'activeCases'], ['Recovered','totalRecovered'],
+                  [['State', 'state'], ['Active Cases', 'activeCases'],
                   ['Deaths', 'totalDeaths']].map(e => {
                     return(
                     <th key={uuidv4()}>
@@ -152,7 +152,7 @@ export class Table2 extends Component {
                   <tr key={s.state} className="ba b--moon-gray">
                           <td>{s.state}</td>
                           <td>{this.numberWithCommas(s.activeCases)}</td>
-                          <td>{this.numberWithCommas(s.totalRecovered)}</td>
+                          {/* <td>{this.numberWithCommas(s.totalRecovered)}</td> */}
                           <td>{this.numberWithCommas(s.totalDeaths)}</td>
 
                   </tr>)
