@@ -5,6 +5,7 @@ import Piechart from '../piechart/Piechart'
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import axios from 'axios';
 import TCCard from '../ui/TCCard/TCCard';
+import { ShareBar } from '../ShareBar/ShareBar';
 
 export class Overall extends Component {
 
@@ -261,6 +262,7 @@ export class Overall extends Component {
                         </div>
                     </TCCard>
                 </div>
+                <ShareBar />
 
                 <div className="mv3 flex-ns flex-column-m justify-center items-center">
                     {/* Line Graph */}

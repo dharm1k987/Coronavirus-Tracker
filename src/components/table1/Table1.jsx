@@ -10,6 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import { v4 as uuidv4 } from 'uuid';
 import {withRouter} from 'react-router-dom';
+import { TCCard } from '../ui/TCCard/TCCard';
 
 
 export class Table1 extends Component {
@@ -131,20 +132,20 @@ export class Table1 extends Component {
 
   render() {
     return (
-      <div>
-          <div className="w-60-ns w-70-m w-90 center mt3">
+      <div className="mid-gray">
+          <div className="w-60-ns w-70-m w-90 center mt3 mid-gray">
             <div><h2>The following table lists the <b>Coronavirus statistics</b> for more than <b>200</b> countries, including the <b>United States, China and Italy</b>.
                 You can <b>sort</b> as you wish, use the <b>search bar</b>, change the table to list <b>COVID 19 stats</b> for more than 20 rows at once. To find out
                 more information and <b>global news</b> about a country, simply click on it. Cick either <b>USA, CANADA</b> or <b>CHINA</b> to have state info as well.</h2>
             </div>
             <input value={this.state.searchValue} onChange={(e) => this.filterCountryList(e.target.value)} placeholder="Search by country for latest news..." className="w-100 pa2 br3"></input>
           </div>
-        <div className="center">
-          <table className="mv3 w-60-ns w-70-m w-90 center ba br4">
-            <thead>
+        <TCCard className="mv3 w-60-ns w-70-m w-90 center ba br4">
+          <table className="center w-100 mid-gray">
+            <thead className="f4">
               <tr>
                 {
-                  [['Country', 'country'], ['Active Cases', 'activeCases'], ['New Cases','newCases'],
+                  [['Country', 'country'], ['Active', 'activeCases'], ['New','newCases'],
                    ['More']].map(e => {
                     return(
                     <th key={uuidv4()}>
@@ -163,7 +164,7 @@ export class Table1 extends Component {
 
               {
                 this.state.filteredStats.filter(s => s.country !== "TOTAL:").map(s => (
-                  <tr onClick={(e) => this.handleRowClick(s.country)} key={s.country} className="ba b--moon-gray">
+                  <tr onClick={(e) => this.handleRowClick(s.country)} key={s.country} className="bb b--moon-gray">
                           <td>{s.country}</td>
                           <td>{this.numberWithCommas(s.activeCases)}</td>
                           {
@@ -200,7 +201,7 @@ export class Table1 extends Component {
               </div>
 
           </div>
-        </div>
+        </TCCard>
 
     </div>
     );

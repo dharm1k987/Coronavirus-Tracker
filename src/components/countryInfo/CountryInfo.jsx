@@ -9,6 +9,8 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import "./CountryInfo.css"
 import HomeBtn from '../HomeBtn/HomeBtn';
 import { Redirect } from 'react-router-dom';
+import CopyBtn from '../ui/CopyBtn/CopyBtn';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { Table2 } from '../table2/Table2';
 const Parser = require('rss-parser');
 
@@ -22,7 +24,8 @@ class CountryInfo extends React.Component {
       graph: null,
       notFound: false,
       timelines: null,
-      stateStats: []
+      stateStats: [],
+      copyBtnIsDisabled: false
     }
   }
 
@@ -126,6 +129,14 @@ class CountryInfo extends React.Component {
     return (
       <div>
         <div className="w-50-ns w-90 center"><HomeBtn /></div>
+        <div className="w-50-ns w-90 center mv1">
+          <CopyBtn
+            textToCopy={encodeURI("trco.cc/"+this.state.country)}
+            onCopy={() => this.setState({ copyBtnIsDisabled: true })}
+            isDisabled={this.state.copyBtnIsDisabled}
+            colour="blue" icon={<FilterNoneIcon />}
+          >{this.state.copyBtnIsDisabled ? `Copied TRCO.CC/${this.state.country}!` : `Copy TRCO.CC/${this.state.country}` }</CopyBtn>
+        </div>
 
         <div>
           {
@@ -136,9 +147,9 @@ class CountryInfo extends React.Component {
         </div> 
 
         {/* Add table for CAD, CHN, USA */}
-        {
+        {/* FIXME: need to fix table entries to show correct data {
           this.state.stateStats.length > 0 ? <Table2 stats={this.state.stateStats}/> : null 
-        } 
+        } */}
 
         <div className="tc mt4 mb2 mh2 br2">
           <h1 className="f3 mid-gray b mt2 mb0 pa0" >

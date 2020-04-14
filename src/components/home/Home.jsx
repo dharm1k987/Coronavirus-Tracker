@@ -3,9 +3,14 @@ import { Overall, Table1 } from '..'
 import axios from 'axios';
 import InfoIcon from '@material-ui/icons/Info';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { LinkBtn } from '../ui/LinkBtn/LinkBtn'
 import "./Home.css"
 import TCCard from '../ui/TCCard/TCCard';
+import Btn from '../ui/Btn/Btn';
+import SiteIntro from '../SiteIntro/SiteIntro';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import CopyBtn from '../ui/CopyBtn/CopyBtn';
 
 const moment = require('moment')
 
@@ -17,7 +22,8 @@ class Home extends React.Component {
     this.state = {
       liveStats: null,
       world: null,
-      timelines: null
+      timelines: null,
+      copyBtnIsDisabled: false
     }
   }
 
@@ -64,43 +70,36 @@ class Home extends React.Component {
     }).catch(e => console.log(e));
   }
 
+  siteLinkCopied() {
+    // TODO: copy link
+    this.setState({
+      copyBtnIsDisabled: true
+    })
+  }
+
   render() {
     return (<div>
-      <div className="w-70-ns w-90 center">
+      <h1 className="f2 f1-ns tc w-50-ns w-90 center mt4 mt5-ns mb3 normal">Welcome to <b>TRCO.CC</b></h1>
+      <h1 className="f5 f4-ns tc w-50-ns w-90 center mv3 normal">Find the latest on the COVID-19 outbreak here.</h1>
+      <div className="w-50-ns w-90 center mv3">
+        <CopyBtn
+          textToCopy={"trco.cc"}
+          onCopy={() => this.siteLinkCopied()}
+          isDisabled={this.state.copyBtnIsDisabled}
+          colour="blue" icon={<FilterNoneIcon />}
+        >{this.state.copyBtnIsDisabled ? 'Copied TRCO.CC!' : 'Copy TRCO.CC & share with family' }</CopyBtn>
+      </div>
+      <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
+      <div className="w-50-ns w-90 center">
+      <LinkBtn colour="light-red" icon={<VerifiedUserIcon />} link="/readiness-test">COVID-19 Pandemic Readiness Test</LinkBtn>
+      </div>
+      <div className="w-50-ns w-90 center">
         <LinkBtn colour="blue" icon={<InfoIcon />} link="/guide">What do I need to know?</LinkBtn>
       </div>
-
-
-      <div className="w-70-ns w-90 center">
-      <LinkBtn colour="light-red" icon={<VerifiedUserIcon />} link="/readiness-test">COVID-19 Pandemic Readiness Test</LinkBtn>
-
+      <Table1 stats={this.state.liveStats} />
+      <div className="mt3 w-60-ns w-90 tc center">
+        <SiteIntro />
       </div>
-
-     
-
-      <div className="mt3 w-70-ns w-90 tc center">
-        <TCCard>
-          <h1 className="mid-gray">COVID-19 CORONAVIRUS UPDATE</h1> 
-          <h2 className="mid-gray">
-
-            This site will serve as a <b>tracker</b> to the worldwide <b>COVID 19 Coronavirus pandemic</b>, that originated in <b>Wuhan, China</b>.
-            <br></br><br></br>
-            We offer <b>statistics</b> on the <b>latest virus outbreak</b>, and report figures of <b>total confirmed cases (infected), deaths and recoveries</b>.
-            These numbers are accurate as per the <b>World Health Organization</b> and are <b>updated every few minutes</b>.
-            <br></br><br></br>
-
-            Clicking on a <b>country</b> will show a counter of the <b>current status</b> in that location. There will also be <b>world</b> news which you may
-            refer to get the latest information.<br></br><br></br>
-
-            Our goal is to provide <b>accurate information</b>, while at the same time keep it <b>succinct and relevant</b> instead of a full encyclopedia.
-
-          </h2> 
-        </TCCard>
-      </div>
-
-      <Overall placeName={"World"} place={this.state.world} timelines={this.state.timelines}/>
-
-        <Table1 stats={this.state.liveStats} />
 
 
       </div>
