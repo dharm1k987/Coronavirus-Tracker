@@ -7,6 +7,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import SendIcon from '@material-ui/icons/Send';
 import HomeBtn from '../HomeBtn/HomeBtn';
 import Btn from '../ui/Btn/Btn';
+import './AboutUs.css'
 
 class AboutUs extends React.Component {
 
@@ -36,7 +37,8 @@ class AboutUs extends React.Component {
         },
       ],
       feedback: "",
-      feedbackBtnIsDisabled: false
+      feedbackBtnIsDisabled: false,
+      feedbackBtnTitle: 'Send'
     };
   }
 
@@ -45,12 +47,14 @@ class AboutUs extends React.Component {
       feedbackMsg: this.state.feedback
     });
     this.setState({
-      feedbackBtnIsDisabled: true
+      feedbackBtnIsDisabled: true,
+      feedbackBtnTitle: 'Sent',
+      feedback: ''
     });
   }
 
   updateFeedback(feedback) {
-    this.setState({ feedback });
+    this.setState({ feedback, feedbackBtnIsDisabled: false, feedbackBtnTitle: 'Send' });
   }
 
   render() {
@@ -64,24 +68,25 @@ class AboutUs extends React.Component {
             <h2 className="mid-gray">{g.desc}</h2>
           </div>))}
       </TCCard>
-      <h1 className="f2 tc mt4 mb2 ">The Team</h1>
+      <h1 className="f2 tc mt4 mb2">The Team</h1>
       <div className="flex flex-wrap w-100 w-80-l center">
         <TCCard className="mid-gray">
         <p className="f5 mid-gray">We’re a team of individuals focused on playing a crucial role in the fight against COVID-19. With our goals outlined above, we’re focused on incorporating those tenets with all of our features being rolled out, to give everyone visiting our site the best info possible. Connect with us below!</p>
         </TCCard>
       </div>
-      <h1 className="f2 tc pt5 pb3">Connect With Us</h1>
+      <h1 className="f2 tc pt3 pb3">Connect With Us</h1>
       <p className="">Have tips, feedback or ideas? Let us know below!</p>
       <textarea
         value={this.state.feedback}
         className="ba b--light-silver br2 w-100 pa2"
         placeholder="Type your heart out..."
         maxlength="250"
+        draggable="false"
         onChange={(e) => this.updateFeedback(e.target.value)}/>
       <Btn
         isDisabled={this.state.feedbackBtnIsDisabled}
         colour={"blue"}
-        icon={(<SendIcon />)} handleOnClick={() => this.sendFeedback()}>Send</Btn>
+        icon={(<SendIcon />)} handleOnClick={() => this.sendFeedback()}>{this.state.feedbackBtnTitle}</Btn>
     </div>);
   }
 }
