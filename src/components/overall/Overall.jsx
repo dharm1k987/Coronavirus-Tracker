@@ -162,7 +162,7 @@ export class Overall extends Component {
                         afterBuildTicks: function (chartObj) {
                             if (!s.log) return
 
-                            chartObj.max = 1000000
+                            chartObj.max = 10000000
                             chartObj.min = 1
                             chartObj.ticks = [];
                             chartObj.ticks.push(1);
@@ -172,6 +172,8 @@ export class Overall extends Component {
                             chartObj.ticks.push(10000);
                             chartObj.ticks.push(100000);
                             chartObj.ticks.push(1000000);
+                            chartObj.ticks.push(10000000);
+
                         },
                         gridLines: {
                             drawOnChartArea: false,
@@ -187,7 +189,7 @@ export class Overall extends Component {
                     boxWidth: 10,
                 }
 
-            }
+            },
         }
 
         return result
