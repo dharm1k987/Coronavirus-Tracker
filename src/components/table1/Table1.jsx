@@ -17,6 +17,7 @@ export class Table1 extends Component {
 
 
   numberWithCommas(x) {
+    if (!x) return 0;
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
