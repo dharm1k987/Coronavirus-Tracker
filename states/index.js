@@ -45,13 +45,30 @@ async function china() {
 }
 
 async function canada() {
-    // https://en.wikipedia.org/wiki/Template:2019%E2%80%9320_coronavirus_pandemic_data/Canada_medical_cases_by_province
-    const doc = await wtf.fetch('Template:2019–20_coronavirus_pandemic_data/Canada_medical_cases_by_province');
+    // https://en.wikipedia.org/wiki/Template:COVID-19_pandemic_data/Canada_medical_cases_by_province
+    const doc = await wtf.fetch('Template:COVID-19_pandemic_data/Canada_medical_cases_by_province');
     let data = doc.tables(0).json()
     let result = []
+    const provinces = ['BRITISH COLUMBIA', 'ALBERTA', 'SASKATCHEWAN', 'MANITOBA', 'ONTARIO',
+                       'QUEBEC', 'NEW BRUNSWICK', 'PRINCE EDWARD ISLAND', 'NOVA SCOTIA', 'NEWFOUNDLAND AND LABRADOR',
+                       'YUKON', 'NORTHWEST TERRITORIES', 'NUNAVUT'];
+    const BreakException = {};
     for (let i in data) {
+        let state = "";
+        try {
+            state = data[i].Province.links[0].text;
+        }
+        catch {
+            provinces.forEach(p => {
+                if (data[i].Province.text.toUpperCase().includes(p)) {
+                    state = p;
+                    throw BreakException;
+                }
+            })
+            if (state === "") continue;
+        }
         let obj = {
-            state: data[i].Province.text.toUpperCase(),
+            state: state.toUpperCase(),
             activeCases: data[i].Active.number,
             totalRecovered: data[i]['Recov.'].number,
             totalDeaths: data[i].Deaths.number
