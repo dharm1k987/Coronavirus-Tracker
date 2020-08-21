@@ -1,0 +1,8 @@
+
+label {
+    margin: 0;
+}
+
+.checkbox-mui {
+    padding: 0 !important; /* required */
+}

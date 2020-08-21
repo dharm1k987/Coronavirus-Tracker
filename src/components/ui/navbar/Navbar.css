@@ -1,0 +1,12 @@
+.title {
+	flex-grow: 1;
+}
+
+.logo {
+	max-width: 35px
+}
+
+.appbar {
+	align-items: center;
+	background-color: #37474f !important; /* required */
+}

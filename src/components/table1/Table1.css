@@ -1,0 +1,25 @@
+.swap:hover {
+    cursor: pointer;
+}
+
+.backArrow:hover,
+.frontArrow:hover {
+    cursor: pointer
+}
+
+table {
+    overflow: hidden;
+}
+td {
+    padding: 0.5rem;
+    background: #fff;    
+  }
+
+th {
+    padding: 0.5rem;
+    border-bottom: 1px solid #aaa9aa;
+}
+
+tr:hover {
+    cursor: pointer;
+}
