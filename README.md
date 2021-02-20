@@ -8,13 +8,9 @@ Demonstration: [YouTube Video](https://www.youtube.com/watch?v=HAUdK1UaFuc)
 
 <img src="screens/img1.png">  
 
-<img src="screens/img2.png">  
-
 <img src="screens/img3.png">  
 
 <img src="screens/img4.png">  
-
-<img src="screens/img5.png">  
 
 <img src="screens/img6.png">  
 
