@@ -12,6 +12,18 @@ Demonstration: [YouTube Video](https://www.youtube.com/watch?v=HAUdK1UaFuc)
 
 <img src="screens/img4.png">  
 
-<img src="screens/img6.png">  
+### Features Include:
 
-<img src="screens/img7.png">  
+- Ability to view Covid cases from over 150 countries worldwide
+- Ability to filter by country, and in some cases, provinces/states too
+- Ability to see recommendations to limit the spread of Covid
+- Ability to see graphs and future projects of cases
+- Ability to see latest news of country in regards to Covid
+
+### Technologies Used:
+
+- React
+- Node.js
+- Express.js
+- MongoDB
+- Web Scraping
